@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PureReader</string>
+
+    <string name="nav_timeline">时间轴</string>
+    <string name="nav_favorite">收藏</string>
+    <string name="nav_setting">设置</string>
 </resources>

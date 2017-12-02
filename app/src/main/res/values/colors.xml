@@ -23,4 +23,12 @@
     <color name="grey_300_96p">#F5E0E0E0</color>
     <color name="grey_900">#212121</color>
     <color name="grey_900_96p">#F5212121</color>
+
+    <color name="colorBaseBackground">#fafafa</color>
+
+    <color name="nav_item_unselected">#757575</color>
+    <color name="nav_item_selected">@color/colorAccent</color>
+
+    <color name="colorPrimaryText">#212121</color>
+    <color name="colorSecondaryText">#757575</color>
 </resources>
