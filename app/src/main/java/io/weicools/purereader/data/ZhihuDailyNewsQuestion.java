@@ -36,7 +36,7 @@ public class ZhihuDailyNewsQuestion {
     @ColumnInfo(name = "id")
     @Expose
     @SerializedName("id")
-    private String id;
+    private int id;
 
     @ColumnInfo(name = "ga_prefix")
     @Expose
@@ -64,7 +64,7 @@ public class ZhihuDailyNewsQuestion {
         return type;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -92,7 +92,7 @@ public class ZhihuDailyNewsQuestion {
         this.type = type;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

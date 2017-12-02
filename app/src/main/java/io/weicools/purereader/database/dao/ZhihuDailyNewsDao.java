@@ -1,5 +1,6 @@
 package io.weicools.purereader.database.dao;
 
+import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
@@ -17,6 +18,7 @@ import io.weicools.purereader.data.ZhihuDailyNewsQuestion;
  * Interface for database access on {@link ZhihuDailyNews} related operations.
  */
 
+@Dao
 public interface ZhihuDailyNewsDao {
     @Query("SELECT * FROM zhihu_daily_news WHERE timestamp BETWEEN (:timestamp - 24*60*60*1000 + 1) AND :timestamp ORDER BY timestamp ASC")
     List<ZhihuDailyNewsQuestion> queryAllByDate(long timestamp);
