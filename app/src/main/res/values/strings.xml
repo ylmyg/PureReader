@@ -4,4 +4,10 @@
     <string name="nav_timeline">时间轴</string>
     <string name="nav_favorite">收藏</string>
     <string name="nav_setting">设置</string>
+    <string name="timeline">时间轴</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="zhihu_daily">知乎日报</string>
+    <string name="empty_content">哎呀, 内容走丢了…</string>
 </resources>
