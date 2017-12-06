@@ -1,5 +1,7 @@
 package io.weicools.purereader.ui;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
@@ -8,12 +10,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 
 import io.weicools.purereader.R;
+import io.weicools.purereader.service.CacheService;
 import io.weicools.purereader.ui.favorite.FavoriteFragment;
 import io.weicools.purereader.ui.setting.SettingFragment;
 import io.weicools.purereader.ui.timeline.TimelineFragment;
@@ -98,8 +100,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // FIXME: 2017/12/2 Start the caching service.
-        // startService(new Intent(MainActivity.this, CacheService.class));
+        startService(new Intent(MainActivity.this, CacheService.class));
     }
 
     @Override
