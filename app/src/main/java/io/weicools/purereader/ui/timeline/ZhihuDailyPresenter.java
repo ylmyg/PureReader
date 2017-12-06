@@ -21,7 +21,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
     @NonNull
     private final ZhihuDailyNewsRepository mRepository;
 
-    ZhihuDailyPresenter(@NonNull ZhihuDailyContract.View view,
+    public ZhihuDailyPresenter(@NonNull ZhihuDailyContract.View view,
                         @NonNull ZhihuDailyNewsRepository repository) {
         this.mView = view;
         this.mRepository = repository;
