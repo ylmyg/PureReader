@@ -32,7 +32,7 @@ public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter<ZhihuDailyNewsAd
     private List<ZhihuDailyNewsQuestion> mList;
     private OnRecyclerViewItemOnClickListener mListener;
 
-    public ZhihuDailyNewsAdapter(@NonNull Context context,
+    ZhihuDailyNewsAdapter(@NonNull Context context,
                                  @NonNull List<ZhihuDailyNewsQuestion> list) {
         this.mContext = context;
         this.mList = list;
@@ -67,11 +67,11 @@ public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter<ZhihuDailyNewsAd
         return mList.isEmpty() ? 0 : mList.size();
     }
 
-    public void setItemClickListener(OnRecyclerViewItemOnClickListener listener) {
+    void setItemClickListener(OnRecyclerViewItemOnClickListener listener) {
         this.mListener = listener;
     }
 
-    public void updateData(@NonNull List<ZhihuDailyNewsQuestion> list) {
+    void updateData(@NonNull List<ZhihuDailyNewsQuestion> list) {
         mList.clear();
         mList.addAll(list);
         notifyDataSetChanged();
@@ -83,7 +83,7 @@ public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter<ZhihuDailyNewsAd
         private TextView title;
         private OnRecyclerViewItemOnClickListener listener;
 
-        public ViewHolder(View itemView, OnRecyclerViewItemOnClickListener listener) {
+        ViewHolder(View itemView, OnRecyclerViewItemOnClickListener listener) {
             super(itemView);
 
             itemImg = itemView.findViewById(R.id.image_view_cover);
