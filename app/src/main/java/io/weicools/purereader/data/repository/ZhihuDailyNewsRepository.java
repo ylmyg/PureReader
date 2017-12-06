@@ -79,7 +79,7 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
             @Override
             public void onNewsLoaded(@NonNull List<ZhihuDailyNewsQuestion> list) {
                 refreshCache(cleanCache, list);
-                callback.onNewsLoaded(new ArrayList<ZhihuDailyNewsQuestion>(list));
+                callback.onNewsLoaded(new ArrayList<>(mCachedItems.values()));
                 // Save these item to database.
                 saveAll(list);
             }

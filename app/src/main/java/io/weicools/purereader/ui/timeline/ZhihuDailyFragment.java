@@ -12,6 +12,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +24,10 @@ import java.util.List;
 import java.util.TimeZone;
 
 import io.weicools.purereader.R;
-import io.weicools.purereader.data.ContentType;
 import io.weicools.purereader.data.PostType;
 import io.weicools.purereader.data.ZhihuDailyNewsQuestion;
 import io.weicools.purereader.interfaze.OnRecyclerViewItemOnClickListener;
+import io.weicools.purereader.service.CacheService;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -208,16 +209,16 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
         }
 
         mListSize = list.size();
+        Log.i("content size+++", mListSize + "");
 
         mEmptyView.setVisibility(list.isEmpty() ? View.VISIBLE : View.INVISIBLE);
 
-        // TODO: 2017/12/3 cache
         // Cache data of the items
-//        for (ZhihuDailyNewsQuestion item : list) {
-//            Intent intent = new Intent(CacheService.BROADCAST_FILTER_ACTION);
-//            intent.putExtra(CacheService.FLAG_ID, item.getId());
-//            intent.putExtra(CacheService.FLAG_TYPE, PostType.TYPE_ZHIHU);
-//            LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
-//        }
+        for (ZhihuDailyNewsQuestion item : list) {
+            Intent intent = new Intent(CacheService.BROADCAST_FILTER_ACTION);
+            intent.putExtra(CacheService.FLAG_ID, item.getId());
+            intent.putExtra(CacheService.FLAG_TYPE, PostType.TYPE_ZHIHU);
+            LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+        }
     }
 }
