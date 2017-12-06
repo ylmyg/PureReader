@@ -14,7 +14,7 @@ import io.weicools.purereader.data.ZhihuDailyNewsQuestion;
  * This specifies the contract between the view and the presenter.
  */
 
-public class ZhihuDailyContract {
+public interface ZhihuDailyContract {
     interface View extends BaseView<Presenter> {
         boolean isActive();
 
