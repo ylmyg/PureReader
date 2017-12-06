@@ -21,7 +21,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.MainActivity" />
+
         <service android:name=".service.CacheService" />
+
+        <activity android:name=".ui.detail.DetailsActivity"></activity>
     </application>
 
 </manifest>

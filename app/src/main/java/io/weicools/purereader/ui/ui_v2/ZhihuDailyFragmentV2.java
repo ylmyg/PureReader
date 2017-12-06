@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.TimeZone;
 
 import io.weicools.purereader.R;
+import io.weicools.purereader.data.ContentType;
 import io.weicools.purereader.data.PostType;
 import io.weicools.purereader.data.ZhihuDailyNewsQuestion;
 import io.weicools.purereader.data.local.ZhihuDailyNewsLocalDataSource;
@@ -31,6 +32,7 @@ import io.weicools.purereader.data.remote.ZhihuDailyNewsRemoteDataSource;
 import io.weicools.purereader.data.repository.ZhihuDailyNewsRepository;
 import io.weicools.purereader.interfaze.OnRecyclerViewItemOnClickListener;
 import io.weicools.purereader.service.CacheService;
+import io.weicools.purereader.ui.detail.DetailsActivity;
 import io.weicools.purereader.ui.timeline.ZhihuDailyContract;
 import io.weicools.purereader.ui.timeline.ZhihuDailyNewsAdapter;
 import io.weicools.purereader.ui.timeline.ZhihuDailyPresenter;
@@ -204,19 +206,18 @@ public class ZhihuDailyFragmentV2 extends Fragment implements ZhihuDailyContract
     }
 
     @Override
-    public void showResult(@NonNull List<ZhihuDailyNewsQuestion> list) {
+    public void showResult(@NonNull final List<ZhihuDailyNewsQuestion> list) {
         if (mAdapter == null) {
             mAdapter = new ZhihuDailyNewsAdapter(getContext(), list);
             mAdapter.setItemClickListener(new OnRecyclerViewItemOnClickListener() {
                 @Override
                 public void OnItemClick(View v, int position) {
-                    // TODO: 2017/12/3 start detail activity
-//                    Intent intent = new Intent(getActivity(), DetailsActivity.class);
-//                    intent.putExtra(DetailsActivity.KEY_ARTICLE_ID, list.get(i).getId());
-//                    intent.putExtra(DetailsActivity.KEY_ARTICLE_TYPE, ContentType.TYPE_ZHIHU_DAILY);
-//                    intent.putExtra(DetailsActivity.KEY_ARTICLE_TITLE, list.get(i).getTitle());
-//                    intent.putExtra(DetailsActivity.KEY_ARTICLE_IS_FAVORITE, list.get(i).isFavorite());
-//                    startActivity(intent);
+                    Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                    intent.putExtra(DetailsActivity.KEY_ARTICLE_ID, list.get(position).getId());
+                    intent.putExtra(DetailsActivity.KEY_ARTICLE_TYPE, ContentType.TYPE_ZHIHU_DAILY);
+                    intent.putExtra(DetailsActivity.KEY_ARTICLE_TITLE, list.get(position).getTitle());
+                    intent.putExtra(DetailsActivity.KEY_ARTICLE_IS_FAVORITE, list.get(position).isFavorite());
+                    startActivity(intent);
                 }
             });
             mRecyclerView.setAdapter(mAdapter);
