@@ -9,6 +9,7 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.weicools.purereader.data.ZhihuDailyNews;
 import io.weicools.purereader.data.ZhihuDailyNewsQuestion;
 
@@ -21,16 +22,16 @@ import io.weicools.purereader.data.ZhihuDailyNewsQuestion;
 @Dao
 public interface ZhihuDailyNewsDao {
     @Query("SELECT * FROM zhihu_daily_news WHERE timestamp BETWEEN (:timestamp - 24*60*60*1000 + 1) AND :timestamp ORDER BY timestamp ASC")
-    List<ZhihuDailyNewsQuestion> queryAllByDate(long timestamp);
+    Flowable<List<ZhihuDailyNewsQuestion>> queryAllByDate(long timestamp);
 
     @Query("SELECT * FROM zhihu_daily_news WHERE id = :id")
-    ZhihuDailyNewsQuestion queryItemById(int id);
+    Flowable<ZhihuDailyNewsQuestion> queryItemById(int id);
 
     @Query("SELECT * FROM zhihu_daily_news WHERE favorite = 1")
-    List<ZhihuDailyNewsQuestion> queryAllFavorites();
+    Flowable<List<ZhihuDailyNewsQuestion>> queryAllFavorites();
 
     @Query("SELECT * FROM zhihu_daily_news WHERE (timestamp < :timestamp) AND (favorite = 0)")
-    List<ZhihuDailyNewsQuestion> queryAllTimeoutItems(long timestamp);
+    Flowable<List<ZhihuDailyNewsQuestion>> queryAllTimeoutItems(long timestamp);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertAll(List<ZhihuDailyNewsQuestion> items);
