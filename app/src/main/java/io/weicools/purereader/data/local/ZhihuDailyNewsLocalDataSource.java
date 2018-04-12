@@ -44,6 +44,7 @@ public class ZhihuDailyNewsLocalDataSource implements ZhihuDailyNewsDataSource {
     }
 
     private ZhihuDailyNewsLocalDataSource(Context context) {
+        mDisposable = new CompositeDisposable();
         DatabaseCreator creator = DatabaseCreator.getInstance();
         if (!creator.isDatabaseCreated()) {
             creator.createDb(context);

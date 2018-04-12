@@ -203,7 +203,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsContrac
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
+        //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
         mImageView = findViewById(R.id.image_view);
 
