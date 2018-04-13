@@ -1,4 +1,4 @@
-package io.weicools.purereader.ui.timeline;
+package io.weicools.purereader.module.timeline;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +18,7 @@ import java.util.List;
 import io.weicools.purereader.R;
 import io.weicools.purereader.data.ContentType;
 import io.weicools.purereader.data.ZhihuDailyNewsQuestion;
-import io.weicools.purereader.ui.detail.DetailsActivity;
+import io.weicools.purereader.module.detail.DetailsActivity;
 
 /**
  * Create by weicools on 2017/12/3.

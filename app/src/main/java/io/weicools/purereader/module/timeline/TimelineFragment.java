@@ -1,4 +1,4 @@
-package io.weicools.purereader.ui.timeline;
+package io.weicools.purereader.module.timeline;
 
 
 import android.os.Bundle;

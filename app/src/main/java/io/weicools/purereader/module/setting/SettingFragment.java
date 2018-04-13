@@ -1,4 +1,4 @@
-package io.weicools.purereader.ui.favorite;
+package io.weicools.purereader.module.setting;
 
 
 import android.os.Bundle;
@@ -12,10 +12,10 @@ import io.weicools.purereader.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FavoriteFragment extends Fragment {
+public class SettingFragment extends Fragment {
 
 
-    public FavoriteFragment() {
+    public SettingFragment() {
         // Required empty public constructor
     }
 
@@ -24,10 +24,10 @@ public class FavoriteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorite, container, false);
+        return inflater.inflate(R.layout.fragment_setting, container, false);
     }
 
-    public static FavoriteFragment newInstance() {
-        return new FavoriteFragment();
+    public static SettingFragment newInstance() {
+        return new SettingFragment();
     }
 }

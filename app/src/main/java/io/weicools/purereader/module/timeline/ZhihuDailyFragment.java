@@ -1,4 +1,4 @@
-package io.weicools.purereader.ui.timeline;
+package io.weicools.purereader.module.timeline;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,7 +26,7 @@ import io.weicools.purereader.R;
 import io.weicools.purereader.data.PostType;
 import io.weicools.purereader.data.ZhihuDailyNewsQuestion;
 import io.weicools.purereader.service.CacheService;
-import io.weicools.purereader.ui.DatePickerDialog;
+import io.weicools.purereader.module.DatePickerDialog;
 
 /**
  * A simple {@link Fragment} subclass.

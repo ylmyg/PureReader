@@ -1,4 +1,4 @@
-package io.weicools.purereader.ui.timeline;
+package io.weicools.purereader.module.timeline;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,8 +16,8 @@ import android.view.MenuItem;
 
 import io.weicools.purereader.R;
 import io.weicools.purereader.service.CacheService;
-import io.weicools.purereader.ui.favorite.FavoriteFragment;
-import io.weicools.purereader.ui.setting.SettingFragment;
+import io.weicools.purereader.module.favorite.FavoriteFragment;
+import io.weicools.purereader.module.setting.SettingFragment;
 
 /**
  * Created by Weicools on 2017/12/2.

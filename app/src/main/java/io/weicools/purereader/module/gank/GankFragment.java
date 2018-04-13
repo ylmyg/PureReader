@@ -1,4 +1,4 @@
-package io.weicools.purereader.ui.gank;
+package io.weicools.purereader.module.gank;
 
 
 import android.os.Bundle;

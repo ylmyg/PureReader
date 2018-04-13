@@ -1,4 +1,4 @@
-package io.weicools.purereader.ui.timeline;
+package io.weicools.purereader.module.timeline;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;

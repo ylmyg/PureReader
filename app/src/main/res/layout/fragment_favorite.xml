@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="io.weicools.purereader.ui.favorite.FavoriteFragment">
+    tools:context="io.weicools.purereader.module.favorite.FavoriteFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
