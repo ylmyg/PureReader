@@ -15,7 +15,7 @@ import io.weicools.purereader.data.PostType;
 import io.weicools.purereader.data.ZhihuDailyContent;
 import io.weicools.purereader.database.AppDatabase;
 import io.weicools.purereader.database.DatabaseCreator;
-import io.weicools.purereader.retrofit.RetrofitService;
+import io.weicools.purereader.api.RetrofitService;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

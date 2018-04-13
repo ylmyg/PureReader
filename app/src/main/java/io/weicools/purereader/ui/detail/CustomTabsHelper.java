@@ -1,4 +1,4 @@
-package io.weicools.purereader.customtab;
+package io.weicools.purereader.ui.detail;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;

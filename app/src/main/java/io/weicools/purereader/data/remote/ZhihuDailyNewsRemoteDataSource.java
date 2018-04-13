@@ -9,7 +9,7 @@ import java.util.List;
 import io.weicools.purereader.data.ZhihuDailyNews;
 import io.weicools.purereader.data.ZhihuDailyNewsQuestion;
 import io.weicools.purereader.data.datasource.ZhihuDailyNewsDataSource;
-import io.weicools.purereader.retrofit.RetrofitService;
+import io.weicools.purereader.api.RetrofitService;
 import io.weicools.purereader.util.DateFormatUtil;
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -25,7 +25,6 @@ import java.util.TimeZone;
 import io.weicools.purereader.R;
 import io.weicools.purereader.data.PostType;
 import io.weicools.purereader.data.ZhihuDailyNewsQuestion;
-import io.weicools.purereader.interfaze.OnRecyclerViewItemOnClickListener;
 import io.weicools.purereader.service.CacheService;
 
 /**
@@ -35,7 +34,6 @@ import io.weicools.purereader.service.CacheService;
  * Displays a grid of {@link ZhihuDailyNewsQuestion}s.
  */
 public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.View {
-
     private ZhihuDailyContract.Presenter mPresenter;
 
     // View references.
@@ -190,18 +188,6 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
     public void showResult(@NonNull List<ZhihuDailyNewsQuestion> list) {
         if (mAdapter == null) {
             mAdapter = new ZhihuDailyNewsAdapter(getContext(), list);
-            mAdapter.setItemClickListener(new OnRecyclerViewItemOnClickListener() {
-                @Override
-                public void OnItemClick(View v, int position) {
-                    // TODO: 2017/12/3 start detail activity
-//                    Intent intent = new Intent(getActivity(), DetailsActivity.class);
-//                    intent.putExtra(DetailsActivity.KEY_ARTICLE_ID, list.get(i).getId());
-//                    intent.putExtra(DetailsActivity.KEY_ARTICLE_TYPE, ContentType.TYPE_ZHIHU_DAILY);
-//                    intent.putExtra(DetailsActivity.KEY_ARTICLE_TITLE, list.get(i).getTitle());
-//                    intent.putExtra(DetailsActivity.KEY_ARTICLE_IS_FAVORITE, list.get(i).isFavorite());
-//                    startActivity(intent);
-                }
-            });
             mRecyclerView.setAdapter(mAdapter);
         } else {
             mAdapter.updateData(list);

@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import io.weicools.purereader.data.ZhihuDailyContent;
 import io.weicools.purereader.data.ZhihuDailyNewsQuestion;
 import io.weicools.purereader.data.datasource.ZhihuDailyContentDataSource;
-import io.weicools.purereader.retrofit.RetrofitService;
+import io.weicools.purereader.api.RetrofitService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

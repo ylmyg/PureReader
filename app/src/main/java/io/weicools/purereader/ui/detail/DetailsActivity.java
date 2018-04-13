@@ -27,7 +27,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 
 import io.weicools.purereader.R;
-import io.weicools.purereader.customtab.CustomTabsHelper;
 import io.weicools.purereader.data.ContentType;
 import io.weicools.purereader.data.ZhihuDailyContent;
 import io.weicools.purereader.data.local.ZhihuDailyContentLocalDataSource;

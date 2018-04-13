@@ -1,4 +1,4 @@
-package io.weicools.purereader.retrofit;
+package io.weicools.purereader.api;
 
 import io.weicools.purereader.data.ZhihuDailyContent;
 import io.weicools.purereader.data.ZhihuDailyNews;
