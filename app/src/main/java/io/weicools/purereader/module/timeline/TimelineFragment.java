@@ -8,24 +8,41 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import io.weicools.purereader.R;
 import io.weicools.purereader.data.local.ZhihuDailyNewsLocalDataSource;
 import io.weicools.purereader.data.remote.ZhihuDailyNewsRemoteDataSource;
 import io.weicools.purereader.data.repository.ZhihuDailyNewsRepository;
+import io.weicools.purereader.module.gank.AndroidFragment;
+import io.weicools.purereader.module.gank.GankFragment;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class TimelineFragment extends Fragment {
-    private FloatingActionButton mFab;
-    private TabLayout mTabLayout;
+    @BindView(R.id.timeline_tab_layout)
+    TabLayout mTabLayout;
+    @BindView(R.id.view_pager)
+    ViewPager mViewPager;
+    @BindView(R.id.fab)
+    FloatingActionButton mFab;
+    Unbinder unbinder;
 
     private ZhihuDailyFragment mZhihuFragment;
+    private GankFragment mGankFragment;
+    private AndroidFragment mAndroidFragment;
+
 
     public TimelineFragment() {
         // Required empty public constructor
@@ -41,8 +58,12 @@ public class TimelineFragment extends Fragment {
         if (savedInstanceState != null) {
             FragmentManager fm = getChildFragmentManager();
             mZhihuFragment = (ZhihuDailyFragment) fm.getFragment(savedInstanceState, ZhihuDailyFragment.class.getSimpleName());
+            mGankFragment = (GankFragment) fm.getFragment(savedInstanceState, GankFragment.class.getSimpleName());
+            mAndroidFragment = (AndroidFragment) fm.getFragment(savedInstanceState, AndroidFragment.class.getSimpleName());
         } else {
             mZhihuFragment = ZhihuDailyFragment.newInstance();
+            mGankFragment = GankFragment.newInstance();
+            mAndroidFragment = AndroidFragment.newInstance();
         }
 
         // FIXME: 2017/12/3 Presenter Zhihu, Gank, Douban
@@ -56,9 +77,10 @@ public class TimelineFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_timeline, container, false);
-        initView(view);
-        initListener();
+        unbinder = ButterKnife.bind(this, view);
 
+        initView();
+        initListener();
         return view;
     }
 
@@ -69,40 +91,63 @@ public class TimelineFragment extends Fragment {
         if (mZhihuFragment.isAdded()) {
             fm.putFragment(outState, ZhihuDailyFragment.class.getSimpleName(), mZhihuFragment);
         }
+        if (mGankFragment.isAdded()) {
+            fm.putFragment(outState, GankFragment.class.getSimpleName(), mGankFragment);
+        }
+        if (mAndroidFragment.isAdded()) {
+            fm.putFragment(outState, AndroidFragment.class.getSimpleName(), mAndroidFragment);
+        }
     }
 
-    private void initView(View view) {
-        // FIXME: 2017/12/3 adapter Gank,Douban
-        ViewPager mViewPager = view.findViewById(R.id.view_pager);
-        mViewPager.setAdapter(new TimelineFragmentPagerAdapter(
-                getChildFragmentManager(),
-                getContext(),
-                mZhihuFragment));
+    private void initView() {
+        List<String> titles = new ArrayList<>();
+        titles.add(getString(R.string.tab_title_main_1));
+        titles.add(getString(R.string.tab_title_main_2));
+        titles.add(getString(R.string.tab_title_main_3));
+        mTabLayout.addTab(mTabLayout.newTab().setText(titles.get(0)));
+        mTabLayout.addTab(mTabLayout.newTab().setText(titles.get(1)));
+        mTabLayout.addTab(mTabLayout.newTab().setText(titles.get(2)));
+
+        List<Fragment> fragments = new ArrayList<>();
+        fragments.add(mZhihuFragment);
+        fragments.add(mGankFragment);
+        fragments.add(mAndroidFragment);
+
         mViewPager.setOffscreenPageLimit(3);
 
-        mTabLayout = view.findViewById(R.id.timeline_tab_layout);
+        FragmentAdapter mFragmentAdapter = new FragmentAdapter(getActivity().getSupportFragmentManager(), fragments, titles);
+        mViewPager.setAdapter(mFragmentAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-        mFab = view.findViewById(R.id.fab);
+        //mTabLayout.setTabsFromPagerAdapter(mFragmentAdapter);
+
+        // FIXME: 2017/12/3 adapter Gank,Douban
+//        mViewPager.setAdapter(new TimelineFragmentPagerAdapter(
+//                getChildFragmentManager(),
+//                getContext(),
+//                mZhihuFragment));
+//        mViewPager.setOffscreenPageLimit(3);
+//
+//        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     private void initListener() {
-        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getPosition() == 2) {
-                    mFab.hide();
-                } else {
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 0) {
                     mFab.show();
+                } else {
+                    mFab.hide();
                 }
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
+            public void onPageScrollStateChanged(int state) {
 
             }
         });
@@ -117,5 +162,37 @@ public class TimelineFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    static class FragmentAdapter extends FragmentStatePagerAdapter {
+        private List<Fragment> mFragments;
+        private List<String> mTitles;
+
+        FragmentAdapter(FragmentManager fm, List<Fragment> fragments, List<String> titles) {
+            super(fm);
+            mFragments = fragments;
+            mTitles = titles;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragments.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mTitles.get(position);
+        }
     }
 }

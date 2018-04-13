@@ -22,4 +22,7 @@
     <string name="share_failed">分享失败</string>
     <string name="btn_cancel">取消</string>
     <string name="btn_ok">确定</string>
+    <string name="tab_title_main_1">知乎日报</string>
+    <string name="tab_title_main_2">今日干货</string>
+    <string name="tab_title_main_3">Android</string>
 </resources>
