@@ -309,12 +309,12 @@ public class DetailsActivity extends AppCompatActivity implements DetailsContrac
             Glide.with(mContext)
                     .load(url)
                     .asBitmap()
-                    .placeholder(R.mipmap.ic_launcher)
+                    .placeholder(R.drawable.placeholder)
                     .centerCrop()
-                    .error(R.mipmap.ic_launcher)
+                    .error(R.drawable.placeholder)
                     .into(mImageView);
         } else {
-            mImageView.setImageResource(R.mipmap.ic_launcher);
+            mImageView.setImageResource(R.drawable.placeholder);
         }
     }
 

@@ -14,8 +14,8 @@
             android:layout_height="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="@string/timeline"
-            app:titleTextColor="@color/colorPrimaryText" />
+            app:title="@string/timeline" />
+        <!--app:titleTextColor="@color/colorPrimaryText"-->
 
         <android.support.design.widget.TabLayout
             android:id="@+id/timeline_tab_layout"
