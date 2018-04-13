@@ -26,6 +26,7 @@ import io.weicools.purereader.R;
 import io.weicools.purereader.data.PostType;
 import io.weicools.purereader.data.ZhihuDailyNewsQuestion;
 import io.weicools.purereader.service.CacheService;
+import io.weicools.purereader.ui.DatePickerDialog;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -127,8 +128,8 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
     }
 
     public void showDatePickerDialog() {
-//        final Calendar c = Calendar.getInstance();
-//        c.set(mYear, mMonth, mDay);
+        final Calendar c = Calendar.getInstance();
+        c.set(mYear, mMonth, mDay);
 //        DatePickerDialog dialog = DatePickerDialog.newInstance((new DatePickerDialog.OnDateSetListener() {
 //            @Override
 //            public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
@@ -147,8 +148,20 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
 //        minDate.set(2013, 5, 20);
 //        dialog.setMinDate(minDate);
 //        dialog.vibrate(false);
-//
-//        dialog.show(getActivity().getFragmentManager(), ZhihuDailyFragment.class.getSimpleName());
+
+        DatePickerDialog dialog = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+                mYear = year;
+                mMonth = monthOfYear;
+                mDay = dayOfMonth;
+                c.set(mYear, monthOfYear, mDay);
+
+                mPresenter.loadNews(true, true, c.getTimeInMillis());
+            }
+        }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+
+        dialog.show(getActivity().getFragmentManager(), ZhihuDailyFragment.class.getSimpleName());
     }
 
     @Override

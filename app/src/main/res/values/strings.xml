@@ -20,4 +20,6 @@
     <string name="share_to">分享至</string>
     <string name="copied_to_clipboard">已复制到剪贴板</string>
     <string name="share_failed">分享失败</string>
+    <string name="btn_cancel">取消</string>
+    <string name="btn_ok">确定</string>
 </resources>
