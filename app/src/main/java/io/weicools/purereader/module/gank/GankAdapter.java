@@ -35,6 +35,13 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankHolder> {
         notifyDataSetChanged();
     }
 
+    public void updateData(@NonNull List<GankData> list) {
+        mDataList.clear();
+        mDataList.addAll(list);
+        notifyDataSetChanged();
+        notifyItemRemoved(list.size());
+    }
+
     @NonNull
     @Override
     public GankHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

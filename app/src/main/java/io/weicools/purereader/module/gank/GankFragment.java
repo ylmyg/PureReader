@@ -3,6 +3,7 @@ package io.weicools.purereader.module.gank;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -32,6 +33,7 @@ import io.weicools.purereader.data.HttpResult;
  * create an instance of this fragment.
  */
 public class GankFragment extends Fragment {
+    private final static String ARG_CATEGORY = "arg_category";
 
     @BindView(R.id.rv_article)
     RecyclerView mRecyclerView;
@@ -41,21 +43,35 @@ public class GankFragment extends Fragment {
     SwipeRefreshLayout mRefreshLayout;
     Unbinder unbinder;
 
+    @Nullable
+    private String lastId;
+    private String category;
     private GankAdapter mAdapter;
+    private LinearLayoutManager mLayoutManager;
+
+    private int currPage = 1;
+    private int mListSize = 0;
 
     public GankFragment() {
         // Required empty public constructor
     }
 
-    public static GankFragment newInstance() {
-        return new GankFragment();
+    public static GankFragment newInstance(String categoryKey) {
+        GankFragment fragment = new GankFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_CATEGORY, categoryKey);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            category = getArguments().getString(ARG_CATEGORY);
+        }
     }
 
     @Override
@@ -66,8 +82,9 @@ public class GankFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
 
         mAdapter = new GankAdapter(getContext());
+        mLayoutManager = new LinearLayoutManager(getContext());
         mRefreshLayout.setColorSchemeColors(ContextCompat.getColor(view.getContext(), R.color.colorAccent));
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -77,19 +94,31 @@ public class GankFragment extends Fragment {
             }
         });
 
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0 && mLayoutManager.findLastCompletelyVisibleItemPosition() == mListSize - 1) {
+                    loadArticles(++currPage);
+                }
+            }
+        });
+
         return view;
     }
 
     private void loadArticles(int i) {
         GankRetrofit.getInstance().getGankApi()
-                .getAllGankData("all", 10, i)
+                .getAllGankData(category, 10, i)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<HttpResult<GankData>>() {
                     @Override
                     public void accept(HttpResult<GankData> gankDataHttpResult) throws Exception {
+                        mRefreshLayout.setRefreshing(false);
                         List<GankData> dataList = gankDataHttpResult.getResults();
-                        mAdapter.setDataList(dataList);
+                        mListSize = dataList.size();
+                        mAdapter.updateData(dataList);
                     }
                 });
     }

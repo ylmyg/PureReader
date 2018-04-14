@@ -1,6 +1,5 @@
 package io.weicools.purereader.module.timeline;
 
-
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,11 +19,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.weicools.purereader.AppConfig;
 import io.weicools.purereader.R;
 import io.weicools.purereader.data.local.ZhihuDailyNewsLocalDataSource;
 import io.weicools.purereader.data.remote.ZhihuDailyNewsRemoteDataSource;
 import io.weicools.purereader.data.repository.ZhihuDailyNewsRepository;
-import io.weicools.purereader.module.gank.AndroidFragment;
 import io.weicools.purereader.module.gank.GankFragment;
 
 /**
@@ -41,8 +40,10 @@ public class TimelineFragment extends Fragment {
 
     private ZhihuDailyFragment mZhihuFragment;
     private GankFragment mGankFragment;
-    private AndroidFragment mAndroidFragment;
-
+    private GankFragment mAndroidFragment;
+    private GankFragment miOSFragment;
+    private GankFragment mWebFontFragment;
+    private GankFragment mRecommendFragment;
 
     public TimelineFragment() {
         // Required empty public constructor
@@ -58,12 +59,18 @@ public class TimelineFragment extends Fragment {
         if (savedInstanceState != null) {
             FragmentManager fm = getChildFragmentManager();
             mZhihuFragment = (ZhihuDailyFragment) fm.getFragment(savedInstanceState, ZhihuDailyFragment.class.getSimpleName());
-            mGankFragment = (GankFragment) fm.getFragment(savedInstanceState, GankFragment.class.getSimpleName());
-            mAndroidFragment = (AndroidFragment) fm.getFragment(savedInstanceState, AndroidFragment.class.getSimpleName());
+            mGankFragment = (GankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_ALL);
+            mAndroidFragment = (GankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_ANDROID);
+            miOSFragment = (GankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_IOS);
+            mWebFontFragment = (GankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_WEB_FONT);
+            mRecommendFragment = (GankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_RECOMMEND);
         } else {
             mZhihuFragment = ZhihuDailyFragment.newInstance();
-            mGankFragment = GankFragment.newInstance();
-            mAndroidFragment = AndroidFragment.newInstance();
+            mGankFragment = GankFragment.newInstance(AppConfig.TYPE_ALL);
+            mAndroidFragment = GankFragment.newInstance(AppConfig.TYPE_ANDROID);
+            miOSFragment = GankFragment.newInstance(AppConfig.TYPE_IOS);
+            mWebFontFragment = GankFragment.newInstance(AppConfig.TYPE_WEB_FONT);
+            mRecommendFragment = GankFragment.newInstance(AppConfig.TYPE_RECOMMEND);
         }
 
         // FIXME: 2017/12/3 Presenter Zhihu, Gank, Douban
@@ -91,11 +98,25 @@ public class TimelineFragment extends Fragment {
         if (mZhihuFragment.isAdded()) {
             fm.putFragment(outState, ZhihuDailyFragment.class.getSimpleName(), mZhihuFragment);
         }
+
         if (mGankFragment.isAdded()) {
-            fm.putFragment(outState, GankFragment.class.getSimpleName(), mGankFragment);
+            fm.putFragment(outState, AppConfig.TYPE_ALL, mGankFragment);
         }
+
         if (mAndroidFragment.isAdded()) {
-            fm.putFragment(outState, AndroidFragment.class.getSimpleName(), mAndroidFragment);
+            fm.putFragment(outState, AppConfig.TYPE_ANDROID, mAndroidFragment);
+        }
+
+        if (miOSFragment.isAdded()) {
+            fm.putFragment(outState, AppConfig.TYPE_IOS, miOSFragment);
+        }
+
+        if (mWebFontFragment.isAdded()) {
+            fm.putFragment(outState, AppConfig.TYPE_WEB_FONT, mWebFontFragment);
+        }
+
+        if (mRecommendFragment.isAdded()) {
+            fm.putFragment(outState, AppConfig.TYPE_RECOMMEND, mRecommendFragment);
         }
     }
 
@@ -104,16 +125,25 @@ public class TimelineFragment extends Fragment {
         titles.add(getString(R.string.tab_title_main_1));
         titles.add(getString(R.string.tab_title_main_2));
         titles.add(getString(R.string.tab_title_main_3));
+        titles.add(AppConfig.TYPE_IOS);
+        titles.add(AppConfig.TYPE_WEB_FONT);
+        titles.add(AppConfig.TYPE_RECOMMEND);
         mTabLayout.addTab(mTabLayout.newTab().setText(titles.get(0)));
         mTabLayout.addTab(mTabLayout.newTab().setText(titles.get(1)));
         mTabLayout.addTab(mTabLayout.newTab().setText(titles.get(2)));
+        mTabLayout.addTab(mTabLayout.newTab().setText(titles.get(3)));
+        mTabLayout.addTab(mTabLayout.newTab().setText(titles.get(4)));
+        mTabLayout.addTab(mTabLayout.newTab().setText(titles.get(5)));
 
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(mZhihuFragment);
         fragments.add(mGankFragment);
         fragments.add(mAndroidFragment);
+        fragments.add(miOSFragment);
+        fragments.add(mWebFontFragment);
+        fragments.add(mRecommendFragment);
 
-        mViewPager.setOffscreenPageLimit(3);
+        mViewPager.setOffscreenPageLimit(6);
 
         FragmentAdapter mFragmentAdapter = new FragmentAdapter(getActivity().getSupportFragmentManager(), fragments, titles);
         mViewPager.setAdapter(mFragmentAdapter);
