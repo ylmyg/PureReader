@@ -37,7 +37,7 @@ public class GankPresenter implements GankContract.Presenter {
     }
 
     @Override
-    public void loadGankData(String category, int page) {
+    public void loadGankData(final boolean isRefresh, String category, int page) {
         GankRetrofit.getInstance().getGankApi()
                 .getGankData(category, 10, page)
                 .subscribeOn(Schedulers.io())
@@ -47,7 +47,11 @@ public class GankPresenter implements GankContract.Presenter {
                     public void accept(HttpResult<GankData> gankDataHttpResult) throws Exception {
                         mView.setLoadingIndicator(false);
                         List<GankData> dataList = gankDataHttpResult.getResults();
-                        mView.showResult(dataList);
+                        if (isRefresh) {
+                            mView.showResult(dataList);
+                        } else {
+                            mView.updateResult(dataList);
+                        }
                     }
                 });
     }

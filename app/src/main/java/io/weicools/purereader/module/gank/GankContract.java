@@ -17,6 +17,7 @@ public interface GankContract {
         void setLoadingIndicator(boolean active);
 
         void showResult(List<GankData> dataList);
+        void updateResult(List<GankData> dataList);
 
         void showLoadingDataError();
 
@@ -24,6 +25,6 @@ public interface GankContract {
     }
 
     interface Presenter extends BasePresenter {
-        void loadGankData(String category, int page);
+        void loadGankData(boolean isRefresh, String category, int page);
     }
 }
