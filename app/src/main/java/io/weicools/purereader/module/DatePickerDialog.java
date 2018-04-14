@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 
+import java.util.Calendar;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -70,6 +72,14 @@ public class DatePickerDialog extends DialogFragment {
 //            getDialog().cancel();
 //        }
         dismiss();
+    }
+
+    public void setMaxDate(Calendar maxDate) {
+        mDatePicker.setMaxDate(maxDate.getTimeInMillis());
+    }
+
+    public void setMinDate(Calendar minDate) {
+        mDatePicker.setMinDate(minDate.getTimeInMillis());
     }
 
     @Override
