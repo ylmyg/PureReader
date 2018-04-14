@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 
-import io.weicools.purereader.base.BasePresenter;
+import io.weicools.purereader.BasePresenter;
 import io.weicools.purereader.data.ContentType;
 import io.weicools.purereader.data.ZhihuDailyContent;
 
@@ -30,7 +30,7 @@ public class DetailsContract {
         void openWithBrowser(@Nullable String link);
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter {
         void favorite(ContentType type, int id, boolean favorite);
 
         void loadZhihuDailyContent(int id);

@@ -4,8 +4,7 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
-import io.weicools.purereader.base.BasePresenter;
-import io.weicools.purereader.base.BaseView;
+import io.weicools.purereader.BaseView;
 import io.weicools.purereader.data.ZhihuDailyNewsQuestion;
 
 /**
@@ -23,7 +22,7 @@ public interface ZhihuDailyContract {
         void showResult(@NonNull List<ZhihuDailyNewsQuestion> list);
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter {
         void loadNews(boolean forceUpdate, boolean cleanCache, long date);
     }
 }

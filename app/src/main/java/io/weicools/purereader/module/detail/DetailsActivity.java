@@ -107,7 +107,6 @@ public class DetailsActivity extends AppCompatActivity implements DetailsContrac
     @Override
     protected void onResume() {
         super.onResume();
-        mPresenter.start();
         if (mType == ContentType.TYPE_ZHIHU_DAILY) {
             mPresenter.loadZhihuDailyContent(mId);
         }

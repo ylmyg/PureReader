@@ -19,20 +19,15 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 import io.weicools.purereader.R;
-import io.weicools.purereader.api.GankRetrofit;
 import io.weicools.purereader.data.GankData;
-import io.weicools.purereader.data.HttpResult;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link GankFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GankFragment extends Fragment {
+public class GankFragment extends Fragment implements GankContract.View {
     private final static String ARG_CATEGORY = "arg_category";
 
     @BindView(R.id.rv_article)
@@ -49,8 +44,11 @@ public class GankFragment extends Fragment {
     private GankAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
 
+    private GankContract.Presenter mPresenter;
+
     private int currPage = 1;
     private int mListSize = 0;
+    private boolean mIsFirstLoad = true;
 
     public GankFragment() {
         // Required empty public constructor
@@ -81,6 +79,7 @@ public class GankFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_gank, container, false);
         unbinder = ButterKnife.bind(this, view);
 
+        new GankPresenter(this);
         mAdapter = new GankAdapter(getContext());
         mLayoutManager = new LinearLayoutManager(getContext());
         mRefreshLayout.setColorSchemeColors(ContextCompat.getColor(view.getContext(), R.color.colorAccent));
@@ -90,7 +89,7 @@ public class GankFragment extends Fragment {
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                loadArticles(1);
+                mPresenter.loadGankData(category, 1);
             }
         });
 
@@ -99,7 +98,7 @@ public class GankFragment extends Fragment {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (dy > 0 && mLayoutManager.findLastCompletelyVisibleItemPosition() == mListSize - 1) {
-                    loadArticles(++currPage);
+                    mPresenter.loadGankData(category, ++currPage);
                 }
             }
         });
@@ -107,32 +106,48 @@ public class GankFragment extends Fragment {
         return view;
     }
 
-    private void loadArticles(int i) {
-        GankRetrofit.getInstance().getGankApi()
-                .getAllGankData(category, 10, i)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<HttpResult<GankData>>() {
-                    @Override
-                    public void accept(HttpResult<GankData> gankDataHttpResult) throws Exception {
-                        mRefreshLayout.setRefreshing(false);
-                        List<GankData> dataList = gankDataHttpResult.getResults();
-                        mListSize = dataList.size();
-                        mAdapter.updateData(dataList);
-                    }
-                });
-    }
-
     @Override
     public void onResume() {
         super.onResume();
-
-        loadArticles(1);
+        setLoadingIndicator(mIsFirstLoad);
+        if (mIsFirstLoad) {
+            mPresenter.loadGankData(category, 1);
+            mIsFirstLoad = false;
+        } else {
+            //mPresenter.loadGankData(category, 10, currPage);
+        }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        mPresenter.unSubscribe();
+    }
+
+    @Override
+    public void setPresenter(GankContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void setLoadingIndicator(boolean active) {
+        mRefreshLayout.setRefreshing(active);
+    }
+
+    @Override
+    public void showResult(List<GankData> dataList) {
+        mListSize = dataList.size();
+        mAdapter.updateData(dataList);
+    }
+
+    @Override
+    public void showLoadingDataError() {
+        mEmptyView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showNoData() {
+        mEmptyView.setVisibility(View.VISIBLE);
     }
 }

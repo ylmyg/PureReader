@@ -35,11 +35,6 @@ public class DetailsPresenter implements DetailsContract.Presenter {
     }
 
     @Override
-    public void start() {
-
-    }
-
-    @Override
     public void favorite(ContentType type, int id, boolean favorite) {
         if (type == ContentType.TYPE_ZHIHU_DAILY) {
             mZhihuNewsRepository.favoriteItem(id, favorite);

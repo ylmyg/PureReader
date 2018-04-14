@@ -29,11 +29,6 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
     }
 
     @Override
-    public void start() {
-
-    }
-
-    @Override
     public void loadNews(boolean forceUpdate, boolean cleanCache, long date) {
         mRepository.getZhihuDailyNews(forceUpdate, cleanCache, date, new ZhihuDailyNewsDataSource.LoadZhihuDailyNewsCallback() {
             @Override

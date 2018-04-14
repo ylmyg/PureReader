@@ -108,7 +108,6 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.start();
         Calendar c = Calendar.getInstance();
         c.setTimeZone(TimeZone.getTimeZone("GMT+08"));
         c.set(mYear, mMonth, mDay);
@@ -171,7 +170,6 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
         }
     }
 
-    @Override
     public void initView(View view) {
         mRefreshLayout = view.findViewById(R.id.refresh_layout);
         mRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorAccent));
