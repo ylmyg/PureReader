@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.weicools.purereader.R;
 import io.weicools.purereader.data.GankData;
+import io.weicools.purereader.module.LoadMoreRecyclerOnScrollListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,12 +48,8 @@ public class GankFragment extends Fragment implements GankContract.View {
     private GankContract.Presenter mPresenter;
 
     private int currPage = 1;
-    private int mListSize = 0;
+    //private int mListSize = 0;
     private boolean mIsFirstLoad = true;
-
-    public GankFragment() {
-        // Required empty public constructor
-    }
 
     public static GankFragment newInstance(String categoryKey) {
         GankFragment fragment = new GankFragment();
@@ -93,13 +90,20 @@ public class GankFragment extends Fragment implements GankContract.View {
             }
         });
 
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                if (dy > 0 && mLayoutManager.findLastCompletelyVisibleItemPosition() == mListSize - 1) {
+//                    mPresenter.loadGankData(false, category, ++currPage);
+//                }
+//            }
+//        });
+        mRecyclerView.addOnScrollListener(new LoadMoreRecyclerOnScrollListener(mLayoutManager) {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if (dy > 0 && mLayoutManager.findLastCompletelyVisibleItemPosition() == mListSize - 1) {
-                    mPresenter.loadGankData(false, category, ++currPage);
-                }
+            public void onLoadMore(int current_page) {
+                currPage = current_page;
+                mPresenter.loadGankData(false, category, currPage);
             }
         });
 
@@ -137,13 +141,13 @@ public class GankFragment extends Fragment implements GankContract.View {
 
     @Override
     public void showResult(List<GankData> dataList) {
-        mListSize = dataList.size();
+        //mListSize = dataList.size();
         mAdapter.setDataList(dataList);
     }
 
     @Override
     public void updateResult(List<GankData> dataList) {
-        mListSize = dataList.size();
+        //mListSize = dataList.size();
         mAdapter.updateData(dataList);
     }
 
