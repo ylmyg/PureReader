@@ -11,6 +11,7 @@
     <string name="empty_content">哎呀, 内容走丢了…</string>
     <string name="no_browser_found">没有安装浏览器</string>
     <string name="favorite">收藏</string>
+    <string name="empty_favorite">这里啥也没有, 快去收藏吧!</string>
     <string name="action_copy_link">复制链接</string>
     <string name="action_open_in_browser">在浏览器打开</string>
     <string name="action_share">分享</string>
