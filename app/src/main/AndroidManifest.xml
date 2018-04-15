@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".module.timeline.MainActivity">
+        <activity android:name=".ui.timeline.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,9 +23,9 @@
 
         <service android:name=".service.CacheService" />
 
-        <activity android:name=".module.detail.DetailsActivity" />
-        <activity android:name=".module.setting.LicenseActivity" />
-        <activity android:name=".module.meizi.BigImageActivity" />
+        <activity android:name=".ui.detail.DetailsActivity" />
+        <activity android:name=".ui.setting.LicenseActivity" />
+        <activity android:name=".ui.meizi.BigImageActivity" />
     </application>
 
 </manifest>
