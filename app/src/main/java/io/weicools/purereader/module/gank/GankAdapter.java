@@ -14,6 +14,7 @@ import java.util.List;
 
 import io.weicools.purereader.R;
 import io.weicools.purereader.data.GankData;
+import io.weicools.purereader.util.TimeUtil;
 
 /**
  * Create by weicools on 2018/4/12.
@@ -57,7 +58,7 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankHolder> {
         GankData data = mDataList.get(position);
 
         holder.tvWho.setText(data.getWho());
-        holder.tvTime.setText(data.getPublishedAt());
+        holder.tvTime.setText(TimeUtil.getTimeStr(data.getCreatedAt()));
         holder.tvTitle.setText(data.getDesc());
         holder.tvType.setText(data.getType());
     }
