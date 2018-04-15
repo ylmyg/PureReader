@@ -38,7 +38,7 @@ public class TimelineFragment extends Fragment {
     FloatingActionButton mFab;
     Unbinder unbinder;
 
-    private ZhihuDailyFragment mZhihuFragment;
+    //private ZhihuDailyFragment mZhihuFragment;
     private GankFragment mGankFragment;
     private GankFragment mAndroidFragment;
     private GankFragment miOSFragment;
@@ -58,14 +58,14 @@ public class TimelineFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
             FragmentManager fm = getChildFragmentManager();
-            mZhihuFragment = (ZhihuDailyFragment) fm.getFragment(savedInstanceState, ZhihuDailyFragment.class.getSimpleName());
+            //mZhihuFragment = (ZhihuDailyFragment) fm.getFragment(savedInstanceState, ZhihuDailyFragment.class.getSimpleName());
             mGankFragment = (GankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_ALL);
             mAndroidFragment = (GankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_ANDROID);
             miOSFragment = (GankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_IOS);
             mWebFontFragment = (GankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_WEB_FONT);
             mRecommendFragment = (GankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_RECOMMEND);
         } else {
-            mZhihuFragment = ZhihuDailyFragment.newInstance();
+            //mZhihuFragment = ZhihuDailyFragment.newInstance();
             mGankFragment = GankFragment.newInstance(AppConfig.TYPE_ALL);
             mAndroidFragment = GankFragment.newInstance(AppConfig.TYPE_ANDROID);
             miOSFragment = GankFragment.newInstance(AppConfig.TYPE_IOS);
@@ -74,9 +74,9 @@ public class TimelineFragment extends Fragment {
         }
 
         // FIXME: 2017/12/3 Presenter Zhihu, Gank, Douban
-        new ZhihuDailyPresenter(mZhihuFragment, ZhihuDailyNewsRepository.getInstance(
-                ZhihuDailyNewsLocalDataSource.getInstance(getContext()),
-                ZhihuDailyNewsRemoteDataSource.getInstance()));
+//        new ZhihuDailyPresenter(mZhihuFragment, ZhihuDailyNewsRepository.getInstance(
+//                ZhihuDailyNewsLocalDataSource.getInstance(getContext()),
+//                ZhihuDailyNewsRemoteDataSource.getInstance()));
     }
 
     @Override
@@ -95,9 +95,9 @@ public class TimelineFragment extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         FragmentManager fm = getChildFragmentManager();
-        if (mZhihuFragment.isAdded()) {
-            fm.putFragment(outState, ZhihuDailyFragment.class.getSimpleName(), mZhihuFragment);
-        }
+//        if (mZhihuFragment.isAdded()) {
+//            fm.putFragment(outState, ZhihuDailyFragment.class.getSimpleName(), mZhihuFragment);
+//        }
 
         if (mGankFragment.isAdded()) {
             fm.putFragment(outState, AppConfig.TYPE_ALL, mGankFragment);
@@ -122,7 +122,7 @@ public class TimelineFragment extends Fragment {
 
     private void initView() {
         List<String> titles = new ArrayList<>();
-        titles.add(getString(R.string.tab_title_main_1));
+        //titles.add(getString(R.string.tab_title_main_1));
         titles.add(getString(R.string.tab_title_main_2));
         titles.add(getString(R.string.tab_title_main_3));
         titles.add(AppConfig.TYPE_IOS);
@@ -133,17 +133,17 @@ public class TimelineFragment extends Fragment {
         mTabLayout.addTab(mTabLayout.newTab().setText(titles.get(2)));
         mTabLayout.addTab(mTabLayout.newTab().setText(titles.get(3)));
         mTabLayout.addTab(mTabLayout.newTab().setText(titles.get(4)));
-        mTabLayout.addTab(mTabLayout.newTab().setText(titles.get(5)));
+        //mTabLayout.addTab(mTabLayout.newTab().setText(titles.get(5)));
 
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(mZhihuFragment);
+        //fragments.add(mZhihuFragment);
         fragments.add(mGankFragment);
         fragments.add(mAndroidFragment);
         fragments.add(miOSFragment);
         fragments.add(mWebFontFragment);
         fragments.add(mRecommendFragment);
 
-        mViewPager.setOffscreenPageLimit(6);
+        mViewPager.setOffscreenPageLimit(5);
 
         FragmentAdapter mFragmentAdapter = new FragmentAdapter(getActivity().getSupportFragmentManager(), fragments, titles);
         mViewPager.setAdapter(mFragmentAdapter);
@@ -186,7 +186,7 @@ public class TimelineFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (mTabLayout.getSelectedTabPosition() == 0) {
-                    mZhihuFragment.showDatePickerDialog();
+                    //mZhihuFragment.showDatePickerDialog();
                 } else {
                     //mDoubanFragment.showDatePickerDialog();
                 }
