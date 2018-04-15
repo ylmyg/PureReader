@@ -1,4 +1,4 @@
-package io.weicools.purereader.ui.timeline;
+package io.weicools.purereader.ui;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,7 +29,7 @@ import io.weicools.purereader.ui.gank.GankFragment;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TimelineFragment extends Fragment {
+public class MainFragment extends Fragment {
     @BindView(R.id.timeline_tab_layout)
     TabLayout mTabLayout;
     @BindView(R.id.view_pager)
@@ -47,12 +47,12 @@ public class TimelineFragment extends Fragment {
     private GankFragment mWebFontFragment;
     private GankFragment mRecommendFragment;
 
-    public TimelineFragment() {
+    public MainFragment() {
         // Required empty public constructor
     }
 
-    public static TimelineFragment newInstance() {
-        return new TimelineFragment();
+    public static MainFragment newInstance() {
+        return new MainFragment();
     }
 
     @Override
@@ -81,7 +81,7 @@ public class TimelineFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_timeline, container, false);
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
         unbinder = ButterKnife.bind(this, view);
 
         initView();

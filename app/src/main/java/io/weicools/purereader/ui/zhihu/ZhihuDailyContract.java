@@ -1,10 +1,10 @@
-package io.weicools.purereader.ui.timeline;
+package io.weicools.purereader.ui.zhihu;
 
 import android.support.annotation.NonNull;
 
 import java.util.List;
 
-import io.weicools.purereader.BaseView;
+import io.weicools.purereader.base.BaseView;
 import io.weicools.purereader.data.ZhihuDailyNewsQuestion;
 
 /**

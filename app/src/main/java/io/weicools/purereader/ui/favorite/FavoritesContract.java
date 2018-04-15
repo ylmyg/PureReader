@@ -2,8 +2,8 @@ package io.weicools.purereader.ui.favorite;
 
 import java.util.List;
 
-import io.weicools.purereader.BasePresenter;
-import io.weicools.purereader.BaseView;
+import io.weicools.purereader.base.BasePresenter;
+import io.weicools.purereader.base.BaseView;
 import io.weicools.purereader.data.GankData;
 
 /**

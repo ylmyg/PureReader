@@ -1,4 +1,4 @@
-package io.weicools.purereader.ui.timeline;
+package io.weicools.purereader.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_BOTTOM_NAVIGATION_VIEW_SELECTED_ID = "KEY_BOTTOM_NAVIGATION_VIEW_SELECTED_ID";
     public static final String ACTION_FAVORITE = "io.weicools.purereader.favorite";
 
-    private TimelineFragment mTimelineFragment;
+    private MainFragment mMainFragment;
     private GirlsFragment mGirlsFragment;
     private FavoriteFragment mFavoriteFragment;
     private MyInfoFragment mMyInfoFragment;
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             int id = savedInstanceState.getInt(KEY_BOTTOM_NAVIGATION_VIEW_SELECTED_ID, R.id.nav_timeline);
             switch (id) {
                 case R.id.nav_timeline:
-                    showFragment(mTimelineFragment);
+                    showFragment(mMainFragment);
                     break;
                 case R.id.nav_girls:
                     showFragment(mGirlsFragment);
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 showFragment(mFavoriteFragment);
                 mBottomNavigationView.setSelectedItemId(R.id.nav_favorite);
             } else {
-                showFragment(mTimelineFragment);
+                showFragment(mMainFragment);
             }
         }
 
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 switch (menuItem.getItemId()) {
                     case R.id.nav_timeline:
-                        showFragment(mTimelineFragment);
+                        showFragment(mMainFragment);
                         break;
                     case R.id.nav_girls:
                         showFragment(mGirlsFragment);
@@ -117,8 +117,8 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         outState.putInt(KEY_BOTTOM_NAVIGATION_VIEW_SELECTED_ID, mBottomNavigationView.getSelectedItemId());
         FragmentManager fm = getSupportFragmentManager();
-        if (mTimelineFragment.isAdded()) {
-            fm.putFragment(outState, TimelineFragment.class.getSimpleName(), mTimelineFragment);
+        if (mMainFragment.isAdded()) {
+            fm.putFragment(outState, MainFragment.class.getSimpleName(), mMainFragment);
         }
         if (mGirlsFragment.isAdded()) {
             fm.putFragment(outState, GirlsFragment.class.getSimpleName(), mGirlsFragment);
@@ -134,20 +134,20 @@ public class MainActivity extends AppCompatActivity {
     private void initFragment(Bundle savedInstanceState) {
         FragmentManager fm = getSupportFragmentManager();
         if (savedInstanceState == null) {
-            mTimelineFragment = TimelineFragment.newInstance();
+            mMainFragment = MainFragment.newInstance();
             mGirlsFragment = GirlsFragment.newInstance();
             mFavoriteFragment = FavoriteFragment.newInstance();
             mMyInfoFragment = MyInfoFragment.newInstance();
         } else {
-            mTimelineFragment = (TimelineFragment) fm.getFragment(savedInstanceState, TimelineFragment.class.getSimpleName());
+            mMainFragment = (MainFragment) fm.getFragment(savedInstanceState, MainFragment.class.getSimpleName());
             mGirlsFragment = (GirlsFragment) fm.getFragment(savedInstanceState, GirlsFragment.class.getSimpleName());
             mFavoriteFragment = (FavoriteFragment) fm.getFragment(savedInstanceState, FavoriteFragment.class.getSimpleName());
             mMyInfoFragment = (MyInfoFragment) fm.getFragment(savedInstanceState, MyInfoFragment.class.getSimpleName());
         }
 
-        if (!mTimelineFragment.isAdded()) {
+        if (!mMainFragment.isAdded()) {
             fm.beginTransaction()
-                    .add(R.id.main_container, mTimelineFragment, TimelineFragment.class.getSimpleName())
+                    .add(R.id.main_container, mMainFragment, MainFragment.class.getSimpleName())
                     .commit();
         }
 
@@ -172,30 +172,30 @@ public class MainActivity extends AppCompatActivity {
 
     private void showFragment(Fragment fragment) {
         FragmentManager fm = getSupportFragmentManager();
-        if (fragment instanceof TimelineFragment) {
+        if (fragment instanceof MainFragment) {
             fm.beginTransaction()
-                    .show(mTimelineFragment)
+                    .show(mMainFragment)
                     .hide(mGirlsFragment)
                     .hide(mFavoriteFragment)
                     .hide(mMyInfoFragment)
                     .commit();
         } else if (fragment instanceof GirlsFragment) {
             fm.beginTransaction()
-                    .hide(mTimelineFragment)
+                    .hide(mMainFragment)
                     .show(mGirlsFragment)
                     .hide(mFavoriteFragment)
                     .hide(mMyInfoFragment)
                     .commit();
         } else if (fragment instanceof FavoriteFragment) {
             fm.beginTransaction()
-                    .hide(mTimelineFragment)
+                    .hide(mMainFragment)
                     .hide(mGirlsFragment)
                     .show(mFavoriteFragment)
                     .hide(mMyInfoFragment)
                     .commit();
         } else if (fragment instanceof MyInfoFragment) {
             fm.beginTransaction()
-                    .hide(mTimelineFragment)
+                    .hide(mMainFragment)
                     .hide(mGirlsFragment)
                     .hide(mFavoriteFragment)
                     .show(mMyInfoFragment)

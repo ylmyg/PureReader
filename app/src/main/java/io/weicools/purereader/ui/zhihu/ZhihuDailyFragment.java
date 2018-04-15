@@ -1,4 +1,4 @@
-package io.weicools.purereader.ui.timeline;
+package io.weicools.purereader.ui.zhihu;
 
 import android.content.Intent;
 import android.os.Bundle;

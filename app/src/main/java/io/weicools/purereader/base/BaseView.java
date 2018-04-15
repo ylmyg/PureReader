@@ -1,4 +1,4 @@
-package io.weicools.purereader;
+package io.weicools.purereader.base;
 
 /**
  * Create by weicools on 2018/4/14.
