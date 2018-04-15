@@ -51,13 +51,20 @@ public class GirlAdapter extends RecyclerView.Adapter<GirlAdapter.GirlHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull GirlHolder holder, int position) {
-        GankData data = mDataList.get(position);
+        final GankData data = mDataList.get(position);
 
         Glide.with(mContext).load(data.getUrl() + "?imageView2/0/w/250")
                 .crossFade()
-                .placeholder(R.drawable.placeholder)
-                .error(R.drawable.placeholder)
                 .into(holder.ivGirl);
+//                .placeholder(R.drawable.placeholder)
+//                .error(R.drawable.placeholder)
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BigImageActivity.startBigImageActivity(mContext, data.getUrl(), data.getDesc());
+            }
+        });
     }
 
     @Override

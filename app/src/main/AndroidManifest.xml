@@ -25,6 +25,7 @@
 
         <activity android:name=".module.detail.DetailsActivity" />
         <activity android:name=".module.setting.LicenseActivity" />
+        <activity android:name=".module.meizi.BigImageActivity" />
     </application>
 
 </manifest>
