@@ -18,7 +18,7 @@ import io.weicools.purereader.R;
 import io.weicools.purereader.module.meizi.GirlsFragment;
 import io.weicools.purereader.service.CacheService;
 import io.weicools.purereader.module.favorite.FavoriteFragment;
-import io.weicools.purereader.module.setting.SettingFragment;
+import io.weicools.purereader.module.setting.MyInfoFragment;
 import io.weicools.purereader.util.BottomNavigationViewHelper;
 
 /**
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private TimelineFragment mTimelineFragment;
     private GirlsFragment mGirlsFragment;
     private FavoriteFragment mFavoriteFragment;
-    private SettingFragment mSettingFragment;
+    private MyInfoFragment mMyInfoFragment;
 
     private BottomNavigationView mBottomNavigationView;
 
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                     showFragment(mFavoriteFragment);
                     break;
                 case R.id.nav_setting:
-                    showFragment(mSettingFragment);
+                    showFragment(mMyInfoFragment);
                     break;
                 default:
                     break;
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case R.id.nav_setting:
-                        showFragment(mSettingFragment);
+                        showFragment(mMyInfoFragment);
                         break;
 
                     default:
@@ -126,8 +126,8 @@ public class MainActivity extends AppCompatActivity {
         if (mFavoriteFragment.isAdded()) {
             fm.putFragment(outState, FavoriteFragment.class.getSimpleName(), mFavoriteFragment);
         }
-        if (mSettingFragment.isAdded()) {
-            fm.putFragment(outState, SettingFragment.class.getSimpleName(), mSettingFragment);
+        if (mMyInfoFragment.isAdded()) {
+            fm.putFragment(outState, MyInfoFragment.class.getSimpleName(), mMyInfoFragment);
         }
     }
 
@@ -137,12 +137,12 @@ public class MainActivity extends AppCompatActivity {
             mTimelineFragment = TimelineFragment.newInstance();
             mGirlsFragment = GirlsFragment.newInstance();
             mFavoriteFragment = FavoriteFragment.newInstance();
-            mSettingFragment = SettingFragment.newInstance();
+            mMyInfoFragment = MyInfoFragment.newInstance();
         } else {
             mTimelineFragment = (TimelineFragment) fm.getFragment(savedInstanceState, TimelineFragment.class.getSimpleName());
             mGirlsFragment = (GirlsFragment) fm.getFragment(savedInstanceState, GirlsFragment.class.getSimpleName());
             mFavoriteFragment = (FavoriteFragment) fm.getFragment(savedInstanceState, FavoriteFragment.class.getSimpleName());
-            mSettingFragment = (SettingFragment) fm.getFragment(savedInstanceState, SettingFragment.class.getSimpleName());
+            mMyInfoFragment = (MyInfoFragment) fm.getFragment(savedInstanceState, MyInfoFragment.class.getSimpleName());
         }
 
         if (!mTimelineFragment.isAdded()) {
@@ -163,9 +163,9 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
         }
 
-        if (!mSettingFragment.isAdded()) {
+        if (!mMyInfoFragment.isAdded()) {
             fm.beginTransaction()
-                    .add(R.id.main_container, mSettingFragment, SettingFragment.class.getSimpleName())
+                    .add(R.id.main_container, mMyInfoFragment, MyInfoFragment.class.getSimpleName())
                     .commit();
         }
     }
@@ -177,28 +177,28 @@ public class MainActivity extends AppCompatActivity {
                     .show(mTimelineFragment)
                     .hide(mGirlsFragment)
                     .hide(mFavoriteFragment)
-                    .hide(mSettingFragment)
+                    .hide(mMyInfoFragment)
                     .commit();
         } else if (fragment instanceof GirlsFragment) {
             fm.beginTransaction()
                     .hide(mTimelineFragment)
                     .show(mGirlsFragment)
                     .hide(mFavoriteFragment)
-                    .hide(mSettingFragment)
+                    .hide(mMyInfoFragment)
                     .commit();
         } else if (fragment instanceof FavoriteFragment) {
             fm.beginTransaction()
                     .hide(mTimelineFragment)
                     .hide(mGirlsFragment)
                     .show(mFavoriteFragment)
-                    .hide(mSettingFragment)
+                    .hide(mMyInfoFragment)
                     .commit();
-        } else if (fragment instanceof SettingFragment) {
+        } else if (fragment instanceof MyInfoFragment) {
             fm.beginTransaction()
                     .hide(mTimelineFragment)
                     .hide(mGirlsFragment)
                     .hide(mFavoriteFragment)
-                    .show(mSettingFragment)
+                    .show(mMyInfoFragment)
                     .commit();
         }
     }

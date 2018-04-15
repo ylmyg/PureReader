@@ -24,6 +24,7 @@
         <service android:name=".service.CacheService" />
 
         <activity android:name=".module.detail.DetailsActivity" />
+        <activity android:name=".module.setting.LicenseActivity" />
     </application>
 
 </manifest>

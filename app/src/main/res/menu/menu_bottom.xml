@@ -26,7 +26,7 @@
             android:id="@+id/nav_setting"
             android:enabled="true"
             android:icon="@drawable/ic_info_outline_black_24dp"
-            android:title="@string/nav_setting" />
+            android:title="@string/nav_info" />
 
     </group>
 </menu>
