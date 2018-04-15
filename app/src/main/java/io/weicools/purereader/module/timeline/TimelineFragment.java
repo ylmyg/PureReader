@@ -10,6 +10,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -21,10 +24,8 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.weicools.purereader.AppConfig;
 import io.weicools.purereader.R;
-import io.weicools.purereader.data.local.ZhihuDailyNewsLocalDataSource;
-import io.weicools.purereader.data.remote.ZhihuDailyNewsRemoteDataSource;
-import io.weicools.purereader.data.repository.ZhihuDailyNewsRepository;
 import io.weicools.purereader.module.gank.GankFragment;
+import io.weicools.purereader.module.search.MaterialSearchView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,6 +38,8 @@ public class TimelineFragment extends Fragment {
     @BindView(R.id.fab)
     FloatingActionButton mFab;
     Unbinder unbinder;
+//    @BindView(R.id.search_view)
+//    MaterialSearchView mSearchView;
 
     //private ZhihuDailyFragment mZhihuFragment;
     private GankFragment mGankFragment;
@@ -56,6 +59,7 @@ public class TimelineFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         if (savedInstanceState != null) {
             FragmentManager fm = getChildFragmentManager();
             //mZhihuFragment = (ZhihuDailyFragment) fm.getFragment(savedInstanceState, ZhihuDailyFragment.class.getSimpleName());
@@ -72,11 +76,6 @@ public class TimelineFragment extends Fragment {
             mWebFontFragment = GankFragment.newInstance(AppConfig.TYPE_WEB_FONT);
             mRecommendFragment = GankFragment.newInstance(AppConfig.TYPE_RECOMMEND);
         }
-
-        // FIXME: 2017/12/3 Presenter Zhihu, Gank, Douban
-//        new ZhihuDailyPresenter(mZhihuFragment, ZhihuDailyNewsRepository.getInstance(
-//                ZhihuDailyNewsLocalDataSource.getInstance(getContext()),
-//                ZhihuDailyNewsRemoteDataSource.getInstance()));
     }
 
     @Override
@@ -148,16 +147,6 @@ public class TimelineFragment extends Fragment {
         FragmentAdapter mFragmentAdapter = new FragmentAdapter(getActivity().getSupportFragmentManager(), fragments, titles);
         mViewPager.setAdapter(mFragmentAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-        //mTabLayout.setTabsFromPagerAdapter(mFragmentAdapter);
-
-        // FIXME: 2017/12/3 adapter Gank,Douban
-//        mViewPager.setAdapter(new TimelineFragmentPagerAdapter(
-//                getChildFragmentManager(),
-//                getContext(),
-//                mZhihuFragment));
-//        mViewPager.setOffscreenPageLimit(3);
-//
-//        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     private void initListener() {
@@ -198,6 +187,22 @@ public class TimelineFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+//        if (item.getItemId() == R.id.action_search) {
+//
+//        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_gank, menu);
+//        MenuItem item = menu.findItem(R.id.action_search);
+//        mSearchView.setMenuItem(item);
     }
 
     static class FragmentAdapter extends FragmentStatePagerAdapter {

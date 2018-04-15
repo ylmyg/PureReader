@@ -14,8 +14,19 @@
             android:layout_height="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="@string/timeline" />
-        <!--app:titleTextColor="@color/colorPrimaryText"-->
+            app:title="@string/title_gank" />
+        <!--<FrameLayout-->
+        <!--android:id="@+id/toolbar_container"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+        <!---->
+
+        <!--<io.weicools.purereader.module.search.MaterialSearchView-->
+        <!--android:id="@+id/search_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:visibility="gone"/>-->
+        <!--</FrameLayout>-->
 
         <android.support.design.widget.TabLayout
             android:id="@+id/timeline_tab_layout"

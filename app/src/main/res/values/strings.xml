@@ -5,7 +5,7 @@
     <string name="nav_girls">妹子</string>
     <string name="nav_favorite">收藏</string>
     <string name="nav_info">关于</string>
-    <string name="timeline">时间轴</string>
+    <string name="title_gank">干货集中营</string>
 
     <string name="zhihu_daily">知乎日报</string>
     <string name="empty_content">哎呀, 内容走丢了…</string>
@@ -59,4 +59,5 @@
     <!-- info fragment end -->
     <string name="menu_share">分享</string>
     <string name="menu_save">保存</string>
+    <string name="search_hint">Search</string>
 </resources>

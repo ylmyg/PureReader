@@ -75,4 +75,12 @@
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textAllCaps">true</item>
     </style>
+
+    <style name="MSV_ImageButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+    </style>
 </resources>
