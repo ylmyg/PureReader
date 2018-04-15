@@ -71,22 +71,6 @@ public class ZhihuDailyNewsLocalDataSource implements ZhihuDailyNewsDataSource {
                             }
                         }
                     }));
-//            new AsyncTask<Void, Void, List<ZhihuDailyNewsQuestion>>() {
-//                @Override
-//                protected List<ZhihuDailyNewsQuestion> doInBackground(Void... voids) {
-//                    return mDatabase.zhihuDailyNewsDao().queryAllByDate(date);
-//                }
-//
-//                @Override
-//                protected void onPostExecute(List<ZhihuDailyNewsQuestion> list) {
-//                    super.onPostExecute(list);
-//                    if (list == null) {
-//                        callback.onDataNotAvailable();
-//                    } else {
-//                        callback.onNewsLoaded(list);
-//                    }
-//                }
-//            }.execute();
         }
     }
 
@@ -110,22 +94,6 @@ public class ZhihuDailyNewsLocalDataSource implements ZhihuDailyNewsDataSource {
                             }
                         }
                     }));
-//            new AsyncTask<Void, Void, List<ZhihuDailyNewsQuestion>>() {
-//                @Override
-//                protected List<ZhihuDailyNewsQuestion> doInBackground(Void... voids) {
-//                    return mDatabase.zhihuDailyNewsDao().queryAllFavorites();
-//                }
-//
-//                @Override
-//                protected void onPostExecute(List<ZhihuDailyNewsQuestion> list) {
-//                    super.onPostExecute(list);
-//                    if (list == null) {
-//                        callback.onDataNotAvailable();
-//                    } else {
-//                        callback.onNewsLoaded(list);
-//                    }
-//                }
-//            }.execute();
         }
     }
 
@@ -149,22 +117,6 @@ public class ZhihuDailyNewsLocalDataSource implements ZhihuDailyNewsDataSource {
                             }
                         }
                     }));
-//            new AsyncTask<Void, Void, ZhihuDailyNewsQuestion>() {
-//                @Override
-//                protected ZhihuDailyNewsQuestion doInBackground(Void... voids) {
-//                    return mDatabase.zhihuDailyNewsDao().queryItemById(itemId);
-//                }
-//
-//                @Override
-//                protected void onPostExecute(ZhihuDailyNewsQuestion item) {
-//                    super.onPostExecute(item);
-//                    if (item == null) {
-//                        callback.onDataNotAvailable();
-//                    } else {
-//                        callback.onItemLoaded(item);
-//                    }
-//                }
-//            }.execute();
         }
     }
 
@@ -182,17 +134,9 @@ public class ZhihuDailyNewsLocalDataSource implements ZhihuDailyNewsDataSource {
                         @Override
                         public void accept(ZhihuDailyNewsQuestion temp) throws Exception {
                             temp.setFavorite(favorite);
-                            //mDatabase.zhihuDailyNewsDao().update(temp);
+                            mDatabase.zhihuDailyNewsDao().update(temp);
                         }
                     }));
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    ZhihuDailyNewsQuestion tmp = mDatabase.zhihuDailyNewsDao().queryItemById(itemId);
-//                    tmp.setFavorite(favorite);
-//                    mDatabase.zhihuDailyNewsDao().update(tmp);
-//                }
-//            }).start();
         }
     }
 
@@ -215,18 +159,6 @@ public class ZhihuDailyNewsLocalDataSource implements ZhihuDailyNewsDataSource {
                     }
                 }
             }).subscribeOn(Schedulers.io()).subscribe());
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    mDatabase.beginTransaction();
-//                    try {
-//                        mDatabase.zhihuDailyNewsDao().insertAll(list);
-//                        mDatabase.setTransactionSuccessful();
-//                    } finally {
-//                        mDatabase.endTransaction();
-//                    }
-//                }
-//            }).start();
         }
     }
 }
