@@ -18,7 +18,7 @@ import java.util.List;
 import io.weicools.purereader.R;
 import io.weicools.purereader.data.ContentType;
 import io.weicools.purereader.data.ZhihuDailyNewsQuestion;
-import io.weicools.purereader.ui.detail.DetailsActivity;
+import io.weicools.purereader.ui.zhihu.detail.DetailsActivity;
 
 /**
  * Create by weicools on 2017/12/3.
