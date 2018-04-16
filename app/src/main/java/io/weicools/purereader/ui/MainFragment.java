@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.weicools.purereader.AppConfig;
 import io.weicools.purereader.R;
+import io.weicools.purereader.ui.gank.DailyGankFragment;
 import io.weicools.purereader.ui.gank.GankFragment;
 
 /**
@@ -40,11 +41,12 @@ public class MainFragment extends Fragment {
 //    @BindView(R.id.search_view)
 //    MaterialSearchView mSearchView;
 
-    //private ZhihuDailyFragment mZhihuFragment;
-    private GankFragment mGankFragment;
+//    private ZhihuDailyFragment mZhihuFragment;
+    private DailyGankFragment mGankFragment;
     private GankFragment mAndroidFragment;
     private GankFragment miOSFragment;
     private GankFragment mWebFontFragment;
+    private GankFragment mAppFragment;
     private GankFragment mRecommendFragment;
 
     public MainFragment() {
@@ -61,20 +63,26 @@ public class MainFragment extends Fragment {
         setHasOptionsMenu(true);
         if (savedInstanceState != null) {
             FragmentManager fm = getChildFragmentManager();
-            //mZhihuFragment = (ZhihuDailyFragment) fm.getFragment(savedInstanceState, ZhihuDailyFragment.class.getSimpleName());
-            mGankFragment = (GankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_ALL);
+//            mZhihuFragment = (ZhihuDailyFragment) fm.getFragment(savedInstanceState, ZhihuDailyFragment.class.getSimpleName());
+            mGankFragment = (DailyGankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_DAILY);
             mAndroidFragment = (GankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_ANDROID);
             miOSFragment = (GankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_IOS);
             mWebFontFragment = (GankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_WEB_FONT);
+            mAppFragment = (GankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_APP);
             mRecommendFragment = (GankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_RECOMMEND);
         } else {
-            //mZhihuFragment = ZhihuDailyFragment.newInstance();
-            mGankFragment = GankFragment.newInstance(AppConfig.TYPE_ALL);
+//            mZhihuFragment = ZhihuDailyFragment.newInstance();
+            mGankFragment = DailyGankFragment.newInstance();
             mAndroidFragment = GankFragment.newInstance(AppConfig.TYPE_ANDROID);
             miOSFragment = GankFragment.newInstance(AppConfig.TYPE_IOS);
             mWebFontFragment = GankFragment.newInstance(AppConfig.TYPE_WEB_FONT);
+            mAppFragment = GankFragment.newInstance(AppConfig.TYPE_APP);
             mRecommendFragment = GankFragment.newInstance(AppConfig.TYPE_RECOMMEND);
         }
+
+//        new ZhihuDailyPresenter(mZhihuFragment, ZhihuDailyNewsRepository.getInstance(
+//                ZhihuDailyNewsLocalDataSource.getInstance(getContext()),ZhihuDailyNewsRemoteDataSource.getInstance()
+//                ));
     }
 
     @Override
@@ -98,7 +106,7 @@ public class MainFragment extends Fragment {
 //        }
 
         if (mGankFragment.isAdded()) {
-            fm.putFragment(outState, AppConfig.TYPE_ALL, mGankFragment);
+            fm.putFragment(outState, AppConfig.TYPE_DAILY, mGankFragment);
         }
 
         if (mAndroidFragment.isAdded()) {
@@ -113,6 +121,10 @@ public class MainFragment extends Fragment {
             fm.putFragment(outState, AppConfig.TYPE_WEB_FONT, mWebFontFragment);
         }
 
+        if (mAppFragment.isAdded()) {
+            fm.putFragment(outState, AppConfig.TYPE_APP, mAppFragment);
+        }
+
         if (mRecommendFragment.isAdded()) {
             fm.putFragment(outState, AppConfig.TYPE_RECOMMEND, mRecommendFragment);
         }
@@ -120,25 +132,27 @@ public class MainFragment extends Fragment {
 
     private void initView() {
         List<String> titles = new ArrayList<>();
-        //titles.add(getString(R.string.tab_title_main_1));
-        titles.add(getString(R.string.tab_title_main_2));
-        titles.add(getString(R.string.tab_title_main_3));
+//        titles.add(getString(R.string.tab_title_main_1));
+        titles.add(AppConfig.TYPE_DAILY);
+        titles.add(AppConfig.TYPE_ANDROID);
         titles.add(AppConfig.TYPE_IOS);
         titles.add(AppConfig.TYPE_WEB_FONT);
+        titles.add(AppConfig.TYPE_APP);
         titles.add(AppConfig.TYPE_RECOMMEND);
         mTabLayout.addTab(mTabLayout.newTab().setText(titles.get(0)));
         mTabLayout.addTab(mTabLayout.newTab().setText(titles.get(1)));
         mTabLayout.addTab(mTabLayout.newTab().setText(titles.get(2)));
         mTabLayout.addTab(mTabLayout.newTab().setText(titles.get(3)));
         mTabLayout.addTab(mTabLayout.newTab().setText(titles.get(4)));
-        //mTabLayout.addTab(mTabLayout.newTab().setText(titles.get(5)));
+        mTabLayout.addTab(mTabLayout.newTab().setText(titles.get(5)));
 
         List<Fragment> fragments = new ArrayList<>();
-        //fragments.add(mZhihuFragment);
+//        fragments.add(mZhihuFragment);
         fragments.add(mGankFragment);
         fragments.add(mAndroidFragment);
         fragments.add(miOSFragment);
         fragments.add(mWebFontFragment);
+        fragments.add(mAppFragment);
         fragments.add(mRecommendFragment);
 
         mViewPager.setOffscreenPageLimit(5);
@@ -174,7 +188,8 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (mTabLayout.getSelectedTabPosition() == 0) {
-                    //mZhihuFragment.showDatePickerDialog();
+//                    mZhihuFragment.showDatePickerDialog();
+                    mGankFragment.showDatePickerDialog();
                 } else {
                     //mDoubanFragment.showDatePickerDialog();
                 }

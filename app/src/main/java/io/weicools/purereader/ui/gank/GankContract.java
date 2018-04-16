@@ -26,5 +26,8 @@ public interface GankContract {
 
     interface Presenter extends BasePresenter {
         void loadGankData(boolean isRefresh, String category, int page);
+
+        void loadDailyGankData();
+        void loadDailyData(int year, int month, int day);
     }
 }

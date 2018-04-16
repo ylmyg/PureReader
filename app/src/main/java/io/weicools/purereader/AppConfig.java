@@ -12,9 +12,11 @@ public final class AppConfig {
     }
 
     public static final String TYPE_ALL = "all";
+    public static final String TYPE_DAILY = "今日干货";
     public static final String TYPE_ANDROID = "Android";
     public static final String TYPE_IOS = "iOS";
     public static final String TYPE_WEB_FONT = "前端";
+    public static final String TYPE_APP = "App";
     public static final String TYPE_RECOMMEND = "拓展资源";
 
     public static final String KEY_NO_IMG_MODE = "no_picture_mode";

@@ -3,6 +3,7 @@ package io.weicools.purereader.ui;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,16 +29,31 @@ public class DatePickerDialog extends DialogFragment {
 
     private int currYear, currMonth, currDay;
     private OnDateSetListener mOnDateSetListener;
+    private Calendar mMaxDate, mMinDate;
 
     public DatePickerDialog() {
         // Required empty public constructor
     }
 
-    public static DatePickerDialog newInstance(OnDateSetListener listener, int year,
-                                               int monthOfYear, int dayOfMonth) {
+    public static DatePickerDialog newInstance(OnDateSetListener listener, int year, int monthOfYear,
+                                               int dayOfMonth, Calendar maxDate, Calendar minDate) {
+        DatePickerDialog ret = new DatePickerDialog();
+        ret.initialize(listener, year, monthOfYear, dayOfMonth, maxDate, minDate);
+        return ret;
+    }public static DatePickerDialog newInstance(OnDateSetListener listener, int year, int monthOfYear, int dayOfMonth) {
         DatePickerDialog ret = new DatePickerDialog();
         ret.initialize(listener, year, monthOfYear, dayOfMonth);
         return ret;
+    }
+
+    private void initialize(OnDateSetListener listener, int year, int monthOfYear, int dayOfMonth, Calendar maxDate, Calendar minDate) {
+        mOnDateSetListener = listener;
+
+        currYear = year;
+        currMonth = monthOfYear;
+        currDay = dayOfMonth;
+        mMaxDate = maxDate;
+        mMinDate = minDate;
     }
 
     private void initialize(OnDateSetListener listener, int year, int monthOfYear, int dayOfMonth) {
@@ -56,6 +72,8 @@ public class DatePickerDialog extends DialogFragment {
         unbinder = ButterKnife.bind(this, view);
 
         mDatePicker.init(currYear, currMonth, currDay, null);
+        mDatePicker.setMaxDate(mMaxDate.getTimeInMillis());
+        mDatePicker.setMinDate(mMinDate.getTimeInMillis());
         return view;
     }
 
@@ -74,13 +92,17 @@ public class DatePickerDialog extends DialogFragment {
         dismiss();
     }
 
-    public void setMaxDate(Calendar maxDate) {
-        mDatePicker.setMaxDate(maxDate.getTimeInMillis());
-    }
-
-    public void setMinDate(Calendar minDate) {
-        mDatePicker.setMinDate(minDate.getTimeInMillis());
-    }
+//    public void setMaxDate(Calendar maxDate) {
+//        if (mDatePicker != null) {
+//            mDatePicker.setMaxDate(maxDate.getTimeInMillis());
+//        }
+//    }
+//
+//    public void setMinDate(Calendar minDate) {
+//        if (mDatePicker != null) {
+//            mDatePicker.setMinDate(minDate.getTimeInMillis());
+//        }
+//    }
 
     @Override
     public void onDestroyView() {

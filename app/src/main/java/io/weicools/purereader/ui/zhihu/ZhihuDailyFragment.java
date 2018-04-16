@@ -130,6 +130,8 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
         final Calendar c = Calendar.getInstance();
         c.set(mYear, mMonth, mDay);
 
+        Calendar minDate = Calendar.getInstance();
+        minDate.set(2013, 5, 20);
         DatePickerDialog dialog = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
@@ -140,12 +142,9 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
 
                 mPresenter.loadNews(true, true, c.getTimeInMillis());
             }
-        }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
-        dialog.setMaxDate(Calendar.getInstance());
-
-        Calendar minDate = Calendar.getInstance();
-        minDate.set(2013, 5, 20);
-        dialog.setMinDate(minDate);
+        }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), Calendar.getInstance(), minDate);
+//        dialog.setMaxDate(Calendar.getInstance());
+//        dialog.setMinDate(minDate);
         dialog.show(getActivity().getFragmentManager(), ZhihuDailyFragment.class.getSimpleName());
     }
 

@@ -1,6 +1,7 @@
 package io.weicools.purereader.api;
 
 import io.reactivex.Observable;
+import io.weicools.purereader.data.DailyGankData;
 import io.weicools.purereader.data.GankData;
 import io.weicools.purereader.data.HttpResult;
 import retrofit2.http.GET;
@@ -40,6 +41,13 @@ public interface GankApi {
 
     http://gank.io/api/day/2015/08/06
      */
-    @GET("search/query/listview/category/{dataType}/count/{count}/page/{page}")
-    Observable<HttpResult<GankData>> getDailyGankData(@Path("dataType") String dataType, @Path("count") int count, @Path("page") int page);
+    @GET("day/{year}/{month}/{day}")
+    Observable<DailyGankData> getDailyGankData(@Path("year") int year, @Path("month") int month, @Path("day") int day);
+
+    /*
+    获取发过干货日期接口:
+    http://gank.io/api/day/history 方式 GET
+     */
+    @GET("day/history")
+    Observable<HttpResult<String>> getHistoryDate();
 }

@@ -14,7 +14,7 @@ import java.util.Locale;
 
 public class TimeUtil {
     public static String getTimeStr(String time) {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.CHINA);
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
         long diff = 0;
         try {
             Date publish_date = df.parse(time);
@@ -36,12 +36,24 @@ public class TimeUtil {
                     if (diff == 1) return "昨天";
                     return diff + "天前";
                 }
-                DateFormat df_date = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
+                DateFormat df_date = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
                 return df_date.format(publish_date);
             }
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return time;
+    }
+
+    public static String dateFormat(String dateStr) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        Date date = new Date();
+        try {
+            date = simpleDateFormat.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.US);
+        return simpleDateFormat.format(date);
     }
 }
