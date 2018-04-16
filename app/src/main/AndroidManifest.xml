@@ -23,9 +23,10 @@
 
         <service android:name=".service.CacheService" />
 
-        <activity android:name=".ui.detail.DetailsActivity" />
+        <activity android:name=".ui.zhihu.detail.DetailsActivity" />
         <activity android:name=".ui.setting.LicenseActivity" />
         <activity android:name=".ui.meizi.BigImageActivity" />
+        <activity android:name=".ui.web.WebActivity" />
     </application>
 
 </manifest>

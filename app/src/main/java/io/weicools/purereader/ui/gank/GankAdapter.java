@@ -14,6 +14,7 @@ import java.util.List;
 
 import io.weicools.purereader.R;
 import io.weicools.purereader.data.GankData;
+import io.weicools.purereader.ui.web.WebActivity;
 import io.weicools.purereader.util.TimeUtil;
 
 /**
@@ -55,12 +56,23 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull GankHolder holder, int position) {
-        GankData data = mDataList.get(position);
+        final GankData data = mDataList.get(position);
 
         holder.tvWho.setText(data.getWho());
         holder.tvTime.setText(TimeUtil.getTimeStr(data.getCreatedAt()));
         holder.tvTitle.setText(data.getDesc());
         holder.tvType.setText(data.getType());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String imgUrl = null;
+                if (data.getImages() != null) {
+                    imgUrl = data.getImages().get(0);
+                }
+                WebActivity.startWebActivity(mContext, data.getUrl(), data.getDesc(), imgUrl);
+            }
+        });
     }
 
     @Override
