@@ -56,13 +56,13 @@ PureReader：使用Gank.io Api开发的符合Google Material Design的Android客
 > 注意：此开源项目仅做学习交流使用，如用到实际项目还需多考虑其他因素如并发等，请多多斟酌。如果你觉得不错，对你有帮助，欢迎点个star，follow，也可以帮忙分享给你更多的朋友，这是给我最大的动力与支持。
 
 ## About me
-- **Blog：**[http://weicools.com/](http://weicools.com/)
-- **Email：**lecymeng@outlook.com
+- **Blog：** [http://weicools.com/](http://weicools.com/)
+- **Email：** lecymeng@outlook.com
 
 ## License
 
 ```
-Copyright (C) 2016 Zhengwei Zhang
+Copyright (C) 2018 Zhengwei Zhang
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
