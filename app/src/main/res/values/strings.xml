@@ -38,7 +38,7 @@
     <string name="clear_image_cache">清除图片缓存</string>
     <string name="clear_image_cache_successfully">缓存已被成功清除</string>
     <string name="about">关于</string>
-    <string name="version">版本: V3.3.0</string>
+    <string name="version">版本: V1.0.1</string>
     <!--<string name="rate">为应用评分</string>-->
     <!--<string name="rate_desc">如果你喜欢PureReader,请在酷安中给它一个好评吧</string>-->
     <string name="author">作者</string>
