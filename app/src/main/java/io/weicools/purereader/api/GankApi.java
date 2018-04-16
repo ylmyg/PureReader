@@ -1,5 +1,7 @@
 package io.weicools.purereader.api;
 
+import java.util.List;
+
 import io.reactivex.Observable;
 import io.weicools.purereader.data.DailyGankData;
 import io.weicools.purereader.data.GankData;
@@ -24,7 +26,7 @@ public interface GankApi {
     第几页：数字，大于0
      */
     @GET("data/{dataType}/{count}/{page}")
-    Observable<HttpResult<GankData>> getGankData(@Path("dataType") String dataType, @Path("count") int count, @Path("page") int page);
+    Observable<HttpResult<List<GankData>>> getGankData(@Path("dataType") String dataType, @Path("count") int count, @Path("page") int page);
 
     /*
     搜索 API
@@ -34,7 +36,7 @@ public interface GankApi {
     count 最大 50
      */
     @GET("search/query/listview/category/{dataType}/count/{count}/page/{page}")
-    Observable<HttpResult<GankData>> searchGankData(@Path("dataType") String dataType, @Path("count") int count, @Path("page") int page);
+    Observable<HttpResult<List<GankData>>> searchGankData(@Path("dataType") String dataType, @Path("count") int count, @Path("page") int page);
 
     /*
     每日数据： http://gank.io/api/day/年/月/日
@@ -49,5 +51,5 @@ public interface GankApi {
     http://gank.io/api/day/history 方式 GET
      */
     @GET("day/history")
-    Observable<HttpResult<String>> getHistoryDate();
+    Observable<HttpResult<List<String>>> getHistoryDate();
 }

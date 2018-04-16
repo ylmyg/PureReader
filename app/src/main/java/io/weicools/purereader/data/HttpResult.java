@@ -17,7 +17,7 @@ public class HttpResult<T> {
     private boolean error;
     @SerializedName("results")
     @Expose
-    private List<T> results = null;
+    private T results;
 
     public boolean getError() {
         return error;
@@ -27,11 +27,11 @@ public class HttpResult<T> {
         this.error = error;
     }
 
-    public List<T> getResults() {
+    public T getResults() {
         return results;
     }
 
-    public void setResults(List<T> results) {
+    public void setResults(T results) {
         this.results = results;
     }
 }

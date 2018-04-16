@@ -44,9 +44,9 @@ public class GankPresenter implements GankContract.Presenter {
                 .getGankData(category, 10, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<HttpResult<GankData>>() {
+                .subscribe(new Consumer<HttpResult<List<GankData>>>() {
                     @Override
-                    public void accept(HttpResult<GankData> gankDataHttpResult) throws Exception {
+                    public void accept(HttpResult<List<GankData>> gankDataHttpResult) throws Exception {
                         mView.setLoadingIndicator(false);
                         List<GankData> dataList = gankDataHttpResult.getResults();
                         if (isRefresh) {
@@ -69,9 +69,9 @@ public class GankPresenter implements GankContract.Presenter {
                 .getHistoryDate()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<HttpResult<String>>() {
+                .subscribe(new Consumer<HttpResult<List<String>>>() {
                     @Override
-                    public void accept(HttpResult<String> listHttpResult) throws Exception {
+                    public void accept(HttpResult<List<String>> listHttpResult) throws Exception {
                         String latestDate = listHttpResult.getResults().get(0);
                         String[] s = latestDate.split("-");
                         int year = Integer.parseInt(s[0]);
