@@ -22,8 +22,11 @@
     <string name="share_failed">分享失败</string>
     <string name="btn_cancel">取消</string>
     <string name="btn_ok">确定</string>
-    <string name="tab_title_main_1">知乎日报</string>
     <string name="title_girl">妹子</string>
+
+    <string name="menu_share">分享</string>
+    <string name="menu_save">保存</string>
+    <string name="search_hint">Search</string>
 
     <!--info fragment-->
     <string name="settings">设置</string>
@@ -55,7 +58,4 @@
     <string name="no_mail_app">没有安装邮件类应用</string>
     <string name="open_source_licenses">开源许可证</string>
     <!-- info fragment end -->
-    <string name="menu_share">分享</string>
-    <string name="menu_save">保存</string>
-    <string name="search_hint">Search</string>
 </resources>

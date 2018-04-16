@@ -9,9 +9,6 @@
 
     <color name="colorBaseBackground">#212a2f</color>
 
-    <color name="colorNavItemSelected">#03A9F4</color>
-    <color name="colorNavItemUnselected">#8799a5</color>
-
     <color name="bottom_bg">#35464e</color>
     <color name="bottom_icon">#e4e4e4</color>
     <color name="card_bg">#35464e</color>

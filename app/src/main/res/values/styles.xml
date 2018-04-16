@@ -6,10 +6,6 @@
         <item name="preferenceTheme">@style/MaterialPreferenceTheme</item>
     </style>
 
-    <style name="AppTheme.TranslucentStatus">
-        <item name="android:windowTranslucentStatus">true</item>
-    </style>
-
     <style name="MaterialPreferenceTheme" parent="PreferenceThemeOverlay.v14.Material">
         <item name="android:fadeScrollbars">true</item>
         <item name="android:scrollbars">vertical</item>
