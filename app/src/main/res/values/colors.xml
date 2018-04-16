@@ -4,8 +4,23 @@
     <color name="colorPrimaryDark">#0288D1</color>
     <color name="colorAccent">#81D4FA</color>
 
-    <color name="white">@android:color/white</color>
-    <color name="black">@android:color/black</color>
+    <color name="colorPrimaryText">#212121</color>
+    <color name="colorSecondaryText">#757575</color>
+
+    <color name="colorBaseBackground">#fafafa</color>
+
+    <color name="nav_item_unselected">#9A9A9A</color>
+    <color name="nav_item_selected">@color/colorPrimaryDark</color>
+
+    <color name="bottom_bg">#FEFEFE</color>
+    <color name="bottom_icon">#212121</color>
+    <color name="card_bg">#FFFFFFFF</color>
+    <color name="item_tv_color">#757575</color>
+    <color name="item_tv_desc_color">#212121</color>
+    <color name="item_iv_favorite_color">#212121</color>
+
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
     <color name="red">#F44336</color>
     <color name="blue">#2196F3</color>
     <color name="grey">#9E9E9E</color>
@@ -23,12 +38,4 @@
     <color name="grey_300_96p">#F5E0E0E0</color>
     <color name="grey_900">#212121</color>
     <color name="grey_900_96p">#F5212121</color>
-
-    <color name="colorBaseBackground">#fafafa</color>
-
-    <color name="nav_item_unselected">#9A9A9A</color>
-    <color name="nav_item_selected">@color/colorPrimaryDark</color>
-
-    <color name="colorPrimaryText">#212121</color>
-    <color name="colorSecondaryText">#757575</color>
 </resources>

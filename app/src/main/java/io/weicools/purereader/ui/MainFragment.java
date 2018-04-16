@@ -57,24 +57,31 @@ public class MainFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        if (savedInstanceState != null) {
-            FragmentManager fm = getChildFragmentManager();
-//            mZhihuFragment = (ZhihuDailyFragment) fm.getFragment(savedInstanceState, ZhihuDailyFragment.class.getSimpleName());
-            mGankFragment = (DailyGankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_DAILY);
-            mAndroidFragment = (GankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_ANDROID);
-            miOSFragment = (GankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_IOS);
-            mWebFontFragment = (GankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_WEB_FONT);
-            mAppFragment = (GankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_APP);
-            mRecommendFragment = (GankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_RECOMMEND);
-        } else {
-//            mZhihuFragment = ZhihuDailyFragment.newInstance();
-            mGankFragment = DailyGankFragment.newInstance();
-            mAndroidFragment = GankFragment.newInstance(AppConfig.TYPE_ANDROID);
-            miOSFragment = GankFragment.newInstance(AppConfig.TYPE_IOS);
-            mWebFontFragment = GankFragment.newInstance(AppConfig.TYPE_WEB_FONT);
-            mAppFragment = GankFragment.newInstance(AppConfig.TYPE_APP);
-            mRecommendFragment = GankFragment.newInstance(AppConfig.TYPE_RECOMMEND);
-        }
+//        if (savedInstanceState != null) {
+//            FragmentManager fm = getChildFragmentManager();
+////            mZhihuFragment = (ZhihuDailyFragment) fm.getFragment(savedInstanceState, ZhihuDailyFragment.class.getSimpleName());
+//            mGankFragment = (DailyGankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_DAILY);
+//            mAndroidFragment = (GankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_ANDROID);
+//            miOSFragment = (GankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_IOS);
+//            mWebFontFragment = (GankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_WEB_FONT);
+//            mAppFragment = (GankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_APP);
+//            mRecommendFragment = (GankFragment) fm.getFragment(savedInstanceState, AppConfig.TYPE_RECOMMEND);
+//        } else {
+////            mZhihuFragment = ZhihuDailyFragment.newInstance();
+//            mGankFragment = DailyGankFragment.newInstance();
+//            mAndroidFragment = GankFragment.newInstance(AppConfig.TYPE_ANDROID);
+//            miOSFragment = GankFragment.newInstance(AppConfig.TYPE_IOS);
+//            mWebFontFragment = GankFragment.newInstance(AppConfig.TYPE_WEB_FONT);
+//            mAppFragment = GankFragment.newInstance(AppConfig.TYPE_APP);
+//            mRecommendFragment = GankFragment.newInstance(AppConfig.TYPE_RECOMMEND);
+//        }
+        // FIXME: 2018/4/16 night mode problem
+        mGankFragment = DailyGankFragment.newInstance();
+        mAndroidFragment = GankFragment.newInstance(AppConfig.TYPE_ANDROID);
+        miOSFragment = GankFragment.newInstance(AppConfig.TYPE_IOS);
+        mWebFontFragment = GankFragment.newInstance(AppConfig.TYPE_WEB_FONT);
+        mAppFragment = GankFragment.newInstance(AppConfig.TYPE_APP);
+        mRecommendFragment = GankFragment.newInstance(AppConfig.TYPE_RECOMMEND);
 
 //        new ZhihuDailyPresenter(mZhihuFragment, ZhihuDailyNewsRepository.getInstance(
 //                ZhihuDailyNewsLocalDataSource.getInstance(getContext()),ZhihuDailyNewsRemoteDataSource.getInstance()

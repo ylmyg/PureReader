@@ -8,7 +8,7 @@
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
     android:foreground="?attr/selectableItemBackground"
-    app:cardBackgroundColor="@color/white"
+    app:cardBackgroundColor="@color/card_bg"
     app:cardCornerRadius="2dp"
     app:cardElevation="1dp"
     app:contentPadding="10dp">
@@ -22,6 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="13sp"
+            android:textColor="@color/item_tv_color"
             tools:text="作者: weishu" />
 
         <TextView
@@ -30,6 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:textSize="13sp"
+            android:textColor="@color/item_tv_color"
             tools:ignore="RelativeOverlap"
             tools:text="2018-03-09" />
 
@@ -42,7 +44,7 @@
             android:maxLines="3"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:textColor="@color/black"
+            android:textColor="@color/item_tv_desc_color"
             android:textSize="16sp"
             tools:text="VirtualXposed：不用 Root，不解锁 BootLoader 也不用刷机就使用 Xposed 模块的APP" />
 
@@ -51,6 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_title"
+            android:textColor="@color/item_tv_color"
             android:textSize="13sp"
             tools:text="分类: Android" />
 
