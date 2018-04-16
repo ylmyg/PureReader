@@ -27,7 +27,9 @@
 
     <PreferenceCategory android:title="@string/about">
 
-        <Preference android:title="@string/version" />
+        <Preference
+            android:key="version"
+            android:title="@string/version" />
 
         <!--<Preference-->
             <!--android:key="rate"-->

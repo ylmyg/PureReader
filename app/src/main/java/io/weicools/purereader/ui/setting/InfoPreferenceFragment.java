@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 
 import io.weicools.purereader.AppConfig;
+import io.weicools.purereader.BuildConfig;
 import io.weicools.purereader.R;
 import io.weicools.purereader.ui.CustomTabsHelper;
 
@@ -75,6 +76,9 @@ public class InfoPreferenceFragment extends PreferenceFragmentCompat {
                 return true;
             }
         });
+
+        // set Version
+        findPreference("version").setTitle(getString(R.string.version) + BuildConfig.VERSION_NAME);
 
         // Rate
 //        findPreference("rate").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
