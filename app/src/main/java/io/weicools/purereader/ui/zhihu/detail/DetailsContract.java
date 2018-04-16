@@ -1,4 +1,4 @@
-package io.weicools.purereader.ui.detail;
+package io.weicools.purereader.ui.zhihu.detail;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;

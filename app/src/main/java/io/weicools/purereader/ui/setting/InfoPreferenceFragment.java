@@ -18,7 +18,7 @@ import com.bumptech.glide.Glide;
 
 import io.weicools.purereader.AppConfig;
 import io.weicools.purereader.R;
-import io.weicools.purereader.ui.detail.CustomTabsHelper;
+import io.weicools.purereader.ui.CustomTabsHelper;
 
 /**
  * A simple {@link Fragment} subclass.

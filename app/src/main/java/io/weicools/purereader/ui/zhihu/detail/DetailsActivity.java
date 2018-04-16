@@ -1,4 +1,4 @@
-package io.weicools.purereader.ui.detail;
+package io.weicools.purereader.ui.zhihu.detail;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -35,6 +35,7 @@ import io.weicools.purereader.data.remote.ZhihuDailyContentRemoteDataSource;
 import io.weicools.purereader.data.remote.ZhihuDailyNewsRemoteDataSource;
 import io.weicools.purereader.data.repository.ZhihuDailyContentRepository;
 import io.weicools.purereader.data.repository.ZhihuDailyNewsRepository;
+import io.weicools.purereader.ui.CustomTabsHelper;
 import io.weicools.purereader.util.InfoConstant;
 
 /**
@@ -300,7 +301,11 @@ public class DetailsActivity extends AppCompatActivity implements DetailsContrac
     }
 
     private void setTitle(@NonNull String title) {
-        setCollapsingToolbarLayoutTitle(title);
+        mToolbarLayout.setTitle(title);
+        mToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBar);
+        mToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
+        mToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBarPlus1);
+        mToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBarPlus1);
     }
 
     private void setCover(@Nullable String url) {
@@ -315,14 +320,5 @@ public class DetailsActivity extends AppCompatActivity implements DetailsContrac
         } else {
             mImageView.setImageResource(R.drawable.placeholder);
         }
-    }
-
-    // to change the title's font size of toolbar layout
-    private void setCollapsingToolbarLayoutTitle(String title) {
-        mToolbarLayout.setTitle(title);
-        mToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBar);
-        mToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
-        mToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBarPlus1);
-        mToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBarPlus1);
     }
 }
