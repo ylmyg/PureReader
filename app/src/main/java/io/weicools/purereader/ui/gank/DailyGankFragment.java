@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,8 @@ import io.weicools.purereader.ui.DatePickerDialog;
  * A simple {@link Fragment} subclass.
  * Use the {@link DailyGankFragment#newInstance} factory method to
  * create an instance of this fragment.
+ *
+ * show daily gank
  */
 public class DailyGankFragment extends Fragment implements GankContract.View {
     @BindView(R.id.rv_article)
@@ -38,12 +41,10 @@ public class DailyGankFragment extends Fragment implements GankContract.View {
     Unbinder unbinder;
 
     private GankAdapter mAdapter;
-    private LinearLayoutManager mLayoutManager;
-
     private GankContract.Presenter mPresenter;
 
-    private boolean mIsFirstLoad = true;
     private int mYear, mMonth, mDay;
+    private boolean mIsFirstLoad = true;
 
     public static DailyGankFragment newInstance() {
         return new DailyGankFragment();
@@ -57,15 +58,14 @@ public class DailyGankFragment extends Fragment implements GankContract.View {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_gank, container, false);
         unbinder = ButterKnife.bind(this, view);
 
         new GankPresenter(this);
         mAdapter = new GankAdapter(getContext());
-        mLayoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRefreshLayout.setColorSchemeColors(ContextCompat.getColor(view.getContext(), R.color.colorAccent));
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -109,7 +109,9 @@ public class DailyGankFragment extends Fragment implements GankContract.View {
                 mYear = year;
                 mMonth = monthOfYear;
                 mDay = dayOfMonth;
-                mPresenter.loadDailyData(mYear, mMonth, mDay);
+                // FIXME: 2018/4/16 month ???
+                Log.d("DailyGank", "onDateSet: load daily:" + mYear + "/" + mMonth + "/" + mDay);
+                mPresenter.loadDailyData(mYear, mMonth + 1, mDay);
             }
         }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), Calendar.getInstance(), minDate);
 
@@ -130,11 +132,13 @@ public class DailyGankFragment extends Fragment implements GankContract.View {
 
     @Override
     public void showResult(List<GankData> dataList) {
+        mEmptyView.setVisibility(View.GONE);
         mAdapter.setDataList(dataList);
     }
 
     @Override
     public void updateResult(List<GankData> dataList) {
+        mEmptyView.setVisibility(View.GONE);
         mAdapter.updateData(dataList);
     }
 

@@ -17,6 +17,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.weicools.purereader.AppConfig;
 import io.weicools.purereader.R;
 import io.weicools.purereader.data.GankData;
 import io.weicools.purereader.ui.LoadMoreRecyclerOnScrollListener;
@@ -25,6 +26,8 @@ import io.weicools.purereader.ui.gank.GankPresenter;
 
 /**
  * A simple {@link Fragment} subclass.
+ *
+ * show girls
  */
 public class GirlsFragment extends Fragment implements GankContract.View {
     @BindView(R.id.rv_girls)
@@ -34,11 +37,8 @@ public class GirlsFragment extends Fragment implements GankContract.View {
     Unbinder unbinder;
 
     private GirlAdapter mAdapter;
-    private StaggeredGridLayoutManager mLayoutManager;
-
     private GankContract.Presenter mPresenter;
-    public static final String category = "福利";
-    //private int mListSize = 0;
+
     private int currPage = 1;
     private boolean mIsFirstLoad = true;
 
@@ -49,29 +49,28 @@ public class GirlsFragment extends Fragment implements GankContract.View {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_girls, container, false);
         unbinder = ButterKnife.bind(this, view);
 
         new GankPresenter(this);
         mAdapter = new GirlAdapter(getContext());
-        mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mRefreshLayout.setColorSchemeColors(ContextCompat.getColor(view.getContext(), R.color.colorAccent));
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.loadGankData(true, category, 1);
+                mPresenter.loadGankData(true, AppConfig.TYPE_GIRLS, 1);
             }
         });
 
-        mRecyclerView.addOnScrollListener(new LoadMoreRecyclerOnScrollListener(mLayoutManager) {
+        mRecyclerView.addOnScrollListener(new LoadMoreRecyclerOnScrollListener(layoutManager) {
             @Override
             public void onLoadMore(int current_page) {
                 currPage = current_page;
-                mPresenter.loadGankData(false, category, currPage);
+                mPresenter.loadGankData(false, AppConfig.TYPE_GIRLS, currPage);
             }
         });
 
@@ -83,7 +82,7 @@ public class GirlsFragment extends Fragment implements GankContract.View {
         super.onResume();
         setLoadingIndicator(mIsFirstLoad);
         if (mIsFirstLoad) {
-            mPresenter.loadGankData(false, category, 1);
+            mPresenter.loadGankData(false, AppConfig.TYPE_GIRLS, 1);
             mIsFirstLoad = false;
         } else {
             //mPresenter.loadGankData(category, 10, currPage);
@@ -108,13 +107,11 @@ public class GirlsFragment extends Fragment implements GankContract.View {
 
     @Override
     public void showResult(List<GankData> dataList) {
-        //mListSize = dataList.size();
         mAdapter.setDataList(dataList);
     }
 
     @Override
     public void updateResult(List<GankData> dataList) {
-        //mListSize = dataList.size();
         mAdapter.updateData(dataList);
     }
 

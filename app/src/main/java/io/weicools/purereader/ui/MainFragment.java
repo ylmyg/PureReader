@@ -49,10 +49,6 @@ public class MainFragment extends Fragment {
     private GankFragment mAppFragment;
     private GankFragment mRecommendFragment;
 
-    public MainFragment() {
-        // Required empty public constructor
-    }
-
     public static MainFragment newInstance() {
         return new MainFragment();
     }

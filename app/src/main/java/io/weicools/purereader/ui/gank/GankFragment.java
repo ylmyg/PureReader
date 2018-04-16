@@ -26,6 +26,8 @@ import io.weicools.purereader.ui.LoadMoreRecyclerOnScrollListener;
  * A simple {@link Fragment} subclass.
  * Use the {@link GankFragment#newInstance} factory method to
  * create an instance of this fragment.
+ *
+ * show category gank
  */
 public class GankFragment extends Fragment implements GankContract.View {
     private final static String ARG_CATEGORY = "arg_category";
@@ -38,16 +40,11 @@ public class GankFragment extends Fragment implements GankContract.View {
     SwipeRefreshLayout mRefreshLayout;
     Unbinder unbinder;
 
-    @Nullable
-    private String lastId;
     private String category;
     private GankAdapter mAdapter;
-    private LinearLayoutManager mLayoutManager;
-
     private GankContract.Presenter mPresenter;
 
     private int currPage = 1;
-    //private int mListSize = 0;
     private boolean mIsFirstLoad = true;
 
     public static GankFragment newInstance(String categoryKey) {
@@ -71,15 +68,14 @@ public class GankFragment extends Fragment implements GankContract.View {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_gank, container, false);
         unbinder = ButterKnife.bind(this, view);
 
         new GankPresenter(this);
         mAdapter = new GankAdapter(getContext());
-        mLayoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRefreshLayout.setColorSchemeColors(ContextCompat.getColor(view.getContext(), R.color.colorAccent));
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -89,16 +85,7 @@ public class GankFragment extends Fragment implements GankContract.View {
             }
         });
 
-//        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//                if (dy > 0 && mLayoutManager.findLastCompletelyVisibleItemPosition() == mListSize - 1) {
-//                    mPresenter.loadGankData(false, category, ++currPage);
-//                }
-//            }
-//        });
-        mRecyclerView.addOnScrollListener(new LoadMoreRecyclerOnScrollListener(mLayoutManager) {
+        mRecyclerView.addOnScrollListener(new LoadMoreRecyclerOnScrollListener(layoutManager) {
             @Override
             public void onLoadMore(int current_page) {
                 currPage = current_page;
@@ -116,8 +103,6 @@ public class GankFragment extends Fragment implements GankContract.View {
         if (mIsFirstLoad) {
             mPresenter.loadGankData(false, category, 1);
             mIsFirstLoad = false;
-        } else {
-            //mPresenter.loadGankData(category, 10, currPage);
         }
     }
 
@@ -140,13 +125,13 @@ public class GankFragment extends Fragment implements GankContract.View {
 
     @Override
     public void showResult(List<GankData> dataList) {
-        //mListSize = dataList.size();
+        mEmptyView.setVisibility(View.GONE);
         mAdapter.setDataList(dataList);
     }
 
     @Override
     public void updateResult(List<GankData> dataList) {
-        //mListSize = dataList.size();
+        mEmptyView.setVisibility(View.GONE);
         mAdapter.updateData(dataList);
     }
 

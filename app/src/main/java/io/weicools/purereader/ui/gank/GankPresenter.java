@@ -97,13 +97,27 @@ public class GankPresenter implements GankContract.Presenter {
                     @Override
                     public void accept(DailyGankData dailyGankData) throws Exception {
                         List<GankData> dataList = new ArrayList<>();
-                        dataList.addAll(dailyGankData.getResults().androidList);
-                        dataList.addAll(dailyGankData.getResults().iOSList);
-                        dataList.addAll(dailyGankData.getResults().webFontList);
-                        dataList.addAll(dailyGankData.getResults().appList);
-                        dataList.addAll(dailyGankData.getResults().recommendList);
-                        dataList.addAll(dailyGankData.getResults().girlList);
-                        dataList.addAll(dailyGankData.getResults().videoList);
+                        if (dailyGankData.getResults().androidList != null) {
+                            dataList.addAll(dailyGankData.getResults().androidList);
+                        }
+                        if (dailyGankData.getResults().iOSList != null) {
+                            dataList.addAll(dailyGankData.getResults().iOSList);
+                        }
+                        if (dailyGankData.getResults().webFontList != null) {
+                            dataList.addAll(dailyGankData.getResults().webFontList);
+                        }
+                        if (dailyGankData.getResults().appList != null) {
+                            dataList.addAll(dailyGankData.getResults().appList);
+                        }
+                        if (dailyGankData.getResults().resourceList != null) {
+                            dataList.addAll(dailyGankData.getResults().resourceList);
+                        }
+                        if (dailyGankData.getResults().recommendList != null) {
+                            dataList.addAll(dailyGankData.getResults().recommendList);
+                        }
+                        if (dailyGankData.getResults().videoList != null) {
+                            dataList.addAll(dailyGankData.getResults().videoList);
+                        }
                         mView.showResult(dataList);
                         mView.setLoadingIndicator(false);
                     }

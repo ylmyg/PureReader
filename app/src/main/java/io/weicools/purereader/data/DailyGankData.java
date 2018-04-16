@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Create by weicools on 2018/4/15.
  * <p>
- * desc:
+ * desc: 每日干货Data
  */
 
 public class DailyGankData {
@@ -52,17 +52,17 @@ public class DailyGankData {
         @Expose
         public List<GankData> androidList;
 
-        @SerializedName("休息视频")
-        @Expose
-        public List<GankData> videoList;
-
         @SerializedName("iOS")
         @Expose
         public List<GankData> iOSList;
 
-        @SerializedName("福利")
+        @SerializedName("前端")
         @Expose
-        public List<GankData> girlList;
+        public List<GankData> webFontList;
+
+        @SerializedName("App")
+        @Expose
+        public List<GankData> appList;
 
         @SerializedName("拓展资源")
         @Expose
@@ -72,12 +72,12 @@ public class DailyGankData {
         @Expose
         public List<GankData> recommendList;
 
-        @SerializedName("App")
+        @SerializedName("休息视频")
         @Expose
-        public List<GankData> appList;
+        public List<GankData> videoList;
 
-        @SerializedName("前端")
+        @SerializedName("福利")
         @Expose
-        public List<GankData> webFontList;
+        public List<GankData> girlList;
     }
 }
