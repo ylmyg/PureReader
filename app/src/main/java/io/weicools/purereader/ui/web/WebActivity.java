@@ -1,6 +1,8 @@
 package io.weicools.purereader.ui.web;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +15,8 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -27,6 +31,7 @@ import butterknife.ButterKnife;
 import io.weicools.purereader.R;
 import io.weicools.purereader.ui.CustomTabsHelper;
 import io.weicools.purereader.util.InfoConstant;
+import io.weicools.purereader.util.ToastUtil;
 
 public class WebActivity extends AppCompatActivity {
 
@@ -108,6 +113,12 @@ public class WebActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_more, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
@@ -120,7 +131,7 @@ public class WebActivity extends AppCompatActivity {
 
             AppCompatTextView favorite = view.findViewById(R.id.text_view_favorite);
             AppCompatTextView copyLink = view.findViewById(R.id.text_view_copy_link);
-            AppCompatTextView openWithBrowser = view.findViewById(R.id.text_view_open_with_browser);
+            final AppCompatTextView openWithBrowser = view.findViewById(R.id.text_view_open_with_browser);
             AppCompatTextView share = view.findViewById(R.id.text_view_share);
 
             if (mIsFavorite) {
@@ -144,6 +155,7 @@ public class WebActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     //mPresenter.getLink(mType, REQUEST_COPY_LINK, mId);
+                    copyLink(mUrl);
                     dialog.dismiss();
                 }
             });
@@ -153,6 +165,7 @@ public class WebActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     //mPresenter.getLink(mType, REQUEST_OPEN_WITH_BROWSER, mId);
+                    openWithBrowser(mUrl);
                     dialog.dismiss();
                 }
             });
@@ -162,6 +175,7 @@ public class WebActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     //mPresenter.getLink(mType, REQUEST_SHARE, mId);
+                    share(mUrl);
                     dialog.dismiss();
                 }
             });
@@ -191,6 +205,38 @@ public class WebActivity extends AppCompatActivity {
                     .into(mImageView);
         } else {
             mImageView.setImageResource(R.drawable.placeholder);
+        }
+    }
+
+    private void share(@Nullable String link) {
+        try {
+            Intent shareIntent = new Intent().setAction(Intent.ACTION_SEND).setType("text/plain");
+            String shareText = "" + mDesc + " " + link;
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.share_to)));
+        } catch (android.content.ActivityNotFoundException ex) {
+            ToastUtil.showShort(R.string.something_wrong);
+        }
+    }
+
+    private void copyLink(@Nullable String link) {
+        if (link != null) {
+            ClipboardManager manager = (ClipboardManager) mContext.getSystemService(CLIPBOARD_SERVICE);
+            ClipData clipData = ClipData.newPlainText("text", Html.fromHtml(link).toString());
+            if (manager != null) {
+                manager.setPrimaryClip(clipData);
+            }
+            ToastUtil.showShort(R.string.copied_to_clipboard);
+        } else {
+            ToastUtil.showShort(R.string.something_wrong);
+        }
+    }
+
+    private void openWithBrowser(@Nullable String link) {
+        if (link != null) {
+            CustomTabsHelper.openUrl(mContext, link);
+        } else {
+            ToastUtil.showShort(R.string.something_wrong);
         }
     }
 }
