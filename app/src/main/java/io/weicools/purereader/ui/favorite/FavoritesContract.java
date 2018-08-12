@@ -1,27 +1,27 @@
 package io.weicools.purereader.ui.favorite;
 
+import io.weicools.purereader.data.GankContent;
 import java.util.List;
 
 import io.weicools.purereader.base.BasePresenter;
 import io.weicools.purereader.base.BaseView;
-import io.weicools.purereader.data.GankData;
 
 /**
- * Create by weicools on 2018/4/15.
+ * @author Weicools Create on 2018/4/15.
  * <p>
  * desc:
  */
-
 public interface FavoritesContract {
-    interface View extends BaseView<Presenter> {
-        void setLoadingIndicator(boolean active);
+  interface View extends BaseView<Presenter> {
+    void setLoadingIndicator(boolean active);
 
-        void showFavorites(List<GankData> dataList);
+    void showFavorites(List<GankContent> dataList);
 
-        void showNoData();
-    }
+    void showNoData();
+  }
 
-    interface Presenter extends BasePresenter {
-        void loadFavorites();
-    }
+
+  interface Presenter extends BasePresenter {
+    void loadFavorites();
+  }
 }

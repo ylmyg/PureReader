@@ -22,138 +22,99 @@ import io.weicools.purereader.R;
 import io.weicools.purereader.ui.CustomTabsHelper;
 
 /**
- * A simple {@link Fragment} subclass.
+ * @author Weicools Create on 2018.04.13
+ *
+ * desc:
  */
 public class InfoPreferenceFragment extends PreferenceFragmentCompat {
 
-    private static final int MSG_GLIDE_CLEAR_CACHE_DONE = 1;
+  private static final int MSG_GLIDE_CLEAR_CACHE_DONE = 1;
 
-    private final Handler handler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message msg) {
-            switch (msg.what) {
-                case MSG_GLIDE_CLEAR_CACHE_DONE:
-                    showMessage(R.string.clear_image_cache_successfully);
-                    break;
-                default:
-                    break;
-            }
-            return true;
-        }
+  private final Handler handler = new Handler(msg -> {
+    switch (msg.what) {
+      case MSG_GLIDE_CLEAR_CACHE_DONE:
+        showMessage(R.string.clear_image_cache_successfully);
+        break;
+      default:
+        break;
+    }
+    return true;
+  });
+
+
+  @Override
+  public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+    addPreferencesFromResource(R.xml.info_preference);
+
+    // Setting of night mode
+    findPreference(AppConfig.KEY_NIGHT_MODE).setOnPreferenceChangeListener((preference, newValue) -> {
+      if ((getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)
+          == Configuration.UI_MODE_NIGHT_YES) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+      } else {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+      }
+      getActivity().getWindow().setWindowAnimations(R.style.WindowAnimationFadeInOut);
+      getActivity().recreate();
+      return true;
     });
 
-    @Override
-    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        addPreferencesFromResource(R.xml.info_preference);
+    // Clear the cache of glide
+    findPreference("clear_glide_cache").setOnPreferenceClickListener(preference -> {
+      new Thread(() -> {
+        Glide.get(getContext()).clearDiskCache();
+        handler.sendEmptyMessage(MSG_GLIDE_CLEAR_CACHE_DONE);
+      }).start();
+      return true;
+    });
 
-        // Setting of night mode
-        findPreference(AppConfig.KEY_NIGHT_MODE).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                if ((getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)
-                        == Configuration.UI_MODE_NIGHT_YES) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                }
-                getActivity().getWindow().setWindowAnimations(R.style.WindowAnimationFadeInOut);
-                getActivity().recreate();
-                return true;
-            }
-        });
+    // set Version
+    findPreference("version").setTitle(getString(R.string.version) + BuildConfig.VERSION_NAME);
 
-        // Clear the cache of glide
-        findPreference("clear_glide_cache").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Glide.get(getContext()).clearDiskCache();
-                        handler.sendEmptyMessage(MSG_GLIDE_CLEAR_CACHE_DONE);
-                    }
-                }).start();
-                return true;
-            }
-        });
+    // Open the github contributors page
+    findPreference("contributors").setOnPreferenceClickListener(preference -> {
+      CustomTabsHelper.openUrl(getContext(), getString(R.string.author_page_desc));
+      return true;
+    });
 
-        // set Version
-        findPreference("version").setTitle(getString(R.string.version) + BuildConfig.VERSION_NAME);
+    // Open the github links
+    findPreference("follow_me_on_github").setOnPreferenceClickListener(preference -> {
+      CustomTabsHelper.openUrl(getContext(), getString(R.string.follow_me_on_github_desc));
+      return true;
+    });
 
-        // Rate
-//        findPreference("rate").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-//            @Override
-//            public boolean onPreferenceClick(Preference preference) {
-//                try {
-//                    Uri uri = Uri.parse("market://details?id=" + getActivity().getPackageName());
-//                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    startActivity(intent);
-//                } catch (android.content.ActivityNotFoundException ex) {
-//                    showMessage(R.string.something_wrong);
-//                }
-//                return true;
-//            }
-//        });
+    // Feedback through sending an email
+    findPreference("feedback").setOnPreferenceClickListener(preference -> {
+      try {
+        Uri uri = Uri.parse(getString(R.string.sendto));
+        Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.mail_topic));
+        intent.putExtra(Intent.EXTRA_TEXT,
+            getString(R.string.device_model) + Build.MODEL + "\n"
+                + getString(R.string.sdk_version) + Build.VERSION.RELEASE + "\n"
+                + getString(R.string.version));
+        startActivity(intent);
+      } catch (android.content.ActivityNotFoundException ex) {
+        showMessage(R.string.no_mail_app);
+      }
+      return true;
+    });
 
-        // Open the github contributors page
-        findPreference("contributors").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                CustomTabsHelper.openUrl(getContext(), getString(R.string.author_page_desc));
-                return true;
-            }
-        });
+    // Open the github home page
+    findPreference("source_code").setOnPreferenceClickListener(preference -> {
+      CustomTabsHelper.openUrl(getContext(), getString(R.string.source_code_desc));
+      return true;
+    });
 
-        // Open the github links
-        findPreference("follow_me_on_github").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                CustomTabsHelper.openUrl(getContext(), getString(R.string.follow_me_on_github_desc));
-                return true;
-            }
-        });
+    // Show the open source licenses
+    findPreference("open_source_license").setOnPreferenceClickListener(preference -> {
+      startActivity(new Intent(getActivity(), LicenseActivity.class));
+      return true;
+    });
+  }
 
-        // Feedback through sending an email
-        findPreference("feedback").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                try {
-                    Uri uri = Uri.parse(getString(R.string.sendto));
-                    Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
-                    intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.mail_topic));
-                    intent.putExtra(Intent.EXTRA_TEXT,
-                            getString(R.string.device_model) + Build.MODEL + "\n"
-                                    + getString(R.string.sdk_version) + Build.VERSION.RELEASE + "\n"
-                                    + getString(R.string.version));
-                    startActivity(intent);
-                } catch (android.content.ActivityNotFoundException ex) {
-                    showMessage(R.string.no_mail_app);
-                }
-                return true;
-            }
-        });
 
-        // Open the github home page
-        findPreference("source_code").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                CustomTabsHelper.openUrl(getContext(), getString(R.string.source_code_desc));
-                return true;
-            }
-        });
-
-        // Show the open source licenses
-        findPreference("open_source_license").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                startActivity(new Intent(getActivity(), LicenseActivity.class));
-                return true;
-            }
-        });
-    }
-
-    private void showMessage(@StringRes int resId) {
-        Toast.makeText(getContext(), resId, Toast.LENGTH_SHORT).show();
-    }
+  private void showMessage(@StringRes int resId) {
+    Toast.makeText(getContext(), resId, Toast.LENGTH_SHORT).show();
+  }
 }

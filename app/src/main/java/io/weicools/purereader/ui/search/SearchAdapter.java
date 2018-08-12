@@ -18,117 +18,126 @@ import java.util.List;
 import io.weicools.purereader.R;
 
 /**
- * Create by weicools on 2018/4/15.
- * <p>
+ * @author Weicools Create on 2018/4/15.
+ *
  * desc:
  */
-
 public class SearchAdapter extends BaseAdapter implements Filterable {
-    private ArrayList<String> data;
-    private String[] suggestions;
-    private Drawable suggestionIcon;
-    private LayoutInflater inflater;
-    private boolean ellipsize;
+  private ArrayList<String> data;
+  private String[] suggestions;
+  private Drawable suggestionIcon;
+  private LayoutInflater inflater;
+  private boolean ellipsize;
 
-    public SearchAdapter(Context context, String[] suggestions) {
-        inflater = LayoutInflater.from(context);
-        data = new ArrayList<>();
-        this.suggestions = suggestions;
-    }
 
-    public SearchAdapter(Context context, String[] suggestions, Drawable suggestionIcon, boolean ellipsize) {
-        inflater = LayoutInflater.from(context);
-        data = new ArrayList<>();
-        this.suggestions = suggestions;
-        this.suggestionIcon = suggestionIcon;
-        this.ellipsize = ellipsize;
-    }
+  public SearchAdapter(Context context, String[] suggestions) {
+    inflater = LayoutInflater.from(context);
+    data = new ArrayList<>();
+    this.suggestions = suggestions;
+  }
 
-    @Override
-    public Filter getFilter() {
-        Filter filter = new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                FilterResults filterResults = new FilterResults();
-                if (!TextUtils.isEmpty(constraint)) {
 
-                    // Retrieve the autocomplete results.
-                    List<String> searchData = new ArrayList<>();
+  public SearchAdapter(Context context, String[] suggestions, Drawable suggestionIcon, boolean ellipsize) {
+    inflater = LayoutInflater.from(context);
+    data = new ArrayList<>();
+    this.suggestions = suggestions;
+    this.suggestionIcon = suggestionIcon;
+    this.ellipsize = ellipsize;
+  }
 
-                    for (String string : suggestions) {
-                        if (string.toLowerCase().startsWith(constraint.toString().toLowerCase())) {
-                            searchData.add(string);
-                        }
-                    }
 
-                    // Assign the data to the FilterResults
-                    filterResults.values = searchData;
-                    filterResults.count = searchData.size();
-                }
-                return filterResults;
+  @Override
+  public Filter getFilter() {
+    Filter filter = new Filter() {
+      @Override
+      protected FilterResults performFiltering(CharSequence constraint) {
+        FilterResults filterResults = new FilterResults();
+        if (!TextUtils.isEmpty(constraint)) {
+
+          // Retrieve the autocomplete results.
+          List<String> searchData = new ArrayList<>();
+
+          for (String string : suggestions) {
+            if (string.toLowerCase().startsWith(constraint.toString().toLowerCase())) {
+              searchData.add(string);
             }
+          }
 
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-                if (results.values != null) {
-                    data = (ArrayList<String>) results.values;
-                    notifyDataSetChanged();
-                }
-            }
-        };
-        return filter;
-    }
-
-    @Override
-    public int getCount() {
-        return data.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return data.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-
-        SuggestionsViewHolder viewHolder;
-
-        if (convertView == null) {
-            convertView = inflater.inflate(R.layout.item_search_suggest, parent, false);
-            viewHolder = new SuggestionsViewHolder(convertView);
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (SuggestionsViewHolder) convertView.getTag();
+          // Assign the data to the FilterResults
+          filterResults.values = searchData;
+          filterResults.count = searchData.size();
         }
+        return filterResults;
+      }
 
-        String currentListData = (String) getItem(position);
 
-        viewHolder.textView.setText(currentListData);
-        if (ellipsize) {
-            viewHolder.textView.setSingleLine();
-            viewHolder.textView.setEllipsize(TextUtils.TruncateAt.END);
+      @Override
+      protected void publishResults(CharSequence constraint, FilterResults results) {
+        if (results.values != null) {
+          data = (ArrayList<String>) results.values;
+          notifyDataSetChanged();
         }
+      }
+    };
+    return filter;
+  }
 
-        return convertView;
+
+  @Override
+  public int getCount() {
+    return data.size();
+  }
+
+
+  @Override
+  public Object getItem(int position) {
+    return data.get(position);
+  }
+
+
+  @Override
+  public long getItemId(int position) {
+    return position;
+  }
+
+
+  @Override
+  public View getView(int position, View convertView, ViewGroup parent) {
+
+    SuggestionsViewHolder viewHolder;
+
+    if (convertView == null) {
+      convertView = inflater.inflate(R.layout.item_search_suggest, parent, false);
+      viewHolder = new SuggestionsViewHolder(convertView);
+      convertView.setTag(viewHolder);
+    } else {
+      viewHolder = (SuggestionsViewHolder) convertView.getTag();
     }
 
-    private class SuggestionsViewHolder {
+    String currentListData = (String) getItem(position);
 
-        TextView textView;
-        ImageView imageView;
-
-        SuggestionsViewHolder(View convertView) {
-            textView = convertView.findViewById(R.id.suggestion_text);
-            if (suggestionIcon != null) {
-                imageView = convertView.findViewById(R.id.suggestion_icon);
-                imageView.setImageDrawable(suggestionIcon);
-            }
-        }
+    viewHolder.textView.setText(currentListData);
+    if (ellipsize) {
+      viewHolder.textView.setSingleLine();
+      viewHolder.textView.setEllipsize(TextUtils.TruncateAt.END);
     }
+
+    return convertView;
+  }
+
+
+  private class SuggestionsViewHolder {
+
+    TextView textView;
+    ImageView imageView;
+
+
+    SuggestionsViewHolder(View convertView) {
+      textView = convertView.findViewById(R.id.suggestion_text);
+      if (suggestionIcon != null) {
+        imageView = convertView.findViewById(R.id.suggestion_icon);
+        imageView.setImageDrawable(suggestionIcon);
+      }
+    }
+  }
 }

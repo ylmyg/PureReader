@@ -1,55 +1,68 @@
 package io.weicools.purereader.api;
 
-import java.util.List;
-
 import io.reactivex.Observable;
 import io.weicools.purereader.data.DailyGankData;
 import io.weicools.purereader.data.GankData;
-import io.weicools.purereader.data.HttpResult;
+import io.weicools.purereader.data.SearchGankData;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 /**
- * Create by weicools on 2018/4/12.
+ * @author Weicools Create on 2018/4/12.
  * <p>
- * desc: 干货集中营API: http://gank.io/api/
+ * desc: 干货集中营API: https://gank.io/api/
  */
-
 public interface GankApi {
-    String BASE_URL = "http://gank.io/api/";
+  String BASE_URL = "https://gank.io/api/";
 
-    /*
-    分类数据: http://gank.io/api/data/数据类型/请求个数/第几页
+  /**
+   * https://gank.io/api/today
+   *
+   * @return Observable<DailyGankData>
+   */
+  @GET("today")
+  Observable<DailyGankData> getLatestDailyData();
 
-    数据类型： 福利 | Android | iOS | 休息视频 | 拓展资源 | 前端 | all
-    请求个数： 数字，大于0
-    第几页：数字，大于0
-     */
-    @GET("data/{dataType}/{count}/{page}")
-    Observable<HttpResult<List<GankData>>> getGankData(@Path("dataType") String dataType, @Path("count") int count, @Path("page") int page);
+  /**
+   * https://gank.io/api/day/2018/08/09
+   *
+   * @param year y
+   * @param month m
+   * @param day d
+   * @return Observable<DailyGankData>
+   */
+  @GET("day/{year}/{month}/{day}")
+  Observable<DailyGankData> getDailyData(@Path("year") int year, @Path("month") int month, @Path("day") int day);
 
-    /*
-    搜索 API
-    http://gank.io/api/search/query/listview/category/Android/count/10/page/1
+  /**
+   * https://gank.io/api/data/Android/10/1
+   *
+   * @param category {all | Android | iOS | 休息视频 | 福利 | 拓展资源 | 前端 | 瞎推荐 | App}
+   * @param count count > 0
+   * @param page page > 0
+   * @return Observable<GankData>
+   */
+  @GET("data/{category}/{count}/{page}")
+  Observable<GankData> getCategoryData(@Path("category") String category, @Path("count") int count, @Path("page") int page);
 
-    category 后面可接受参数 all | Android | iOS | 休息视频 | 福利 | 拓展资源 | 前端 | 瞎推荐 | App
-    count 最大 50
-     */
-    @GET("search/query/listview/category/{dataType}/count/{count}/page/{page}")
-    Observable<HttpResult<List<GankData>>> searchGankData(@Path("dataType") String dataType, @Path("count") int count, @Path("page") int page);
+  /**
+   * https://gank.io/api/random/data/Android/5
+   *
+   * @param category {all | Android | iOS | 休息视频 | 福利 | 拓展资源 | 前端 | 瞎推荐 | App}
+   * @param count count > 0
+   * @return Observable<GankData>
+   */
+  @GET("random/data/{category}/{count}")
+  Observable<GankData> getRandomData(@Path("category") String category, @Path("count") int count);
 
-    /*
-    每日数据： http://gank.io/api/day/年/月/日
-
-    http://gank.io/api/day/2015/08/06
-     */
-    @GET("day/{year}/{month}/{day}")
-    Observable<DailyGankData> getDailyGankData(@Path("year") int year, @Path("month") int month, @Path("day") int day);
-
-    /*
-    获取发过干货日期接口:
-    http://gank.io/api/day/history 方式 GET
-     */
-    @GET("day/history")
-    Observable<HttpResult<List<String>>> getHistoryDate();
+  /**
+   * https://gank.io/api/search/query/listview/category/Android/count/10/page/1
+   *
+   * @param category {all | Android | iOS | 休息视频 | 福利 | 拓展资源 | 前端 | 瞎推荐 | App}
+   * @param count max = 50
+   * @param page page > 0
+   * @return Observable<SearchGankData>
+   */
+  @GET("search/query/listview/category/{category}/count/{count}/page/{page}")
+  Observable<SearchGankData> getSearchData(@Path("category") String category, @Path("count") int count, @Path("page") int page);
 }

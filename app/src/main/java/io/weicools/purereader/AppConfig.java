@@ -1,11 +1,10 @@
 package io.weicools.purereader;
 
 /**
- * Create by weicools on 2018/4/13.
+ * @author Weicools Create on 2018/4/13.
  * <p>
  * desc:
  */
-
 public final class AppConfig {
     private AppConfig() {
         throw new AssertionError("No construction for AppConfig class");

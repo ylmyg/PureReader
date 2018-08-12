@@ -14,28 +14,26 @@ import io.weicools.purereader.R;
 import io.weicools.purereader.util.InfoConstant;
 
 /**
- * Author: weicools
- * Time: 2017/12/6 下午4:15
+ * @author Weicools Create on 2017.12.06
  * <p>
  * A helper class of chrome custom tabs.
  * If the chrome custom tabs is available, then use it to open
  * links, otherwise use system browser instead.
  */
-
 public class CustomTabsHelper {
-    public static void openUrl(Context context, String url) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+  public static void openUrl(Context context, String url) {
+    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
-        if (sharedPreferences.getBoolean(InfoConstant.KEY_CHROME_CUSTOM_TABS, true)) {
-            CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-            builder.setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
-            builder.build().launchUrl(context, Uri.parse(url));
-        } else {
-            try {
-                context.startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(url)));
-            } catch (ActivityNotFoundException e) {
-                Toast.makeText(context, R.string.no_browser_found, Toast.LENGTH_SHORT).show();
-            }
-        }
+    if (sharedPreferences.getBoolean(InfoConstant.KEY_CHROME_CUSTOM_TABS, true)) {
+      CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+      builder.setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
+      builder.build().launchUrl(context, Uri.parse(url));
+    } else {
+      try {
+        context.startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(url)));
+      } catch (ActivityNotFoundException e) {
+        Toast.makeText(context, R.string.no_browser_found, Toast.LENGTH_SHORT).show();
+      }
     }
+  }
 }
