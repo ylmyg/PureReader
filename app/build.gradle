@@ -95,6 +95,8 @@ dependencies {
   // ButterKnife
   implementation "com.jakewharton:butterknife:$butterknife_version"
   annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife_version"
+  // ui library
+  implementation 'com.aurelhubert:ahbottomnavigation:2.1.0'
   // analyze
   implementation "com.umeng.analytics:analytics:$umeng_version"
   // leakCanary

@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import io.weicools.purereader.base.BaseFragment;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,14 +33,10 @@ import io.weicools.purereader.ui.gank.GankFragment;
  *
  * desc:
  */
-public class MainFragment extends Fragment {
-  @BindView(R.id.timeline_tab_layout)
-  TabLayout mTabLayout;
-  @BindView(R.id.view_pager)
-  ViewPager mViewPager;
-  @BindView(R.id.fab)
-  FloatingActionButton mFab;
-  Unbinder unbinder;
+public class MainFragment extends BaseFragment {
+  @BindView(R.id.timeline_tab_layout) TabLayout mTabLayout;
+  @BindView(R.id.view_pager) ViewPager mViewPager;
+  @BindView(R.id.fab) FloatingActionButton mFab;
 
   private DailyGankFragment mGankFragment;
   private GankFragment mAndroidFragment;
@@ -51,6 +48,11 @@ public class MainFragment extends Fragment {
 
   public static MainFragment newInstance() {
     return new MainFragment();
+  }
+
+
+  @Override protected int getLayoutResId() {
+    return R.layout.fragment_main;
   }
 
 
@@ -71,13 +73,10 @@ public class MainFragment extends Fragment {
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    // Inflate the layout for this fragment
-    View view = inflater.inflate(R.layout.fragment_main, container, false);
-    unbinder = ButterKnife.bind(this, view);
-
+    super.onCreateView(inflater, container, savedInstanceState);
     initView();
     initListener();
-    return view;
+    return mRootView;
   }
 
 
@@ -167,13 +166,6 @@ public class MainFragment extends Fragment {
         //mDoubanFragment.showDatePickerDialog();
       }
     });
-  }
-
-
-  @Override
-  public void onDestroyView() {
-    super.onDestroyView();
-    unbinder.unbind();
   }
 
 

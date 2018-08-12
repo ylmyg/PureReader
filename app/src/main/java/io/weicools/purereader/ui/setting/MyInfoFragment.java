@@ -8,13 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import io.weicools.purereader.R;
+import io.weicools.purereader.base.BaseFragment;
 
 /**
  * @author Weicools Create on 2018.04.13
  *
  * desc:
  */
-public class MyInfoFragment extends Fragment {
+public class MyInfoFragment extends BaseFragment {
   public MyInfoFragment() {
     // Required empty public constructor
   }
@@ -25,15 +26,18 @@ public class MyInfoFragment extends Fragment {
   }
 
 
+  @Override protected int getLayoutResId() {
+    return R.layout.fragment_my_info;
+  }
+
+
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    // Inflate the layout for this fragment
-    View view = inflater.inflate(R.layout.fragment_my_info, container, false);
+    super.onCreateView(inflater, container, savedInstanceState);
     getChildFragmentManager().beginTransaction()
         .replace(R.id.info_container, new InfoPreferenceFragment())
         .commit();
-
-    return view;
+    return mRootView;
   }
 }
