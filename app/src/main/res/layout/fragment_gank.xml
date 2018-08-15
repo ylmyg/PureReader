@@ -1,4 +1,6 @@
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,6 +12,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingBottom="8dp"
             android:background="@color/colorBaseBackground"
             android:clickable="true"
             android:focusable="true">
@@ -20,8 +23,9 @@
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
                 android:fadeScrollbars="true"
+                tools:listitem="@layout/item_gank"
                 android:scrollbarFadeDuration="1"
-                android:scrollbars="vertical" />
+                android:scrollbars="vertical"/>
 
             <LinearLayout
                 android:id="@+id/empty_view"
@@ -39,7 +43,7 @@
                     android:hapticFeedbackEnabled="true"
                     android:importantForAccessibility="no"
                     android:src="@drawable/ic_bottom_favorite"
-                    android:tint="@color/colorAccent" />
+                    android:tint="@color/colorAccent"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="match_parent"
@@ -48,11 +52,8 @@
                     android:text="@string/empty_content"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textColor="@color/colorAccent" />
-
+                    android:textColor="@color/colorAccent"/>
             </LinearLayout>
-
         </FrameLayout>
-
     </android.support.v4.widget.SwipeRefreshLayout>
 </android.support.design.widget.CoordinatorLayout>

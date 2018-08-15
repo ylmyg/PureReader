@@ -147,6 +147,7 @@ public class DailyGankFragment extends Fragment implements GankContract.View {
 
   @Override
   public void showLoadingDataError() {
+    mRefreshLayout.setRefreshing(false);
     mEmptyView.setVisibility(View.VISIBLE);
   }
 

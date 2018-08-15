@@ -1,6 +1,9 @@
 package io.weicools.purereader.ui.gank;
 
 import android.util.Log;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.weicools.purereader.data.DailyGankData;
 import io.weicools.purereader.data.GankContent;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,18 +70,39 @@ public class GankPresenter implements GankContract.Presenter {
   public void loadLatestDailyData() {
     mDisposable.add(GankRetrofit.getInstance().getGankApi()
         .getLatestDailyData()
+        .map(dailyData -> {
+          List<GankContent> dataList = new ArrayList<>();
+          List<GankContent> androidList = dailyData.getResults().getAndroid();
+          List<GankContent> iOSList = dailyData.getResults().getIOS();
+          List<GankContent> webFontList = dailyData.getResults().getWebFont();
+          List<GankContent> appList = dailyData.getResults().getApp();
+          List<GankContent> resourceList = dailyData.getResults().getResource();
+          if (androidList != null) {
+            dataList.addAll(androidList);
+          }
+          if (iOSList != null) {
+            dataList.addAll(iOSList);
+          }
+          if (webFontList != null) {
+            dataList.addAll(webFontList);
+          }
+          if (appList != null) {
+            dataList.addAll(appList);
+          }
+          if (resourceList != null) {
+            dataList.addAll(resourceList);
+          }
+          return dataList;
+        })
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(dailyGankData -> {
-          List<GankContent> dataList = new ArrayList<>();
-          dataList.addAll(dailyGankData.getResults().getAndroid());
-          dataList.addAll(dailyGankData.getResults().getIOS());
-          dataList.addAll(dailyGankData.getResults().getWebFont());
-          dataList.addAll(dailyGankData.getResults().getApp());
-          dataList.addAll(dailyGankData.getResults().getResource());
+        .subscribe(dataList -> {
           mView.showResult(dataList);
           mView.setLoadingIndicator(false);
-        }, throwable -> mView.showLoadingDataError()));
+        }, throwable -> {
+          mView.setLoadingIndicator(false);
+          mView.showNoData();
+        }));
   }
 
 
@@ -86,15 +110,33 @@ public class GankPresenter implements GankContract.Presenter {
   public void loadDailyData(int year, int month, int day) {
     mDisposable.add(GankRetrofit.getInstance().getGankApi()
         .getDailyData(year, month, day)
+        .map(dailyData -> {
+          List<GankContent> dataList = new ArrayList<>();
+          List<GankContent> androidList = dailyData.getResults().getAndroid();
+          List<GankContent> iOSList = dailyData.getResults().getIOS();
+          List<GankContent> webFontList = dailyData.getResults().getWebFont();
+          List<GankContent> appList = dailyData.getResults().getApp();
+          List<GankContent> resourceList = dailyData.getResults().getResource();
+          if (androidList != null) {
+            dataList.addAll(androidList);
+          }
+          if (iOSList != null) {
+            dataList.addAll(iOSList);
+          }
+          if (webFontList != null) {
+            dataList.addAll(webFontList);
+          }
+          if (appList != null) {
+            dataList.addAll(appList);
+          }
+          if (resourceList != null) {
+            dataList.addAll(resourceList);
+          }
+          return dataList;
+        })
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(dailyGankData -> {
-          List<GankContent> dataList = new ArrayList<>();
-          dataList.addAll(dailyGankData.getResults().getAndroid());
-          dataList.addAll(dailyGankData.getResults().getIOS());
-          dataList.addAll(dailyGankData.getResults().getWebFont());
-          dataList.addAll(dailyGankData.getResults().getApp());
-          dataList.addAll(dailyGankData.getResults().getResource());
+        .subscribe(dataList -> {
           mView.showResult(dataList);
           mView.setLoadingIndicator(false);
         }, throwable -> mView.showLoadingDataError()));

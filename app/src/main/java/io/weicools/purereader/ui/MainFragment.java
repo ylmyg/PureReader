@@ -1,5 +1,6 @@
 package io.weicools.purereader.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +10,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import io.weicools.purereader.base.BaseFragment;
+import io.weicools.purereader.ui.search.SearchActivity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +39,7 @@ import io.weicools.purereader.ui.gank.GankFragment;
  * desc:
  */
 public class MainFragment extends BaseFragment {
+  @BindView(R.id.toolbar) Toolbar mToolbar;
   @BindView(R.id.timeline_tab_layout) TabLayout mTabLayout;
   @BindView(R.id.view_pager) ViewPager mViewPager;
   @BindView(R.id.fab) FloatingActionButton mFab;
@@ -74,9 +80,22 @@ public class MainFragment extends BaseFragment {
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
+    initToolbar();
     initView();
     initListener();
     return mRootView;
+  }
+
+
+  public void initToolbar() {
+    AppCompatActivity compatActivity = (AppCompatActivity) getActivity();
+    if (compatActivity != null) {
+      compatActivity.setSupportActionBar(mToolbar);
+      ActionBar actionBar = compatActivity.getSupportActionBar();
+      if (actionBar != null) {
+        actionBar.setDisplayHomeAsUpEnabled(false);
+      }
+    }
   }
 
 
@@ -138,9 +157,7 @@ public class MainFragment extends BaseFragment {
   private void initListener() {
     mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
       @Override
-      public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-      }
+      public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
 
 
       @Override
@@ -154,16 +171,12 @@ public class MainFragment extends BaseFragment {
 
 
       @Override
-      public void onPageScrollStateChanged(int state) {
-
-      }
+      public void onPageScrollStateChanged(int state) { }
     });
 
     mFab.setOnClickListener(view -> {
       if (mTabLayout.getSelectedTabPosition() == 0) {
         mGankFragment.showDatePickerDialog();
-      } else {
-        //mDoubanFragment.showDatePickerDialog();
       }
     });
   }
@@ -171,14 +184,20 @@ public class MainFragment extends BaseFragment {
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    return super.onOptionsItemSelected(item);
+    switch (item.getItemId()) {
+      case R.id.action_search:
+        startActivity(new Intent(getActivity(), SearchActivity.class));
+        return true;
+      default:
+        return super.onOptionsItemSelected(item);
+    }
   }
 
 
   @Override
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-    super.onCreateOptionsMenu(menu, inflater);
     inflater.inflate(R.menu.menu_gank, menu);
+    super.onCreateOptionsMenu(menu, inflater);
   }
 
 
