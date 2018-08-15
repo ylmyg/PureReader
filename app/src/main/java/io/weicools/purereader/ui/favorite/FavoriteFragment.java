@@ -31,54 +31,46 @@ public class FavoriteFragment extends BaseFragment implements FavoritesContract.
 
   private FavoritesContract.Presenter mPresenter;
 
-
-  public static FavoriteFragment newInstance() {
+  public static FavoriteFragment newInstance () {
     return new FavoriteFragment();
   }
 
-
-  @Override protected int getLayoutResId() {
+  @Override
+  protected int getLayoutResId () {
     return R.layout.fragment_favorite;
   }
 
-
   @Override
-  public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
+  public View onCreateView (@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
     new FavoritesPresenter(this);
     mRefreshLayout.setOnRefreshListener(() -> mPresenter.loadFavorites());
     return mRootView;
   }
 
-
   @Override
-  public void onResume() {
+  public void onResume () {
     super.onResume();
     mPresenter.loadFavorites();
   }
 
-
   @Override
-  public void setPresenter(FavoritesContract.Presenter presenter) {
+  public void setPresenter (FavoritesContract.Presenter presenter) {
     mPresenter = presenter;
   }
 
-
   @Override
-  public void setLoadingIndicator(boolean active) {
+  public void setLoadingIndicator (boolean active) {
     mRefreshLayout.setRefreshing(active);
   }
 
-
   @Override
-  public void showFavorites(List<GankContent> dataList) {
+  public void showFavorites (List<GankContent> dataList) {
 
   }
 
-
   @Override
-  public void showNoData() {
+  public void showNoData () {
     mEmptyView.setVisibility(View.VISIBLE);
   }
 }

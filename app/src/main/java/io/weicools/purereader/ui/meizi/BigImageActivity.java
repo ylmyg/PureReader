@@ -28,24 +28,20 @@ import io.weicools.purereader.util.ShareUtil;
 public class BigImageActivity extends AppCompatActivity {
   public static final String EXTRA_IMAGE_URL = "url";
   public static final String EXTRA_IMAGE_DESC = "desc";
-  @BindView(R.id.toolbar)
-  Toolbar mToolbar;
-  @BindView(R.id.draweeview)
-  SimpleDraweeView mDraweeview;
+  @BindView(R.id.toolbar) Toolbar mToolbar;
+  @BindView(R.id.draweeview) SimpleDraweeView mDraweeview;
 
   private String url, desc;
 
-
-  public static void startBigImageActivity(Context context, String url, String desc) {
+  public static void startBigImageActivity (Context context, String url, String desc) {
     Intent intent = new Intent(context, BigImageActivity.class);
     intent.putExtra(BigImageActivity.EXTRA_IMAGE_URL, url);
     intent.putExtra(BigImageActivity.EXTRA_IMAGE_DESC, desc);
     context.startActivity(intent);
   }
 
-
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
+  protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_big_image);
     ButterKnife.bind(this);
@@ -61,16 +57,14 @@ public class BigImageActivity extends AppCompatActivity {
     mDraweeview.setImageURI(uri);
   }
 
-
   @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
+  public boolean onCreateOptionsMenu (Menu menu) {
     getMenuInflater().inflate(R.menu.menu_image, menu);
     return super.onCreateOptionsMenu(menu);
   }
 
-
   @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
+  public boolean onOptionsItemSelected (MenuItem item) {
     switch (item.getItemId()) {
       case android.R.id.home:
         finish();

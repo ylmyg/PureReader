@@ -11,9 +11,8 @@ import android.net.Uri;
 public class SaveImageUtil {
   public static Uri uri;
 
-
   // TODO: 2018/4/15 download image
-  public static Uri saveImage(Context context, String url, final String desc) {
+  public static Uri saveImage (Context context, String url, final String desc) {
     return uri;
   }
 }

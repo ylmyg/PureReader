@@ -14,19 +14,18 @@ import java.util.List;
 public class MainViewPagerAdapter extends FragmentPagerAdapter {
   private final List<Fragment> mFragmentList;
 
-
-  public MainViewPagerAdapter(FragmentManager fm, @NonNull List<Fragment> fragments) {
+  public MainViewPagerAdapter (FragmentManager fm, @NonNull List<Fragment> fragments) {
     super(fm);
     mFragmentList = fragments;
   }
 
-
-  @Override public Fragment getItem(int position) {
+  @Override
+  public Fragment getItem (int position) {
     return mFragmentList.get(position);
   }
 
-
-  @Override public int getCount() {
+  @Override
+  public int getCount () {
     return mFragmentList.size();
   }
 }

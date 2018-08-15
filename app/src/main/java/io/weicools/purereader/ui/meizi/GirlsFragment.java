@@ -38,20 +38,17 @@ public class GirlsFragment extends BaseFragment implements GankContract.View {
   private int currPage = 1;
   private boolean mIsFirstLoad = true;
 
-
-  public static GirlsFragment newInstance() {
+  public static GirlsFragment newInstance () {
     return new GirlsFragment();
   }
 
-
-  @Override protected int getLayoutResId() {
+  @Override
+  protected int getLayoutResId () {
     return R.layout.fragment_girls;
   }
 
-
   @Override
-  public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
+  public View onCreateView (@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
 
     new GankPresenter(this);
@@ -65,7 +62,7 @@ public class GirlsFragment extends BaseFragment implements GankContract.View {
 
     mRecyclerView.addOnScrollListener(new LoadMoreRecyclerOnScrollListener(layoutManager) {
       @Override
-      public void onLoadMore(int currentPage) {
+      public void onLoadMore (int currentPage) {
         currPage = currentPage;
         mPresenter.loadGankData(false, AppConfig.TYPE_GIRLS, currPage);
       }
@@ -74,9 +71,8 @@ public class GirlsFragment extends BaseFragment implements GankContract.View {
     return mRootView;
   }
 
-
   @Override
-  public void onResume() {
+  public void onResume () {
     super.onResume();
     setLoadingIndicator(mIsFirstLoad);
     if (mIsFirstLoad) {
@@ -87,39 +83,33 @@ public class GirlsFragment extends BaseFragment implements GankContract.View {
     }
   }
 
-
   @Override
-  public void setPresenter(GankContract.Presenter presenter) {
+  public void setPresenter (GankContract.Presenter presenter) {
     mPresenter = presenter;
   }
 
-
   @Override
-  public void setLoadingIndicator(boolean active) {
+  public void setLoadingIndicator (boolean active) {
     mRefreshLayout.setRefreshing(active);
   }
 
-
   @Override
-  public void showResult(List<GankContent> dataList) {
+  public void showResult (List<GankContent> dataList) {
     mAdapter.setDataList(dataList);
   }
 
-
   @Override
-  public void updateResult(List<GankContent> dataList) {
+  public void updateResult (List<GankContent> dataList) {
     mAdapter.updateData(dataList);
   }
 
-
   @Override
-  public void showLoadingDataError() {
+  public void showLoadingDataError () {
     //mEmptyView.setVisibility(View.VISIBLE);
   }
 
-
   @Override
-  public void showNoData() {
+  public void showNoData () {
     //mEmptyView.setVisibility(View.VISIBLE);
   }
 }

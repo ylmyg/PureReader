@@ -6,5 +6,5 @@ package io.weicools.purereader.base;
  * desc: The base of all view layers.
  */
 public interface BaseView<T> {
-    void setPresenter(T presenter);
+  void setPresenter (T presenter);
 }

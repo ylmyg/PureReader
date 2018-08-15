@@ -80,18 +80,15 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
 
   private Context mContext;
 
-
-  public MaterialSearchView(Context context) {
+  public MaterialSearchView (Context context) {
     this(context, null);
   }
 
-
-  public MaterialSearchView(Context context, AttributeSet attrs) {
+  public MaterialSearchView (Context context, AttributeSet attrs) {
     this(context, attrs, 0);
   }
 
-
-  public MaterialSearchView(Context context, AttributeSet attrs, int defStyleAttr) {
+  public MaterialSearchView (Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs);
 
     mContext = context;
@@ -101,8 +98,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     initStyle(attrs, defStyleAttr);
   }
 
-
-  private void initStyle(AttributeSet attrs, int defStyleAttr) {
+  private void initStyle (AttributeSet attrs, int defStyleAttr) {
     TypedArray a = mContext.obtainStyledAttributes(attrs, R.styleable.MaterialSearchView, defStyleAttr, 0);
 
     if (a != null) {
@@ -146,8 +142,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     }
   }
 
-
-  private void initiateView() {
+  private void initiateView () {
     LayoutInflater.from(mContext).inflate(R.layout.search_view, this, true);
     mSearchLayout = findViewById(R.id.search_layout);
 
@@ -171,11 +166,10 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     setAnimationDuration(AnimationUtil.ANIMATION_DURATION_MEDIUM);
   }
 
-
-  private void initSearchView() {
+  private void initSearchView () {
     mSearchSrcTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
       @Override
-      public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+      public boolean onEditorAction (TextView v, int actionId, KeyEvent event) {
         onSubmitQuery();
         return true;
       }
@@ -183,28 +177,26 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
 
     mSearchSrcTextView.addTextChangedListener(new TextWatcher() {
       @Override
-      public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+      public void beforeTextChanged (CharSequence s, int start, int count, int after) {
 
       }
 
-
       @Override
-      public void onTextChanged(CharSequence s, int start, int before, int count) {
+      public void onTextChanged (CharSequence s, int start, int before, int count) {
         mUserQuery = s;
         startFilter(s);
         MaterialSearchView.this.onTextChanged(s);
       }
 
-
       @Override
-      public void afterTextChanged(Editable s) {
+      public void afterTextChanged (Editable s) {
 
       }
     });
 
     mSearchSrcTextView.setOnFocusChangeListener(new OnFocusChangeListener() {
       @Override
-      public void onFocusChange(View v, boolean hasFocus) {
+      public void onFocusChange (View v, boolean hasFocus) {
         if (hasFocus) {
           showKeyboard(mSearchSrcTextView);
           showSuggestions();
@@ -213,17 +205,15 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     });
   }
 
-
-  private void startFilter(CharSequence s) {
+  private void startFilter (CharSequence s) {
     if (mAdapter != null && mAdapter instanceof Filterable) {
       ((Filterable) mAdapter).getFilter().filter(s, MaterialSearchView.this);
     }
   }
 
-
   private final OnClickListener mOnClickListener = new OnClickListener() {
 
-    public void onClick(View v) {
+    public void onClick (View v) {
       if (v == mBackBtn) {
         closeSearch();
       } else if (v == mEmptyBtn) {
@@ -236,19 +226,18 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     }
   };
 
-
-  private void onVoiceClicked() {
+  private void onVoiceClicked () {
     Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
     //intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak an item name or number");    // user hint
-    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);    // setting recognition model, optimized for short phrases – search queries
+    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+        RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);    // setting recognition model, optimized for short phrases – search queries
     intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);    // quantity of searchResults we want to receive
     if (mContext instanceof Activity) {
       ((Activity) mContext).startActivityForResult(intent, REQUEST_VOICE);
     }
   }
 
-
-  private void onTextChanged(CharSequence newText) {
+  private void onTextChanged (CharSequence newText) {
     CharSequence text = mSearchSrcTextView.getText();
     mUserQuery = text;
     boolean hasText = !TextUtils.isEmpty(text);
@@ -264,8 +253,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     mOldQueryText = newText.toString();
   }
 
-
-  private void onSubmitQuery() {
+  private void onSubmitQuery () {
     CharSequence query = mSearchSrcTextView.getText();
     if (query != null && TextUtils.getTrimmedLength(query) > 0) {
       if (mOnQueryChangeListener == null || !mOnQueryChangeListener.onQueryTextSubmit(query.toString())) {
@@ -275,25 +263,21 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     }
   }
 
-
-  private boolean isVoiceAvailable() {
+  private boolean isVoiceAvailable () {
     if (isInEditMode()) {
       return true;
     }
     PackageManager pm = getContext().getPackageManager();
-    List<ResolveInfo> activities = pm.queryIntentActivities(
-        new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
+    List<ResolveInfo> activities = pm.queryIntentActivities(new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
     return activities.size() == 0;
   }
 
-
-  public void hideKeyboard(View view) {
+  public void hideKeyboard (View view) {
     InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
   }
 
-
-  public void showKeyboard(View view) {
+  public void showKeyboard (View view) {
     if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1 && view.hasFocus()) {
       view.clearFocus();
     }
@@ -304,9 +288,8 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
 
   //Public Attributes
 
-
   @Override
-  public void setBackground(Drawable background) {
+  public void setBackground (Drawable background) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
       mSearchTopBar.setBackground(background);
     } else {
@@ -314,49 +297,40 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     }
   }
 
-
   @Override
-  public void setBackgroundColor(int color) {
+  public void setBackgroundColor (int color) {
     mSearchTopBar.setBackgroundColor(color);
   }
 
-
-  public void setTextColor(int color) {
+  public void setTextColor (int color) {
     mSearchSrcTextView.setTextColor(color);
   }
 
-
-  public void setHintTextColor(int color) {
+  public void setHintTextColor (int color) {
     mSearchSrcTextView.setHintTextColor(color);
   }
 
-
-  public void setHint(CharSequence hint) {
+  public void setHint (CharSequence hint) {
     mSearchSrcTextView.setHint(hint);
   }
 
-
-  public void setCloseIcon(Drawable drawable) {
+  public void setCloseIcon (Drawable drawable) {
     mEmptyBtn.setImageDrawable(drawable);
   }
 
-
-  public void setBackIcon(Drawable drawable) {
+  public void setBackIcon (Drawable drawable) {
     mBackBtn.setImageDrawable(drawable);
   }
 
-
-  public void setSuggestionIcon(Drawable drawable) {
+  public void setSuggestionIcon (Drawable drawable) {
     suggestionIcon = drawable;
   }
 
-
-  public void setInputType(int inputType) {
+  public void setInputType (int inputType) {
     mSearchSrcTextView.setInputType(inputType);
   }
 
-
-  public void setSuggestionBackground(Drawable background) {
+  public void setSuggestionBackground (Drawable background) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
       mSuggestionsListView.setBackground(background);
     } else {
@@ -364,8 +338,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     }
   }
 
-
-  public void setCursorDrawable(int drawable) {
+  public void setCursorDrawable (int drawable) {
     try {
       // https://github.com/android/platform_frameworks_base/blob/kitkat-release/core/java/android/widget/TextView.java#L562-564
       Field f = TextView.class.getDeclaredField("mCursorDrawableRes");
@@ -376,62 +349,52 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     }
   }
 
-
-  public void setVoiceSearch(boolean voiceSearch) {
+  public void setVoiceSearch (boolean voiceSearch) {
     allowVoiceSearch = voiceSearch;
   }
 
   //Public Methods
 
-
   /**
    * Call this method to show suggestions list. This shows up when adapter is set. Call {@link #setAdapter(ListAdapter)} before calling this.
    */
-  public void showSuggestions() {
+  public void showSuggestions () {
     if (mAdapter != null && mAdapter.getCount() > 0 && mSuggestionsListView.getVisibility() == GONE) {
       mSuggestionsListView.setVisibility(VISIBLE);
     }
   }
-
 
   /**
    * Submit the query as soon as the user clicks the item.
    *
    * @param submit submit state
    */
-  public void setSubmitOnClick(boolean submit) {
+  public void setSubmitOnClick (boolean submit) {
     this.submit = submit;
   }
 
-
   /**
    * Set Suggest List OnItemClickListener
-   *
-   * @param listener
    */
-  public void setOnItemClickListener(AdapterView.OnItemClickListener listener) {
+  public void setOnItemClickListener (AdapterView.OnItemClickListener listener) {
     mSuggestionsListView.setOnItemClickListener(listener);
   }
 
-
   /**
    * Set Adapter for suggestions list. Should implement Filterable.
-   *
-   * @param adapter
    */
-  public void setAdapter(ListAdapter adapter) {
+  public void setAdapter (ListAdapter adapter) {
     mAdapter = adapter;
     mSuggestionsListView.setAdapter(adapter);
     startFilter(mSearchSrcTextView.getText());
   }
-
 
   /**
    * Set Adapter for suggestions list with the given suggestion array
    *
    * @param suggestions array of suggestions
    */
-  public void setSuggestions(String[] suggestions) {
+  public void setSuggestions (String[] suggestions) {
     if (suggestions != null && suggestions.length > 0) {
       mTintView.setVisibility(VISIBLE);
       final SearchAdapter adapter = new SearchAdapter(mContext, suggestions, suggestionIcon, ellipsize);
@@ -439,7 +402,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
 
       setOnItemClickListener(new AdapterView.OnItemClickListener() {
         @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        public void onItemClick (AdapterView<?> parent, View view, int position, long id) {
           setQuery((String) adapter.getItem(position), submit);
         }
       });
@@ -448,24 +411,19 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     }
   }
 
-
   /**
    * Dismiss the suggestions list.
    */
-  public void dismissSuggestions() {
+  public void dismissSuggestions () {
     if (mSuggestionsListView.getVisibility() == VISIBLE) {
       mSuggestionsListView.setVisibility(GONE);
     }
   }
 
-
   /**
    * Calling this will set the query to search text box. if submit is true, it'll submit the query.
-   *
-   * @param query
-   * @param submit
    */
-  public void setQuery(CharSequence query, boolean submit) {
+  public void setQuery (CharSequence query, boolean submit) {
     mSearchSrcTextView.setText(query);
     if (query != null) {
       mSearchSrcTextView.setSelection(mSearchSrcTextView.length());
@@ -476,58 +434,49 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     }
   }
 
-
   /**
    * Call this method and pass the menu item so this class can handle click events for the Menu Item.
-   *
-   * @param menuItem
    */
-  public void setMenuItem(MenuItem menuItem) {
+  public void setMenuItem (MenuItem menuItem) {
     this.mMenuItem = menuItem;
     mMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
       @Override
-      public boolean onMenuItemClick(MenuItem item) {
+      public boolean onMenuItemClick (MenuItem item) {
         showSearch();
         return true;
       }
     });
   }
 
-
   /**
    * Return true if search is open
-   *
-   * @return
    */
-  public boolean isSearchOpen() {
+  public boolean isSearchOpen () {
     return mIsSearchOpen;
   }
-
 
   /**
    * Sets animation duration. ONLY FOR PRE-LOLLIPOP!!
    *
    * @param duration duration of the animation
    */
-  public void setAnimationDuration(int duration) {
+  public void setAnimationDuration (int duration) {
     mAnimationDuration = duration;
   }
-
 
   /**
    * Open Search View. This will animate the showing of the view.
    */
-  public void showSearch() {
+  public void showSearch () {
     showSearch(true);
   }
-
 
   /**
    * Open Search View. If animate is true, Animate the showing of the view.
    *
    * @param animate true for animate
    */
-  public void showSearch(boolean animate) {
+  public void showSearch (boolean animate) {
     if (isSearchOpen()) {
       return;
     }
@@ -538,7 +487,6 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
 
     if (animate) {
       setVisibleWithAnimation();
-
     } else {
       mSearchLayout.setVisibility(VISIBLE);
       if (mSearchViewListener != null) {
@@ -548,26 +496,23 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     mIsSearchOpen = true;
   }
 
-
-  private void setVisibleWithAnimation() {
+  private void setVisibleWithAnimation () {
     AnimationUtil.AnimationListener animationListener = new AnimationUtil.AnimationListener() {
       @Override
-      public boolean onAnimationStart(View view) {
+      public boolean onAnimationStart (View view) {
         return false;
       }
 
-
       @Override
-      public boolean onAnimationEnd(View view) {
+      public boolean onAnimationEnd (View view) {
         if (mSearchViewListener != null) {
           mSearchViewListener.onSearchViewShown();
         }
         return false;
       }
 
-
       @Override
-      public boolean onAnimationCancel(View view) {
+      public boolean onAnimationCancel (View view) {
         return false;
       }
     };
@@ -575,17 +520,15 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       mSearchLayout.setVisibility(View.VISIBLE);
       AnimationUtil.reveal(mSearchTopBar, animationListener);
-
     } else {
       AnimationUtil.fadeInView(mSearchLayout, mAnimationDuration, animationListener);
     }
   }
 
-
   /**
    * Close search view.
    */
-  public void closeSearch() {
+  public void closeSearch () {
     if (!isSearchOpen()) {
       return;
     }
@@ -599,42 +542,31 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
       mSearchViewListener.onSearchViewClosed();
     }
     mIsSearchOpen = false;
-
   }
-
 
   /**
    * Set this listener to listen to Query Change events.
-   *
-   * @param listener
    */
-  public void setOnQueryTextListener(OnQueryTextListener listener) {
+  public void setOnQueryTextListener (OnQueryTextListener listener) {
     mOnQueryChangeListener = listener;
   }
 
-
   /**
    * Set this listener to listen to Search View open and close events
-   *
-   * @param listener
    */
-  public void setOnSearchViewListener(SearchViewListener listener) {
+  public void setOnSearchViewListener (SearchViewListener listener) {
     mSearchViewListener = listener;
   }
 
-
   /**
    * Ellipsize suggestions longer than one line.
-   *
-   * @param ellipsize
    */
-  public void setEllipsize(boolean ellipsize) {
+  public void setEllipsize (boolean ellipsize) {
     this.ellipsize = ellipsize;
   }
 
-
   @Override
-  public void onFilterComplete(int count) {
+  public void onFilterComplete (int count) {
     if (count > 0) {
       showSuggestions();
     } else {
@@ -642,9 +574,8 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     }
   }
 
-
   @Override
-  public boolean requestFocus(int direction, Rect previouslyFocusedRect) {
+  public boolean requestFocus (int direction, Rect previouslyFocusedRect) {
     // Don't accept focus if in the middle of clearing focus
     if (mClearingFocus) return false;
     // Check if SearchView is focusable.
@@ -652,9 +583,8 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     return mSearchSrcTextView.requestFocus(direction, previouslyFocusedRect);
   }
 
-
   @Override
-  public void clearFocus() {
+  public void clearFocus () {
     mClearingFocus = true;
     hideKeyboard(this);
     super.clearFocus();
@@ -662,9 +592,8 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     mClearingFocus = false;
   }
 
-
   @Override
-  public Parcelable onSaveInstanceState() {
+  public Parcelable onSaveInstanceState () {
     Parcelable superState = super.onSaveInstanceState();
 
     mSavedState = new SavedState(superState);
@@ -674,9 +603,8 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     return mSavedState;
   }
 
-
   @Override
-  public void onRestoreInstanceState(Parcelable state) {
+  public void onRestoreInstanceState (Parcelable state) {
     if (!(state instanceof SavedState)) {
       super.onRestoreInstanceState(state);
       return;
@@ -692,46 +620,38 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     super.onRestoreInstanceState(mSavedState.getSuperState());
   }
 
-
   static class SavedState extends BaseSavedState {
     String query;
     boolean isSearchOpen;
 
-
-    SavedState(Parcelable superState) {
+    SavedState (Parcelable superState) {
       super(superState);
     }
 
-
-    private SavedState(Parcel in) {
+    private SavedState (Parcel in) {
       super(in);
       this.query = in.readString();
       this.isSearchOpen = in.readInt() == 1;
     }
 
-
     @Override
-    public void writeToParcel(Parcel out, int flags) {
+    public void writeToParcel (Parcel out, int flags) {
       super.writeToParcel(out, flags);
       out.writeString(query);
       out.writeInt(isSearchOpen ? 1 : 0);
     }
 
-
     //required field that makes Parcelables from a Parcel
-    public static final Creator<SavedState> CREATOR =
-        new Creator<SavedState>() {
-          public SavedState createFromParcel(Parcel in) {
-            return new SavedState(in);
-          }
+    public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
+      public SavedState createFromParcel (Parcel in) {
+        return new SavedState(in);
+      }
 
-
-          public SavedState[] newArray(int size) {
-            return new SavedState[size];
-          }
-        };
+      public SavedState[] newArray (int size) {
+        return new SavedState[size];
+      }
+    };
   }
-
 
   public interface OnQueryTextListener {
 
@@ -746,7 +666,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
      * @return true if the query has been handled by the listener, false to let the
      * SearchView perform the default action.
      */
-    boolean onQueryTextSubmit(String query);
+    boolean onQueryTextSubmit (String query);
 
     /**
      * Called when the query text is changed by the user.
@@ -755,13 +675,12 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
      * @return false if the SearchView should perform the default action of showing any
      * suggestions if available, true if the action was handled by the listener.
      */
-    boolean onQueryTextChange(String newText);
+    boolean onQueryTextChange (String newText);
   }
 
-
   public interface SearchViewListener {
-    void onSearchViewShown();
+    void onSearchViewShown ();
 
-    void onSearchViewClosed();
+    void onSearchViewClosed ();
   }
 }

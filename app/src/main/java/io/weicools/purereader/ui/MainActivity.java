@@ -31,9 +31,8 @@ public class MainActivity extends AppCompatActivity {
   private BaseFragment mCurrFragment;
   private MainViewPagerAdapter mViewPagerAdapter;
 
-
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
+  protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
@@ -42,8 +41,7 @@ public class MainActivity extends AppCompatActivity {
     // FIXME: 2017/12/2 new FavoritePresenter
   }
 
-
-  private void initViews() {
+  private void initViews () {
     MainFragment mainFragment = MainFragment.newInstance();
     GirlsFragment girlsFragment = GirlsFragment.newInstance();
     FavoriteFragment favoriteFragment = FavoriteFragment.newInstance();
@@ -57,10 +55,14 @@ public class MainActivity extends AppCompatActivity {
     mViewPager.setOffscreenPageLimit(3);
     mViewPager.setAdapter(mViewPagerAdapter);
 
-    AHBottomNavigationItem mainItem = new AHBottomNavigationItem(R.string.nav_timeline, R.drawable.ic_bottom_library_books, R.color.color_tab_1);
-    AHBottomNavigationItem girlItem = new AHBottomNavigationItem(R.string.nav_girls, R.drawable.ic_bottom_photo, R.color.color_tab_2);
-    AHBottomNavigationItem favoriteItem = new AHBottomNavigationItem(R.string.nav_favorite, R.drawable.ic_bottom_favorite, R.color.color_tab_3);
-    AHBottomNavigationItem myInfoItem = new AHBottomNavigationItem(R.string.nav_info, R.drawable.ic_bottom_info_outline, R.color.color_tab_4);
+    AHBottomNavigationItem mainItem =
+        new AHBottomNavigationItem(R.string.nav_timeline, R.drawable.ic_bottom_library_books, R.color.color_tab_1);
+    AHBottomNavigationItem girlItem =
+        new AHBottomNavigationItem(R.string.nav_girls, R.drawable.ic_bottom_photo, R.color.color_tab_2);
+    AHBottomNavigationItem favoriteItem =
+        new AHBottomNavigationItem(R.string.nav_favorite, R.drawable.ic_bottom_favorite, R.color.color_tab_3);
+    AHBottomNavigationItem myInfoItem =
+        new AHBottomNavigationItem(R.string.nav_info, R.drawable.ic_bottom_info_outline, R.color.color_tab_4);
     List<AHBottomNavigationItem> navigationItemList = new ArrayList<>(BOTTOM_COUNT);
     navigationItemList.add(mainItem);
     navigationItemList.add(girlItem);

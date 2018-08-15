@@ -1,69 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="@string/settings">
-
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="no_picture_mode"
-            android:summary="@string/no_image_mode_desc"
-            android:title="@string/no_picture_mode" />
-
-        <SwitchPreference
-            android:defaultValue="true"
-            android:key="chrome_custom_tabs"
-            android:summary="@string/in_app_browser_desc"
-            android:title="@string/in_app_browser" />
-
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="night_mode"
-            android:title="@string/night_mode" />
-
-        <Preference
-            android:key="clear_glide_cache"
-            android:title="@string/clear_image_cache" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="@string/about">
-
-        <Preference
-            android:key="version"
-            android:title="@string/version" />
-
-        <!--<Preference-->
-            <!--android:key="rate"-->
-            <!--android:summary="@string/rate_desc"-->
-            <!--android:title="@string/rate" />-->
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="@string/author">
-
-        <Preference
-            android:key="contributors"
-            android:summary="@string/author_page_desc"
-            android:title="@string/author_page" />
-
-        <Preference
-            android:key="follow_me_on_github"
-            android:summary="@string/follow_me_on_github_desc"
-            android:title="@string/follow_me_on_github" />
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="@string/support">
-
-        <Preference
-            android:key="source_code"
-            android:summary="@string/source_code_desc"
-            android:title="@string/source_code" />
-
-        <Preference
-            android:key="feedback"
-            android:summary="@string/feedback_desc"
-            android:title="@string/feedback" />
-
-        <Preference
-            android:key="open_source_license"
-            android:title="@string/open_source_licenses" />
-    </PreferenceCategory>
+  <PreferenceCategory android:title="@string/settings">
+    <SwitchPreference
+      android:defaultValue="false"
+      android:key="no_picture_mode"
+      android:summary="@string/no_image_mode_desc"
+      android:title="@string/no_picture_mode" />
+    
+    <SwitchPreference
+      android:defaultValue="true"
+      android:key="chrome_custom_tabs"
+      android:summary="@string/in_app_browser_desc"
+      android:title="@string/in_app_browser" />
+    
+    <SwitchPreference
+      android:defaultValue="false"
+      android:key="night_mode"
+      android:title="@string/night_mode" />
+    
+    <Preference
+      android:key="clear_glide_cache"
+      android:title="@string/clear_image_cache" />
+  </PreferenceCategory>
+  
+  <PreferenceCategory android:title="@string/about">
+    <Preference
+      android:key="version"
+      android:title="@string/version" />
+    
+    <!--<Preference-->
+    <!--android:key="rate"-->
+    <!--android:summary="@string/rate_desc"-->
+    <!--android:title="@string/rate" />-->
+  </PreferenceCategory>
+  
+  <PreferenceCategory android:title="@string/author">
+    <Preference
+      android:key="contributors"
+      android:summary="@string/author_page_desc"
+      android:title="@string/author_page" />
+    
+    <Preference
+      android:key="follow_me_on_github"
+      android:summary="@string/follow_me_on_github_desc"
+      android:title="@string/follow_me_on_github" />
+  </PreferenceCategory>
+  
+  <PreferenceCategory android:title="@string/support">
+    <Preference
+      android:key="source_code"
+      android:summary="@string/source_code_desc"
+      android:title="@string/source_code" />
+    
+    <Preference
+      android:key="feedback"
+      android:summary="@string/feedback_desc"
+      android:title="@string/feedback" />
+    
+    <Preference
+      android:key="open_source_license"
+      android:title="@string/open_source_licenses" />
+  </PreferenceCategory>
 </PreferenceScreen>

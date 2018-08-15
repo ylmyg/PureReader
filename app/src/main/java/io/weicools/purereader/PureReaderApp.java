@@ -17,9 +17,8 @@ import io.weicools.purereader.util.ToastUtil;
 public class PureReaderApp extends Application {
   private static Context sAppInstance;
 
-
   @Override
-  public void onCreate() {
+  public void onCreate () {
     super.onCreate();
     sAppInstance = this;
     ToastUtil.init(this);
@@ -31,8 +30,7 @@ public class PureReaderApp extends Application {
     }
   }
 
-
-  public static Context getAppInstance() {
+  public static Context getAppInstance () {
     return sAppInstance;
   }
 }

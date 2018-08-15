@@ -36,8 +36,7 @@ public class SearchFragment extends Fragment {
   private SearchViewAdapter mAdapter;
   private CompositeDisposable mDisposable;
 
-
-  public static SearchFragment newInstance(String category) {
+  public static SearchFragment newInstance (String category) {
     SearchFragment fragment = new SearchFragment();
     Bundle bundle = new Bundle();
     bundle.putString(ARG_CATEGORY, category);
@@ -45,48 +44,50 @@ public class SearchFragment extends Fragment {
     return fragment;
   }
 
-
-  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+  @Override
+  public void onCreate (@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     if (getArguments() != null) {
       mCategory = getArguments().getString(ARG_CATEGORY);
     }
   }
 
-
-  @Nullable @Override public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+  @Nullable
+  @Override
+  public View onCreateView (@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+      @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.frgment_search, container, false);
     unbind = ButterKnife.bind(this, view);
     mDisposable = new CompositeDisposable();
     return view;
   }
 
-
-  @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+  @Override
+  public void onViewCreated (@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     mAdapter = new SearchViewAdapter(view.getContext());
     mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     mRecyclerView.setAdapter(mAdapter);
   }
 
-
-  @Override public void onDestroyView() {
+  @Override
+  public void onDestroyView () {
     super.onDestroyView();
     unbind.unbind();
   }
 
-
-  public void loadSearchHistory() {
+  public void loadSearchHistory () {
 
   }
 
-
-  public void loadSearchData(String keyword, int page) {
+  public void loadSearchData (String keyword, int page) {
     if (isAdded()) {
 
-      mDisposable.add(GankRetrofit.getInstance().getGankApi()
+      mDisposable.add(GankRetrofit.getInstance()
+          .getGankApi()
           .getSearchData(keyword, mCategory, 10, page)
-          .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
           .subscribe(searchGankData -> {
             List<SearchResult> resultList = searchGankData.getSearchResults();
             if (resultList != null) {
@@ -98,6 +99,5 @@ public class SearchFragment extends Fragment {
             Log.e("zzw", "accept: +++" + throwable.getMessage());
           }));
     }
-
   }
 }

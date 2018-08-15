@@ -41,9 +41,8 @@ public class SearchActivity extends AppCompatActivity {
   private SearchFragment mAppFragment;
   private SearchPagerAdapter mPagerAdapter;
 
-
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
+  protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_search);
     ButterKnife.bind(this);
@@ -51,11 +50,11 @@ public class SearchActivity extends AppCompatActivity {
     initViews();
   }
 
-
-  private void initViews() {
-    String[] titles = { getString(R.string.category_all), getString(R.string.category_android),
-        getString(R.string.category_ios), getString(R.string.category_web_font),
-        getString(R.string.category_app) };
+  private void initViews () {
+    String[] titles = {
+        getString(R.string.category_all), getString(R.string.category_android), getString(R.string.category_ios),
+        getString(R.string.category_web_font), getString(R.string.category_app)
+    };
     mAllFragment = SearchFragment.newInstance(AppConfig.TYPE_ALL);
     mAndroidFragment = SearchFragment.newInstance(AppConfig.TYPE_ANDROID);
     mIOSFragment = SearchFragment.newInstance(AppConfig.TYPE_IOS);
@@ -74,13 +73,14 @@ public class SearchActivity extends AppCompatActivity {
     mTabLayout.setupWithViewPager(mViewPager);
 
     mEditQuery.addTextChangedListener(new TextWatcher() {
-      @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+      @Override
+      public void beforeTextChanged (CharSequence s, int start, int count, int after) { }
 
+      @Override
+      public void onTextChanged (CharSequence s, int start, int before, int count) { }
 
-      @Override public void onTextChanged(CharSequence s, int start, int before, int count) { }
-
-
-      @Override public void afterTextChanged(Editable s) {
+      @Override
+      public void afterTextChanged (Editable s) {
         if (!TextUtils.isEmpty(mEditQuery.getText().toString().trim())) {
           mPagerAdapter.loadSearchResult(mEditQuery.getText().toString(), 1);
         }
@@ -88,45 +88,43 @@ public class SearchActivity extends AppCompatActivity {
     });
   }
 
-
-  @OnClick(R.id.iv_back) public void onBackClicked() {
+  @OnClick(R.id.iv_back)
+  public void onBackClicked () {
     finish();
   }
 
-
-  @OnClick(R.id.iv_back) public void onClearSearchKeyword() {
+  @OnClick(R.id.iv_back)
+  public void onClearSearchKeyword () {
     mEditQuery.setText("");
   }
-
 
   static class SearchPagerAdapter extends FragmentPagerAdapter {
     private final List<Fragment> mFragmentList;
     private final String[] mTitles;
 
-
-    SearchPagerAdapter(FragmentManager fm, List<Fragment> fragmentList, String[] titles) {
+    SearchPagerAdapter (FragmentManager fm, List<Fragment> fragmentList, String[] titles) {
       super(fm);
       mFragmentList = fragmentList;
       mTitles = titles;
     }
 
-
-    @Override public Fragment getItem(int position) {
+    @Override
+    public Fragment getItem (int position) {
       return mFragmentList.get(position);
     }
 
-
-    @Override public int getCount() {
+    @Override
+    public int getCount () {
       return mTitles.length;
     }
 
-
-    @Nullable @Override public CharSequence getPageTitle(int position) {
+    @Nullable
+    @Override
+    public CharSequence getPageTitle (int position) {
       return mTitles[position];
     }
 
-
-    public void loadSearchResult(String keyword, int page) {
+    public void loadSearchResult (String keyword, int page) {
       for (Fragment fragment : mFragmentList) {
         ((SearchFragment) fragment).loadSearchData(keyword, page);
       }

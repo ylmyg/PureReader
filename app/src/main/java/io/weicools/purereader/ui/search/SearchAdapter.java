@@ -29,15 +29,13 @@ public class SearchAdapter extends BaseAdapter implements Filterable {
   private LayoutInflater inflater;
   private boolean ellipsize;
 
-
-  public SearchAdapter(Context context, String[] suggestions) {
+  public SearchAdapter (Context context, String[] suggestions) {
     inflater = LayoutInflater.from(context);
     data = new ArrayList<>();
     this.suggestions = suggestions;
   }
 
-
-  public SearchAdapter(Context context, String[] suggestions, Drawable suggestionIcon, boolean ellipsize) {
+  public SearchAdapter (Context context, String[] suggestions, Drawable suggestionIcon, boolean ellipsize) {
     inflater = LayoutInflater.from(context);
     data = new ArrayList<>();
     this.suggestions = suggestions;
@@ -45,12 +43,11 @@ public class SearchAdapter extends BaseAdapter implements Filterable {
     this.ellipsize = ellipsize;
   }
 
-
   @Override
-  public Filter getFilter() {
+  public Filter getFilter () {
     Filter filter = new Filter() {
       @Override
-      protected FilterResults performFiltering(CharSequence constraint) {
+      protected FilterResults performFiltering (CharSequence constraint) {
         FilterResults filterResults = new FilterResults();
         if (!TextUtils.isEmpty(constraint)) {
 
@@ -70,9 +67,8 @@ public class SearchAdapter extends BaseAdapter implements Filterable {
         return filterResults;
       }
 
-
       @Override
-      protected void publishResults(CharSequence constraint, FilterResults results) {
+      protected void publishResults (CharSequence constraint, FilterResults results) {
         if (results.values != null) {
           data = (ArrayList<String>) results.values;
           notifyDataSetChanged();
@@ -82,27 +78,23 @@ public class SearchAdapter extends BaseAdapter implements Filterable {
     return filter;
   }
 
-
   @Override
-  public int getCount() {
+  public int getCount () {
     return data.size();
   }
 
-
   @Override
-  public Object getItem(int position) {
+  public Object getItem (int position) {
     return data.get(position);
   }
 
-
   @Override
-  public long getItemId(int position) {
+  public long getItemId (int position) {
     return position;
   }
 
-
   @Override
-  public View getView(int position, View convertView, ViewGroup parent) {
+  public View getView (int position, View convertView, ViewGroup parent) {
 
     SuggestionsViewHolder viewHolder;
 
@@ -125,14 +117,12 @@ public class SearchAdapter extends BaseAdapter implements Filterable {
     return convertView;
   }
 
-
   private class SuggestionsViewHolder {
 
     TextView textView;
     ImageView imageView;
 
-
-    SuggestionsViewHolder(View convertView) {
+    SuggestionsViewHolder (View convertView) {
       textView = convertView.findViewById(R.id.suggestion_text);
       if (suggestionIcon != null) {
         imageView = convertView.findViewById(R.id.suggestion_icon);

@@ -8,27 +8,23 @@ package io.weicools.purereader.ui.favorite;
 public class FavoritesPresenter implements FavoritesContract.Presenter {
   private FavoritesContract.View mView;
 
-
-  public FavoritesPresenter(FavoritesContract.View view) {
+  public FavoritesPresenter (FavoritesContract.View view) {
     mView = view;
     mView.setPresenter(this);
   }
 
-
   @Override
-  public void subscribe() {
+  public void subscribe () {
 
   }
 
-
   @Override
-  public void unSubscribe() {
+  public void unSubscribe () {
 
   }
 
-
   @Override
-  public void loadFavorites() {
+  public void loadFavorites () {
 
   }
 }

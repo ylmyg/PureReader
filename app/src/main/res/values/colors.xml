@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#03A9F4</color>
-    <color name="colorPrimaryDark">#0288D1</color>
-    <color name="colorAccent">#81D4FA</color>
-
-    <color name="colorPrimaryText">#212121</color>
-    <color name="colorSecondaryText">#757575</color>
-
-    <color name="colorBaseBackground">#fafafa</color>
-
-    <color name="bottom_bg">#FEFEFE</color>
-    <color name="bottom_icon">#212121</color>
-    <color name="card_bg">#FFFFFFFF</color>
-
-    <color name="nav_item_unselected">#9A9A9A</color>
-    <color name="nav_item_selected">@color/colorPrimaryDark</color>
-
-    <color name="color_tab_1">#455C65</color>
-    <color name="color_tab_2">#00886A</color>
-    <color name="color_tab_3">#8B6B62</color>
-    <color name="color_tab_4">#6C4A42</color>
-    <color name="color_tab_5">#F63D2B</color>
-
-    <color name="colorLightBar">#FFFFFF</color>
-    <color name="colorLightStatus">#9E9E9E</color>
-    <color name="icon_color_1">#000000</color>
-    <color name="icon_color_2">#FFFFFF</color>
+  <color name="colorPrimary">#03A9F4</color>
+  <color name="colorPrimaryDark">#0288D1</color>
+  <color name="colorAccent">#81D4FA</color>
+  
+  <color name="colorPrimaryText">#212121</color>
+  <color name="colorSecondaryText">#757575</color>
+  
+  <color name="colorBaseBackground">#fafafa</color>
+  
+  <color name="bottom_bg">#FEFEFE</color>
+  <color name="bottom_icon">#212121</color>
+  <color name="card_bg">#FFFFFFFF</color>
+  
+  <color name="nav_item_unselected">#9A9A9A</color>
+  <color name="nav_item_selected">@color/colorPrimaryDark</color>
+  
+  <color name="color_tab_1">#455C65</color>
+  <color name="color_tab_2">#00886A</color>
+  <color name="color_tab_3">#8B6B62</color>
+  <color name="color_tab_4">#6C4A42</color>
+  <color name="color_tab_5">#F63D2B</color>
+  
+  <color name="colorLightBar">#FFFFFF</color>
+  <color name="colorLightStatus">#9E9E9E</color>
+  <color name="icon_color_1">#000000</color>
+  <color name="icon_color_2">#FFFFFF</color>
 </resources>

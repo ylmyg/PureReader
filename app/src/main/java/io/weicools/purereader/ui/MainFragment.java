@@ -51,19 +51,17 @@ public class MainFragment extends BaseFragment {
   private GankFragment mAppFragment;
   private GankFragment mRecommendFragment;
 
-
-  public static MainFragment newInstance() {
+  public static MainFragment newInstance () {
     return new MainFragment();
   }
 
-
-  @Override protected int getLayoutResId() {
+  @Override
+  protected int getLayoutResId () {
     return R.layout.fragment_main;
   }
 
-
   @Override
-  public void onCreate(@Nullable Bundle savedInstanceState) {
+  public void onCreate (@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setHasOptionsMenu(true);
     // FIXME: 2018/4/16 night mode problem
@@ -75,10 +73,8 @@ public class MainFragment extends BaseFragment {
     mRecommendFragment = GankFragment.newInstance(AppConfig.TYPE_RECOMMEND);
   }
 
-
   @Override
-  public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
+  public View onCreateView (@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
     initToolbar();
     initView();
@@ -86,8 +82,7 @@ public class MainFragment extends BaseFragment {
     return mRootView;
   }
 
-
-  public void initToolbar() {
+  public void initToolbar () {
     AppCompatActivity compatActivity = (AppCompatActivity) getActivity();
     if (compatActivity != null) {
       compatActivity.setSupportActionBar(mToolbar);
@@ -98,9 +93,8 @@ public class MainFragment extends BaseFragment {
     }
   }
 
-
   @Override
-  public void onSaveInstanceState(@NonNull Bundle outState) {
+  public void onSaveInstanceState (@NonNull Bundle outState) {
     super.onSaveInstanceState(outState);
     FragmentManager fm = getChildFragmentManager();
     if (mGankFragment.isAdded()) {
@@ -123,8 +117,7 @@ public class MainFragment extends BaseFragment {
     }
   }
 
-
-  private void initView() {
+  private void initView () {
     List<String> titles = new ArrayList<>();
     titles.add(AppConfig.TYPE_DAILY);
     titles.add(AppConfig.TYPE_ANDROID);
@@ -153,15 +146,13 @@ public class MainFragment extends BaseFragment {
     mTabLayout.setupWithViewPager(mViewPager);
   }
 
-
-  private void initListener() {
+  private void initListener () {
     mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
       @Override
-      public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
-
+      public void onPageScrolled (int position, float positionOffset, int positionOffsetPixels) { }
 
       @Override
-      public void onPageSelected(int position) {
+      public void onPageSelected (int position) {
         if (position == 0) {
           mFab.show();
         } else {
@@ -169,9 +160,8 @@ public class MainFragment extends BaseFragment {
         }
       }
 
-
       @Override
-      public void onPageScrollStateChanged(int state) { }
+      public void onPageScrollStateChanged (int state) { }
     });
 
     mFab.setOnClickListener(view -> {
@@ -181,9 +171,8 @@ public class MainFragment extends BaseFragment {
     });
   }
 
-
   @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
+  public boolean onOptionsItemSelected (MenuItem item) {
     switch (item.getItemId()) {
       case R.id.action_search:
         startActivity(new Intent(getActivity(), SearchActivity.class));
@@ -193,40 +182,34 @@ public class MainFragment extends BaseFragment {
     }
   }
 
-
   @Override
-  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+  public void onCreateOptionsMenu (Menu menu, MenuInflater inflater) {
     inflater.inflate(R.menu.menu_gank, menu);
     super.onCreateOptionsMenu(menu, inflater);
   }
-
 
   static class FragmentAdapter extends FragmentStatePagerAdapter {
     private List<Fragment> mFragments;
     private List<String> mTitles;
 
-
-    FragmentAdapter(FragmentManager fm, List<Fragment> fragments, List<String> titles) {
+    FragmentAdapter (FragmentManager fm, List<Fragment> fragments, List<String> titles) {
       super(fm);
       mFragments = fragments;
       mTitles = titles;
     }
 
-
     @Override
-    public Fragment getItem(int position) {
+    public Fragment getItem (int position) {
       return mFragments.get(position);
     }
 
-
     @Override
-    public int getCount() {
+    public int getCount () {
       return mFragments.size();
     }
 
-
     @Override
-    public CharSequence getPageTitle(int position) {
+    public CharSequence getPageTitle (int position) {
       return mTitles.get(position);
     }
   }

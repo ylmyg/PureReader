@@ -13,15 +13,14 @@ import io.weicools.purereader.base.BaseView;
  */
 public interface FavoritesContract {
   interface View extends BaseView<Presenter> {
-    void setLoadingIndicator(boolean active);
+    void setLoadingIndicator (boolean active);
 
-    void showFavorites(List<GankContent> dataList);
+    void showFavorites (List<GankContent> dataList);
 
-    void showNoData();
+    void showNoData ();
   }
 
-
   interface Presenter extends BasePresenter {
-    void loadFavorites();
+    void loadFavorites ();
   }
 }

@@ -6,10 +6,9 @@ package io.weicools.purereader.util;
  */
 
 public final class InfoConstant {
-  private InfoConstant() {
+  private InfoConstant () {
     throw new AssertionError("No construction for constant class");
   }
-
 
   public static final String KEY_NO_IMG_MODE = "no_picture_mode";
   public static final String KEY_CHROME_CUSTOM_TABS = "chrome_custom_tabs";

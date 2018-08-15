@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#35464e</color>
-    <color name="colorPrimaryDark">#212a2f</color>
-    <color name="colorAccent">#03A9F4</color>
+  <color name="colorPrimary">#35464e</color>
+  <color name="colorPrimaryDark">#212a2f</color>
+  <color name="colorAccent">#03A9F4</color>
 
-    <color name="colorPrimaryText">#e4e4e4</color>
-    <color name="colorSecondaryText">#b5b5b5</color>
+  <color name="colorPrimaryText">#e4e4e4</color>
+  <color name="colorSecondaryText">#b5b5b5</color>
 
-    <color name="colorBaseBackground">#212a2f</color>
+  <color name="colorBaseBackground">#212a2f</color>
 
-    <color name="bottom_bg">#35464e</color>
-    <color name="bottom_icon">#e4e4e4</color>
-    <color name="card_bg">#35464e</color>
+  <color name="bottom_bg">#35464e</color>
+  <color name="bottom_icon">#e4e4e4</color>
+  <color name="card_bg">#35464e</color>
 </resources>

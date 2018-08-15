@@ -16,28 +16,23 @@ import io.weicools.purereader.base.BaseFragment;
  * desc:
  */
 public class MyInfoFragment extends BaseFragment {
-  public MyInfoFragment() {
+  public MyInfoFragment () {
     // Required empty public constructor
   }
 
-
-  public static MyInfoFragment newInstance() {
+  public static MyInfoFragment newInstance () {
     return new MyInfoFragment();
   }
 
-
-  @Override protected int getLayoutResId() {
+  @Override
+  protected int getLayoutResId () {
     return R.layout.fragment_my_info;
   }
 
-
   @Override
-  public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
+  public View onCreateView (@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
-    getChildFragmentManager().beginTransaction()
-        .replace(R.id.info_container, new InfoPreferenceFragment())
-        .commit();
+    getChildFragmentManager().beginTransaction().replace(R.id.info_container, new InfoPreferenceFragment()).commit();
     return mRootView;
   }
 }

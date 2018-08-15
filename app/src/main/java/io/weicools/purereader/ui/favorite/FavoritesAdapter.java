@@ -19,41 +19,35 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
   private Context mContext;
   private List<GankContent> mDataList;
 
-
-  public FavoritesAdapter(Context context) {
+  public FavoritesAdapter (Context context) {
     mContext = context;
     mDataList = new ArrayList<>();
   }
 
-
-  public void setDataList(List<GankContent> dataList) {
+  public void setDataList (List<GankContent> dataList) {
     mDataList = dataList;
     notifyDataSetChanged();
   }
 
-
   @NonNull
   @Override
-  public FavoritesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+  public FavoritesHolder onCreateViewHolder (@NonNull ViewGroup parent, int viewType) {
     return null;
   }
 
-
   @Override
-  public void onBindViewHolder(@NonNull FavoritesHolder holder, int position) {
+  public void onBindViewHolder (@NonNull FavoritesHolder holder, int position) {
 
   }
 
-
   @Override
-  public int getItemCount() {
+  public int getItemCount () {
     return mDataList.size();
   }
 
-
   static class FavoritesHolder extends RecyclerView.ViewHolder {
 
-    FavoritesHolder(View itemView) {
+    FavoritesHolder (View itemView) {
       super(itemView);
     }
   }

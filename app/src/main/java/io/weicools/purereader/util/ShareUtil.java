@@ -10,7 +10,7 @@ import android.net.Uri;
  * desc:
  */
 public class ShareUtil {
-  public static void shareText(Context context, String shareText) {
+  public static void shareText (Context context, String shareText) {
     Intent intent = new Intent(Intent.ACTION_SEND);
     intent.setType("text/plain");
     intent.putExtra(Intent.EXTRA_SUBJECT, "分享");
@@ -19,8 +19,7 @@ public class ShareUtil {
     context.startActivity(Intent.createChooser(intent, "分享"));
   }
 
-
-  public static void shareImage(Context context, Uri uri) {
+  public static void shareImage (Context context, Uri uri) {
     Intent shareIntent = new Intent();
     shareIntent.setAction(Intent.ACTION_SEND);
     shareIntent.putExtra(Intent.EXTRA_STREAM, uri);

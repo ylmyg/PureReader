@@ -12,23 +12,22 @@ import java.util.List;
  */
 public interface GankContract {
   interface View extends BaseView<Presenter> {
-    void setLoadingIndicator(boolean active);
+    void setLoadingIndicator (boolean active);
 
-    void showResult(List<GankContent> dataList);
+    void showResult (List<GankContent> dataList);
 
-    void updateResult(List<GankContent> dataList);
+    void updateResult (List<GankContent> dataList);
 
-    void showLoadingDataError();
+    void showLoadingDataError ();
 
-    void showNoData();
+    void showNoData ();
   }
 
-
   interface Presenter extends BasePresenter {
-    void loadGankData(boolean isRefresh, String category, int page);
+    void loadGankData (boolean isRefresh, String category, int page);
 
-    void loadLatestDailyData();
+    void loadLatestDailyData ();
 
-    void loadDailyData(int year, int month, int day);
+    void loadDailyData (int year, int month, int day);
   }
 }

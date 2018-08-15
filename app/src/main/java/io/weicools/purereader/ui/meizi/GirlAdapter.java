@@ -25,57 +25,49 @@ public class GirlAdapter extends RecyclerView.Adapter<GirlAdapter.GirlHolder> {
   private Context mContext;
   private List<GankContent> mDataList;
 
-
-  public GirlAdapter(Context context) {
+  public GirlAdapter (Context context) {
     mContext = context;
     mDataList = new ArrayList<>();
   }
 
-
-  public void setDataList(List<GankContent> dataList) {
+  public void setDataList (List<GankContent> dataList) {
     mDataList = dataList;
     notifyDataSetChanged();
   }
 
-
-  public void updateData(List<GankContent> dataList) {
+  public void updateData (List<GankContent> dataList) {
     int position = mDataList.size();
     mDataList.addAll(dataList);
     notifyItemRangeChanged(position, dataList.size());
   }
 
-
   @NonNull
   @Override
-  public GirlHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+  public GirlHolder onCreateViewHolder (@NonNull ViewGroup parent, int viewType) {
     View view = LayoutInflater.from(mContext).inflate(R.layout.item_girls, parent, false);
     return new GirlHolder(view);
   }
 
-
   @Override
-  public void onBindViewHolder(@NonNull GirlHolder holder, int position) {
+  public void onBindViewHolder (@NonNull GirlHolder holder, int position) {
     final GankContent data = mDataList.get(position);
 
-    Glide.with(mContext).load(data.getUrl() + "?imageView2/0/w/250")
-        .into(holder.ivGirl);
+    Glide.with(mContext).load(data.getUrl() + "?imageView2/0/w/250").into(holder.ivGirl);
     //                .placeholder(R.drawable.placeholder)
     //                .error(R.drawable.placeholder)
-    holder.itemView.setOnClickListener(v -> BigImageActivity.startBigImageActivity(mContext, data.getUrl(), data.getDesc()));
+    holder.itemView.setOnClickListener(
+        v -> BigImageActivity.startBigImageActivity(mContext, data.getUrl(), data.getDesc()));
   }
-
 
   @Override
-  public int getItemCount() {
+  public int getItemCount () {
     return mDataList.size();
   }
-
 
   static class GirlHolder extends RecyclerView.ViewHolder {
     final ImageView ivGirl;
 
-
-    GirlHolder(View itemView) {
+    GirlHolder (View itemView) {
       super(itemView);
       ivGirl = itemView.findViewById(R.id.iv_girl);
     }

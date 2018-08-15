@@ -16,7 +16,7 @@ import io.weicools.purereader.R;
 public class LicenseActivity extends AppCompatActivity {
 
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
+  protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_license);
 
@@ -28,9 +28,8 @@ public class LicenseActivity extends AppCompatActivity {
     webView.loadUrl("file:///android_asset/licenses.html");
   }
 
-
   @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
+  public boolean onOptionsItemSelected (MenuItem item) {
     if (item.getItemId() == android.R.id.home) {
       onBackPressed();
     }

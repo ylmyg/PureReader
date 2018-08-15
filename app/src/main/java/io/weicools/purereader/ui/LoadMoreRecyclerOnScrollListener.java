@@ -22,14 +22,12 @@ public abstract class LoadMoreRecyclerOnScrollListener extends RecyclerView.OnSc
 
   private RecyclerView.LayoutManager mLayoutManager;
 
-
-  public LoadMoreRecyclerOnScrollListener(RecyclerView.LayoutManager layoutManager) {
+  public LoadMoreRecyclerOnScrollListener (RecyclerView.LayoutManager layoutManager) {
     this.mLayoutManager = layoutManager;
   }
 
-
   @Override
-  public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+  public void onScrolled (RecyclerView recyclerView, int dx, int dy) {
     super.onScrolled(recyclerView, dx, dy);
 
     visibleItemCount = recyclerView.getChildCount();
@@ -39,9 +37,8 @@ public abstract class LoadMoreRecyclerOnScrollListener extends RecyclerView.OnSc
     }
     if (mLayoutManager instanceof StaggeredGridLayoutManager) {
       totalItemCount = mLayoutManager.getItemCount();
-      int[] lastPositions = ((StaggeredGridLayoutManager) mLayoutManager)
-          .findFirstVisibleItemPositions(new int[((StaggeredGridLayoutManager) mLayoutManager)
-              .getSpanCount()]);
+      int[] lastPositions = ((StaggeredGridLayoutManager) mLayoutManager).findFirstVisibleItemPositions(
+          new int[((StaggeredGridLayoutManager) mLayoutManager).getSpanCount()]);
       firstVisibleItem = getMinPositions(lastPositions);
     }
 
@@ -52,7 +49,8 @@ public abstract class LoadMoreRecyclerOnScrollListener extends RecyclerView.OnSc
         previousTotal = totalItemCount;
       }
     }
-    if (!isLoading && totalItemCount > visibleItemCount && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
+    if (!isLoading && totalItemCount > visibleItemCount && (totalItemCount - visibleItemCount) <= (firstVisibleItem
+        + visibleThreshold)) {
       currentPage++;
       onLoadMore(currentPage);
       isLoading = true;
@@ -60,11 +58,10 @@ public abstract class LoadMoreRecyclerOnScrollListener extends RecyclerView.OnSc
     }
   }
 
-
   /**
    * 获得当前展示最小的position
    */
-  private int getMinPositions(int[] positions) {
+  private int getMinPositions (int[] positions) {
     int size = positions.length;
     int minPosition = Integer.MAX_VALUE;
     for (int i = 0; i < size; i++) {
@@ -73,6 +70,5 @@ public abstract class LoadMoreRecyclerOnScrollListener extends RecyclerView.OnSc
     return minPosition;
   }
 
-
-  public abstract void onLoadMore(int currentPage);
+  public abstract void onLoadMore (int currentPage);
 }

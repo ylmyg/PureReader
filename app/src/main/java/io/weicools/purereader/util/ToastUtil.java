@@ -11,31 +11,25 @@ import android.widget.Toast;
  * desc:
  */
 public class ToastUtil {
-  @SuppressLint("StaticFieldLeak")
-  private static Application application;
+  @SuppressLint("StaticFieldLeak") private static Application application;
 
-
-  public static void init(Application application) {
+  public static void init (Application application) {
     ToastUtil.application = application;
   }
 
-
-  public static void showShort(String text) {
+  public static void showShort (String text) {
     Toast.makeText(application, text, Toast.LENGTH_SHORT).show();
   }
 
-
-  public static void showShort(@StringRes int resId) {
+  public static void showShort (@StringRes int resId) {
     showShort(application.getString(resId));
   }
 
-
-  public static void showLong(String text) {
+  public static void showLong (String text) {
     Toast.makeText(application, text, Toast.LENGTH_LONG).show();
   }
 
-
-  public static void showLong(@StringRes int resId) {
+  public static void showLong (@StringRes int resId) {
     showLong(application.getString(resId));
   }
 }

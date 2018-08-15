@@ -16,13 +16,11 @@ public final class DateFormatUtil {
   private static final String DATE_FORMAT_STYLE2 = "yyyy/MM/dd";
   private static final String DATE_FORMAT_STYLE3 = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 
-
-  private DateFormatUtil() {
+  private DateFormatUtil () {
     throw new AssertionError("No construction for constant class");
   }
 
-
-  public static String getTimeStr(String time) {
+  public static String getTimeStr (String time) {
     DateFormat df = new SimpleDateFormat(DATE_FORMAT_STYLE3, Locale.getDefault());
     long diff;
     try {
@@ -56,8 +54,7 @@ public final class DateFormatUtil {
     return time;
   }
 
-
-  public static String dateFormat(String dateStr) {
+  public static String dateFormat (String dateStr) {
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
     Date date = new Date();
     try {
@@ -69,8 +66,7 @@ public final class DateFormatUtil {
     return simpleDateFormat.format(date);
   }
 
-
-  public static String formatZhihuDailyDateLongToString(long date) {
+  public static String formatZhihuDailyDateLongToString (long date) {
     String sDate;
     Date d = new Date(date + 24 * 60 * 60 * 1000);
     SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
@@ -78,8 +74,7 @@ public final class DateFormatUtil {
     return sDate;
   }
 
-
-  public static long formatZhihuDailyDateStringToLong(String date) {
+  public static long formatZhihuDailyDateStringToLong (String date) {
     Date d = null;
     try {
       d = new SimpleDateFormat("yyyyMMdd", Locale.getDefault()).parse(date);
@@ -89,8 +84,7 @@ public final class DateFormatUtil {
     return d == null ? 0 : d.getTime();
   }
 
-
-  public static String formatDoubanMomentDateLongToString(long date) {
+  public static String formatDoubanMomentDateLongToString (long date) {
     String sDate;
     Date d = new Date(date);
     SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT_STYLE1, Locale.getDefault());
@@ -99,8 +93,7 @@ public final class DateFormatUtil {
     return sDate;
   }
 
-
-  public static long formatDoubanMomentDateStringToLong(String date) {
+  public static long formatDoubanMomentDateStringToLong (String date) {
     Date d = null;
     try {
       d = new SimpleDateFormat(DATE_FORMAT_STYLE1, Locale.getDefault()).parse(date);
@@ -110,8 +103,7 @@ public final class DateFormatUtil {
     return d == null ? 0 : d.getTime();
   }
 
-
-  public static long formatGuokrHandpickTimeStringToLong(String date) {
+  public static long formatGuokrHandpickTimeStringToLong (String date) {
     Date d = null;
     try {
       d = new SimpleDateFormat(DATE_FORMAT_STYLE1, Locale.getDefault()).parse(date.substring(0, 10));

@@ -25,29 +25,26 @@ public class GankPresenter implements GankContract.Presenter {
   private GankContract.View mView;
   private CompositeDisposable mDisposable;
 
-
-  public GankPresenter(GankContract.View view) {
+  public GankPresenter (GankContract.View view) {
     mView = view;
     mView.setPresenter(this);
     mDisposable = new CompositeDisposable();
   }
 
-
   @Override
-  public void subscribe() {
+  public void subscribe () {
     //loadGankData(1);
   }
 
-
   @Override
-  public void unSubscribe() {
+  public void unSubscribe () {
     mDisposable.clear();
   }
 
-
   @Override
-  public void loadGankData(final boolean isRefresh, String category, int page) {
-    mDisposable.add(GankRetrofit.getInstance().getGankApi()
+  public void loadGankData (final boolean isRefresh, String category, int page) {
+    mDisposable.add(GankRetrofit.getInstance()
+        .getGankApi()
         .getCategoryData(category, 10, page)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -65,80 +62,68 @@ public class GankPresenter implements GankContract.Presenter {
         }));
   }
 
-
   @Override
-  public void loadLatestDailyData() {
-    mDisposable.add(GankRetrofit.getInstance().getGankApi()
-        .getLatestDailyData()
-        .map(dailyData -> {
-          List<GankContent> dataList = new ArrayList<>();
-          List<GankContent> androidList = dailyData.getResults().getAndroid();
-          List<GankContent> iOSList = dailyData.getResults().getIOS();
-          List<GankContent> webFontList = dailyData.getResults().getWebFont();
-          List<GankContent> appList = dailyData.getResults().getApp();
-          List<GankContent> resourceList = dailyData.getResults().getResource();
-          if (androidList != null) {
-            dataList.addAll(androidList);
-          }
-          if (iOSList != null) {
-            dataList.addAll(iOSList);
-          }
-          if (webFontList != null) {
-            dataList.addAll(webFontList);
-          }
-          if (appList != null) {
-            dataList.addAll(appList);
-          }
-          if (resourceList != null) {
-            dataList.addAll(resourceList);
-          }
-          return dataList;
-        })
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(dataList -> {
-          mView.showResult(dataList);
-          mView.setLoadingIndicator(false);
-        }, throwable -> {
-          mView.setLoadingIndicator(false);
-          mView.showNoData();
-        }));
+  public void loadLatestDailyData () {
+    mDisposable.add(GankRetrofit.getInstance().getGankApi().getLatestDailyData().map(dailyData -> {
+      List<GankContent> dataList = new ArrayList<>();
+      List<GankContent> androidList = dailyData.getResults().getAndroid();
+      List<GankContent> iOSList = dailyData.getResults().getIOS();
+      List<GankContent> webFontList = dailyData.getResults().getWebFont();
+      List<GankContent> appList = dailyData.getResults().getApp();
+      List<GankContent> resourceList = dailyData.getResults().getResource();
+      if (androidList != null) {
+        dataList.addAll(androidList);
+      }
+      if (iOSList != null) {
+        dataList.addAll(iOSList);
+      }
+      if (webFontList != null) {
+        dataList.addAll(webFontList);
+      }
+      if (appList != null) {
+        dataList.addAll(appList);
+      }
+      if (resourceList != null) {
+        dataList.addAll(resourceList);
+      }
+      return dataList;
+    }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(dataList -> {
+      mView.showResult(dataList);
+      mView.setLoadingIndicator(false);
+    }, throwable -> {
+      mView.setLoadingIndicator(false);
+      mView.showNoData();
+    }));
   }
 
-
   @Override
-  public void loadDailyData(int year, int month, int day) {
-    mDisposable.add(GankRetrofit.getInstance().getGankApi()
-        .getDailyData(year, month, day)
-        .map(dailyData -> {
-          List<GankContent> dataList = new ArrayList<>();
-          List<GankContent> androidList = dailyData.getResults().getAndroid();
-          List<GankContent> iOSList = dailyData.getResults().getIOS();
-          List<GankContent> webFontList = dailyData.getResults().getWebFont();
-          List<GankContent> appList = dailyData.getResults().getApp();
-          List<GankContent> resourceList = dailyData.getResults().getResource();
-          if (androidList != null) {
-            dataList.addAll(androidList);
-          }
-          if (iOSList != null) {
-            dataList.addAll(iOSList);
-          }
-          if (webFontList != null) {
-            dataList.addAll(webFontList);
-          }
-          if (appList != null) {
-            dataList.addAll(appList);
-          }
-          if (resourceList != null) {
-            dataList.addAll(resourceList);
-          }
-          return dataList;
-        })
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(dataList -> {
-          mView.showResult(dataList);
-          mView.setLoadingIndicator(false);
-        }, throwable -> mView.showLoadingDataError()));
+  public void loadDailyData (int year, int month, int day) {
+    mDisposable.add(GankRetrofit.getInstance().getGankApi().getDailyData(year, month, day).map(dailyData -> {
+      List<GankContent> dataList = new ArrayList<>();
+      List<GankContent> androidList = dailyData.getResults().getAndroid();
+      List<GankContent> iOSList = dailyData.getResults().getIOS();
+      List<GankContent> webFontList = dailyData.getResults().getWebFont();
+      List<GankContent> appList = dailyData.getResults().getApp();
+      List<GankContent> resourceList = dailyData.getResults().getResource();
+      if (androidList != null) {
+        dataList.addAll(androidList);
+      }
+      if (iOSList != null) {
+        dataList.addAll(iOSList);
+      }
+      if (webFontList != null) {
+        dataList.addAll(webFontList);
+      }
+      if (appList != null) {
+        dataList.addAll(appList);
+      }
+      if (resourceList != null) {
+        dataList.addAll(resourceList);
+      }
+      return dataList;
+    }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(dataList -> {
+      mView.showResult(dataList);
+      mView.setLoadingIndicator(false);
+    }, throwable -> mView.showLoadingDataError()));
   }
 }

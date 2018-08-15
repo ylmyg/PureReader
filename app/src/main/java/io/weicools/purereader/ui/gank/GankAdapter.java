@@ -26,20 +26,17 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankHolder> {
   private Context mContext;
   private List<GankContent> mDataList;
 
-
-  public GankAdapter(Context context) {
+  public GankAdapter (Context context) {
     mContext = context;
     mDataList = new ArrayList<>();
   }
 
-
-  public void setDataList(List<GankContent> dataList) {
+  public void setDataList (List<GankContent> dataList) {
     mDataList = dataList;
     notifyDataSetChanged();
   }
 
-
-  public void updateData(@NonNull List<GankContent> list) {
+  public void updateData (@NonNull List<GankContent> list) {
     int insertionPos = this.mDataList.size();
     this.mDataList.addAll(list);
     notifyItemRangeInserted(insertionPos, list.size());
@@ -49,17 +46,15 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankHolder> {
     //        notifyItemRemoved(list.size());
   }
 
-
   @NonNull
   @Override
-  public GankHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+  public GankHolder onCreateViewHolder (@NonNull ViewGroup parent, int viewType) {
     View view = LayoutInflater.from(mContext).inflate(R.layout.item_gank, parent, false);
     return new GankHolder(view);
   }
 
-
   @Override
-  public void onBindViewHolder(@NonNull GankHolder holder, int position) {
+  public void onBindViewHolder (@NonNull GankHolder holder, int position) {
     final GankContent data = mDataList.get(position);
 
     holder.tvWho.setText(data.getWho());
@@ -72,12 +67,10 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankHolder> {
     });
   }
 
-
   @Override
-  public int getItemCount() {
+  public int getItemCount () {
     return mDataList.size();
   }
-
 
   static class GankHolder extends RecyclerView.ViewHolder {
     final TextView tvWho;
@@ -86,8 +79,7 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankHolder> {
     final TextView tvType;
     final ImageView ivCollect;
 
-
-    GankHolder(View itemView) {
+    GankHolder (View itemView) {
       super(itemView);
       tvWho = itemView.findViewById(R.id.tv_who);
       tvTime = itemView.findViewById(R.id.tv_time);

@@ -15,23 +15,19 @@ import io.weicools.purereader.PureReaderApp;
 public final class ImageLoader {
   private Context mContext;
 
-
-  private ImageLoader() {
+  private ImageLoader () {
     mContext = PureReaderApp.getAppInstance();
   }
-
 
   private static class ImageLoaderHolder {
     static final ImageLoader INSTANCE = new ImageLoader();
   }
 
-
-  public static ImageLoader getInstance() {
+  public static ImageLoader getInstance () {
     return ImageLoaderHolder.INSTANCE;
   }
 
-
-  public void loadImage(ImageView iv, String url, @DrawableRes int placeHolder) {
+  public void loadImage (ImageView iv, String url, @DrawableRes int placeHolder) {
     RequestOptions options = new RequestOptions().centerCrop().placeholder(placeHolder);
     Glide.with(mContext).applyDefaultRequestOptions(options).load(url).into(iv);
   }

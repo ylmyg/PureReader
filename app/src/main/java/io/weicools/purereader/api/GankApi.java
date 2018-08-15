@@ -21,7 +21,7 @@ public interface GankApi {
    * @return Observable<DailyGankData>
    */
   @GET("today")
-  Observable<DailyGankData> getLatestDailyData();
+  Observable<DailyGankData> getLatestDailyData ();
 
   /**
    * https://gank.io/api/day/2018/08/09
@@ -32,7 +32,7 @@ public interface GankApi {
    * @return Observable<DailyGankData>
    */
   @GET("day/{year}/{month}/{day}")
-  Observable<DailyGankData> getDailyData(@Path("year") int year, @Path("month") int month, @Path("day") int day);
+  Observable<DailyGankData> getDailyData (@Path("year") int year, @Path("month") int month, @Path("day") int day);
 
   /**
    * https://gank.io/api/data/Android/10/1
@@ -43,7 +43,8 @@ public interface GankApi {
    * @return Observable<GankData>
    */
   @GET("data/{category}/{count}/{page}")
-  Observable<GankData> getCategoryData(@Path("category") String category, @Path("count") int count, @Path("page") int page);
+  Observable<GankData> getCategoryData (@Path("category") String category, @Path("count") int count,
+      @Path("page") int page);
 
   /**
    * https://gank.io/api/random/data/Android/5
@@ -53,7 +54,7 @@ public interface GankApi {
    * @return Observable<GankData>
    */
   @GET("random/data/{category}/{count}")
-  Observable<GankData> getRandomData(@Path("category") String category, @Path("count") int count);
+  Observable<GankData> getRandomData (@Path("category") String category, @Path("count") int count);
 
   /**
    * https://gank.io/api/search/query/listview/category/Android/count/10/page/1
@@ -64,5 +65,6 @@ public interface GankApi {
    * @return Observable<SearchGankData>
    */
   @GET("search/query/{keyword}/category/{category}/count/{count}/page/{page}")
-  Observable<SearchGankData> getSearchData(@Path("keyword") String keyword, @Path("category") String category, @Path("count") int count, @Path("page") int page);
+  Observable<SearchGankData> getSearchData (@Path("keyword") String keyword, @Path("category") String category,
+      @Path("count") int count, @Path("page") int page);
 }

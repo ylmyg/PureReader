@@ -37,9 +37,8 @@ public class InfoPreferenceFragment extends PreferenceFragmentCompat {
     return true;
   });
 
-
   @Override
-  public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+  public void onCreatePreferences (Bundle savedInstanceState, String rootKey) {
     addPreferencesFromResource(R.xml.info_preference);
 
     // Setting of night mode
@@ -86,10 +85,13 @@ public class InfoPreferenceFragment extends PreferenceFragmentCompat {
         Uri uri = Uri.parse(getString(R.string.sendto));
         Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
         intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.mail_topic));
-        intent.putExtra(Intent.EXTRA_TEXT,
-            getString(R.string.device_model) + Build.MODEL + "\n"
-                + getString(R.string.sdk_version) + Build.VERSION.RELEASE + "\n"
-                + getString(R.string.version));
+        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.device_model)
+            + Build.MODEL
+            + "\n"
+            + getString(R.string.sdk_version)
+            + Build.VERSION.RELEASE
+            + "\n"
+            + getString(R.string.version));
         startActivity(intent);
       } catch (android.content.ActivityNotFoundException ex) {
         showMessage(R.string.no_mail_app);
@@ -110,8 +112,7 @@ public class InfoPreferenceFragment extends PreferenceFragmentCompat {
     });
   }
 
-
-  private void showMessage(@StringRes int resId) {
+  private void showMessage (@StringRes int resId) {
     Toast.makeText(getContext(), resId, Toast.LENGTH_SHORT).show();
   }
 }

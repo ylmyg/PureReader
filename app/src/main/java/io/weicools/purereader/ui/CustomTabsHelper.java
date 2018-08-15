@@ -21,7 +21,7 @@ import io.weicools.purereader.util.InfoConstant;
  * links, otherwise use system browser instead.
  */
 public class CustomTabsHelper {
-  public static void openUrl(Context context, String url) {
+  public static void openUrl (Context context, String url) {
     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
     if (sharedPreferences.getBoolean(InfoConstant.KEY_CHROME_CUSTOM_TABS, true)) {

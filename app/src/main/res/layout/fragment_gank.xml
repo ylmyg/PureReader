@@ -1,59 +1,59 @@
 <android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <android.support.v4.widget.SwipeRefreshLayout
+    android:id="@+id/refresh_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/refresh_layout"
+    <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/colorBaseBackground"
+      android:clickable="true"
+      android:focusable="true"
+      android:paddingBottom="8dp">
+
+      <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_article"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:fadeScrollbars="true"
+        android:scrollbarFadeDuration="1"
+        android:scrollbars="vertical"
+        tools:listitem="@layout/item_gank" />
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="8dp"
-            android:background="@color/colorBaseBackground"
-            android:clickable="true"
-            android:focusable="true">
+      <LinearLayout
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_article"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:fadeScrollbars="true"
-                tools:listitem="@layout/item_gank"
-                android:scrollbarFadeDuration="1"
-                android:scrollbars="vertical"/>
+        <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:hapticFeedbackEnabled="true"
+          android:importantForAccessibility="no"
+          android:src="@drawable/ic_bottom_favorite"
+          android:tint="@color/colorAccent" />
 
-            <LinearLayout
-                android:id="@+id/empty_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hapticFeedbackEnabled="true"
-                    android:importantForAccessibility="no"
-                    android:src="@drawable/ic_bottom_favorite"
-                    android:tint="@color/colorAccent"/>
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/empty_content"
-                    android:textAlignment="center"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textColor="@color/colorAccent"/>
-            </LinearLayout>
-        </FrameLayout>
-    </android.support.v4.widget.SwipeRefreshLayout>
+        <android.support.v7.widget.AppCompatTextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="16dp"
+          android:text="@string/empty_content"
+          android:textAlignment="center"
+          android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+          android:textColor="@color/colorAccent" />
+      </LinearLayout>
+    </FrameLayout>
+  </android.support.v4.widget.SwipeRefreshLayout>
 </android.support.design.widget.CoordinatorLayout>

@@ -38,16 +38,11 @@ import io.weicools.purereader.util.ToastUtil;
  */
 public class WebActivity extends AppCompatActivity {
 
-  @BindView(R.id.image_view)
-  ImageView mImageView;
-  @BindView(R.id.toolbar)
-  Toolbar mToolbar;
-  @BindView(R.id.toolbar_layout)
-  CollapsingToolbarLayout mToolbarLayout;
-  @BindView(R.id.web_view)
-  WebView mWebView;
-  @BindView(R.id.nested_scroll_view)
-  NestedScrollView mNestedScrollView;
+  @BindView(R.id.image_view) ImageView mImageView;
+  @BindView(R.id.toolbar) Toolbar mToolbar;
+  @BindView(R.id.toolbar_layout) CollapsingToolbarLayout mToolbarLayout;
+  @BindView(R.id.web_view) WebView mWebView;
+  @BindView(R.id.nested_scroll_view) NestedScrollView mNestedScrollView;
 
   private Context mContext;
   private String mUrl, mDesc, mImgUrl;
@@ -58,8 +53,7 @@ public class WebActivity extends AppCompatActivity {
   private boolean mIsNightMode = false;
   private boolean mIsFavorite = false;
 
-
-  public static void startWebActivity(Context context, String url, String desc, String imgUrl) {
+  public static void startWebActivity (Context context, String url, String desc, String imgUrl) {
     Intent intent = new Intent(context, WebActivity.class);
     intent.putExtra(URL, url);
     intent.putExtra(DESC, desc);
@@ -67,9 +61,8 @@ public class WebActivity extends AppCompatActivity {
     context.startActivity(intent);
   }
 
-
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
+  protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_web);
     ButterKnife.bind(this);
@@ -87,9 +80,8 @@ public class WebActivity extends AppCompatActivity {
     initWebView();
   }
 
-
   @SuppressLint("SetJavaScriptEnabled")
-  private void initWebView() {
+  private void initWebView () {
     mWebView.setScrollbarFadingEnabled(true);
     mWebView.getSettings().setJavaScriptEnabled(true);
     mWebView.getSettings().setBuiltInZoomControls(false);
@@ -98,11 +90,13 @@ public class WebActivity extends AppCompatActivity {
     mWebView.getSettings().setAppCacheEnabled(false);
 
     // Show the images or not.
-    mWebView.getSettings().setBlockNetworkImage(PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(InfoConstant.KEY_NO_IMG_MODE, false));
+    mWebView.getSettings()
+        .setBlockNetworkImage(
+            PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(InfoConstant.KEY_NO_IMG_MODE, false));
 
     mWebView.setWebViewClient(new WebViewClient() {
       @Override
-      public boolean shouldOverrideUrlLoading(WebView view, String url) {
+      public boolean shouldOverrideUrlLoading (WebView view, String url) {
         CustomTabsHelper.openUrl(mContext, url);
         return true;
       }
@@ -112,16 +106,14 @@ public class WebActivity extends AppCompatActivity {
     mWebView.loadUrl(mUrl);
   }
 
-
   @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
+  public boolean onCreateOptionsMenu (Menu menu) {
     getMenuInflater().inflate(R.menu.menu_more, menu);
     return true;
   }
 
-
   @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
+  public boolean onOptionsItemSelected (MenuItem item) {
     int id = item.getItemId();
     if (id == android.R.id.home) {
       onBackPressed();
@@ -173,8 +165,7 @@ public class WebActivity extends AppCompatActivity {
     return true;
   }
 
-
-  private void setToolbarTitle(@NonNull String title) {
+  private void setToolbarTitle (@NonNull String title) {
     mToolbarLayout.setTitle(title);
     mToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBar);
     mToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
@@ -182,8 +173,7 @@ public class WebActivity extends AppCompatActivity {
     mToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBarPlus1);
   }
 
-
-  private void setCover(@Nullable String url) {
+  private void setCover (@Nullable String url) {
     if (!TextUtils.isEmpty(url)) {
       ImageLoader.getInstance().loadImage(mImageView, url, R.drawable.placeholder);
     } else {
@@ -191,8 +181,7 @@ public class WebActivity extends AppCompatActivity {
     }
   }
 
-
-  private void share(@Nullable String link) {
+  private void share (@Nullable String link) {
     try {
       Intent shareIntent = new Intent().setAction(Intent.ACTION_SEND).setType("text/plain");
       String shareText = "" + mDesc + " " + link;
@@ -203,8 +192,7 @@ public class WebActivity extends AppCompatActivity {
     }
   }
 
-
-  private void copyLink(@Nullable String link) {
+  private void copyLink (@Nullable String link) {
     if (link != null) {
       ClipboardManager manager = (ClipboardManager) mContext.getSystemService(CLIPBOARD_SERVICE);
       ClipData clipData = ClipData.newPlainText("text", Html.fromHtml(link).toString());
@@ -217,8 +205,7 @@ public class WebActivity extends AppCompatActivity {
     }
   }
 
-
-  private void openWithBrowser(@Nullable String link) {
+  private void openWithBrowser (@Nullable String link) {
     if (link != null) {
       CustomTabsHelper.openUrl(mContext, link);
     } else {

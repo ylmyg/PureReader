@@ -15,14 +15,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public final class GankRetrofit {
   private GankApi mGankApi;
 
+  private GankRetrofit () {
+    OkHttpClient httpClient = new OkHttpClient.Builder().connectTimeout(5, TimeUnit.SECONDS).build();
 
-  private GankRetrofit() {
-    OkHttpClient httpClient = new OkHttpClient.Builder()
-        .connectTimeout(5, TimeUnit.SECONDS)
-        .build();
-
-    Retrofit retrofit = new Retrofit.Builder()
-        .baseUrl(GankApi.BASE_URL)
+    Retrofit retrofit = new Retrofit.Builder().baseUrl(GankApi.BASE_URL)
         .client(httpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -31,18 +27,15 @@ public final class GankRetrofit {
     mGankApi = retrofit.create(GankApi.class);
   }
 
-
   private static class WanRetrofitHolder {
     static final GankRetrofit INSTANCE = new GankRetrofit();
   }
 
-
-  public static GankRetrofit getInstance() {
+  public static GankRetrofit getInstance () {
     return WanRetrofitHolder.INSTANCE;
   }
 
-
-  public GankApi getGankApi() {
+  public GankApi getGankApi () {
     return mGankApi;
   }
 }
