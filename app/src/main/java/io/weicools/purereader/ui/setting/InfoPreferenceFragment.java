@@ -6,20 +6,16 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.StringRes;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
-
 import io.weicools.purereader.AppConfig;
 import io.weicools.purereader.BuildConfig;
 import io.weicools.purereader.R;
 import io.weicools.purereader.ui.CustomTabsHelper;
+import io.weicools.purereader.ui.about.AboutActivity;
 
 /**
  * @author Weicools Create on 2018.04.13
@@ -73,7 +69,8 @@ public class InfoPreferenceFragment extends PreferenceFragmentCompat {
 
     // Open the github contributors page
     findPreference("contributors").setOnPreferenceClickListener(preference -> {
-      CustomTabsHelper.openUrl(getContext(), getString(R.string.author_page_desc));
+      startActivity(new Intent(getContext(), AboutActivity.class));
+      // CustomTabsHelper.openUrl(getContext(), getString(R.string.author_page_desc));
       return true;
     });
 
