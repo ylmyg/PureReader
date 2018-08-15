@@ -64,16 +64,40 @@ public class AboutActivity extends MaterialAboutActivity {
             c, ContextCompat.getDrawable(c, R.drawable.ic_email),
             "Send an email", true, "lecymeng@outlook.com",
             "Question concerning MaterialAboutLibrary"))
-        .addItem(ConvenienceBuilder.createPhoneItem(
-            c, ContextCompat.getDrawable(c, R.drawable.ic_phone),
-            "Call me", true, "+86 15185584134"))
         .addItem(new MaterialAboutActionItem.Builder()
             .text("Fork on GitHub")
             .icon(R.drawable.ic_github)
             .setOnClickAction(ConvenienceBuilder.createWebsiteOnClickAction(c, Uri.parse("https://github.com/lecymeng")))
             .build());
 
-    return new MaterialAboutList(appCardBuilder.build(), authorCardBuilder.build());
+    MaterialAboutCard.Builder libraryCardBuilder = new MaterialAboutCard.Builder()
+        .title("Open Source Library")
+        .addItem(ConvenienceBuilder.createWebsiteActionItem(
+            c, ContextCompat.getDrawable(c, R.drawable.ic_library_3),
+            "RxJava2", true, Uri.parse("https://github.com/ReactiveX/RxJava")))
+        .addItem(ConvenienceBuilder.createWebsiteActionItem(
+            c, ContextCompat.getDrawable(c, R.drawable.ic_library_2),
+            "Retrofit", true, Uri.parse("https://github.com/square/retrofit")))
+        .addItem(ConvenienceBuilder.createWebsiteActionItem(
+            c, ContextCompat.getDrawable(c, R.drawable.ic_library_1),
+            "OkHttp", true, Uri.parse("https://github.com/square/okhttp")))
+        .addItem(ConvenienceBuilder.createWebsiteActionItem(
+            c, ContextCompat.getDrawable(c, R.drawable.ic_library_3),
+            "Fresco", true, Uri.parse("https://github.com/facebook/fresco")))
+        .addItem(ConvenienceBuilder.createWebsiteActionItem(
+            c, ContextCompat.getDrawable(c, R.drawable.ic_library_2),
+            "Glide", true, Uri.parse("https://github.com/bumptech/glide")))
+        .addItem(ConvenienceBuilder.createWebsiteActionItem(
+            c, ContextCompat.getDrawable(c, R.drawable.ic_library_1),
+            "Butterknife", true, Uri.parse("https://github.com/JakeWharton/butterknife")))
+        .addItem(ConvenienceBuilder.createWebsiteActionItem(
+            c, ContextCompat.getDrawable(c, R.drawable.ic_library_3),
+            "AHBottomNavigation", true, Uri.parse("https://github.com/aurelhubert/ahbottomnavigation")))
+        .addItem(ConvenienceBuilder.createWebsiteActionItem(
+            c, ContextCompat.getDrawable(c, R.drawable.ic_library_2),
+            "Material About", true, Uri.parse("https://github.com/daniel-stoneuk/material-about-library")));
+
+    return new MaterialAboutList(appCardBuilder.build(), authorCardBuilder.build(), libraryCardBuilder.build());
   }
 
 
