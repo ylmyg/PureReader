@@ -1,86 +1,103 @@
 package io.weicools.purereader.ui.about;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 import com.danielstone.materialaboutlibrary.ConvenienceBuilder;
 import com.danielstone.materialaboutlibrary.MaterialAboutActivity;
 import com.danielstone.materialaboutlibrary.items.MaterialAboutActionItem;
-import com.danielstone.materialaboutlibrary.items.MaterialAboutItemOnClickAction;
 import com.danielstone.materialaboutlibrary.items.MaterialAboutTitleItem;
 import com.danielstone.materialaboutlibrary.model.MaterialAboutCard;
 import com.danielstone.materialaboutlibrary.model.MaterialAboutList;
-import com.danielstone.materialaboutlibrary.util.ViewTypeManager;
 import io.weicools.purereader.R;
+import io.weicools.purereader.ui.setting.LicenseActivity;
 
+/**
+ * @author Weicools Create on 2018.08.14
+ *
+ * desc:
+ */
 public class AboutActivity extends MaterialAboutActivity {
-  protected int colorIcon = R.color.mal_color_icon_light_theme;
-
-
   @NonNull
   @Override
   protected MaterialAboutList getMaterialAboutList(@NonNull final Context c) {
-    MaterialAboutCard.Builder advancedCardBuilder = new MaterialAboutCard.Builder();
-    advancedCardBuilder.title("Advanced");
-
-    advancedCardBuilder.addItem(new MaterialAboutTitleItem.Builder()
-        .text("TitleItem OnClickAction")
+    MaterialAboutCard.Builder appCardBuilder = new MaterialAboutCard.Builder();
+    // Add items to card
+    appCardBuilder.addItem(new MaterialAboutTitleItem.Builder()
+        .text("Pure Reader")
+        .desc("© 2018 Weicools")
         .icon(R.mipmap.ic_launcher)
-        .setOnClickAction(ConvenienceBuilder.createWebsiteOnClickAction(c, Uri.parse("http://www.daniel-stone.uk")))
         .build());
 
-    advancedCardBuilder.addItem(new MaterialAboutActionItem.Builder()
-        .text("Snackbar demo")
-        .icon(R.drawable.ic_action_navigation_arrow_back)
-        .setOnClickAction(() -> Snackbar.make(AboutActivity.this.findViewById(R.id.mal_material_about_activity_coordinator_layout), "Test", Snackbar.LENGTH_SHORT).show())
+    appCardBuilder.addItem(ConvenienceBuilder.createVersionActionItem(c,
+        ContextCompat.getDrawable(c, R.drawable.ic_insert_link_24dp),
+        "Version", false));
+
+    appCardBuilder.addItem(new MaterialAboutActionItem.Builder()
+        .text("Changelog")
+        .icon(ContextCompat.getDrawable(c, R.drawable.ic_track_changes_24dp))
+        .setOnClickAction(ConvenienceBuilder.createWebViewDialogOnClickAction(c, "Releases", "https://github.com/lecymeng/PureReader/releases", true, false))
         .build());
 
-    advancedCardBuilder.addItem(new MaterialAboutActionItem.Builder()
-        .text("OnLongClickAction demo")
-        .icon(R.drawable.ic_action_navigation_arrow_back)
-        .setOnLongClickAction(() -> Toast.makeText(c, "Long pressed", Toast.LENGTH_SHORT).show())
+    appCardBuilder.addItem(new MaterialAboutActionItem.Builder()
+        .text("Licenses")
+        .icon(R.drawable.ic_insert_link_24dp)
+        .setOnClickAction(() -> c.startActivity(new Intent(c, LicenseActivity.class)))
         .build());
 
-    advancedCardBuilder.addItem(new MyCustomItem.Builder()
-        .text("Custom Item")
-        .icon(R.drawable.ic_action_navigation_arrow_back)
+    MaterialAboutCard.Builder authorCardBuilder = new MaterialAboutCard.Builder()
+        .title("Author")
+        .addItem(new MaterialAboutActionItem.Builder()
+            .text("Weicools")
+            .subText("Beijing")
+            .icon(R.drawable.ic_person_outline_24dp)
+            .build());
+
+    authorCardBuilder.addItem(new MaterialAboutActionItem.Builder()
+        .text("Fork on GitHub")
+        .icon(R.drawable.ic_insert_link_24dp)
+        .setOnClickAction(ConvenienceBuilder.createWebsiteOnClickAction(c, Uri.parse("https://github.com/lecymeng")))
         .build());
 
-    advancedCardBuilder.addItem(createDynamicItem("Tap for a random number & swap position", c));
+    MaterialAboutCard.Builder convenienceCardBuilder = new MaterialAboutCard.Builder()
+        .title("Convenience Builder")
+        .addItem(ConvenienceBuilder.createVersionActionItem(c,
+            ContextCompat.getDrawable(c, R.drawable.ic_insert_link_24dp),
+            "Version", false));
 
-    return Demo.createMaterialAboutList(c);
-  }
+    convenienceCardBuilder.addItem(ConvenienceBuilder.createWebsiteActionItem(c,
+        ContextCompat.getDrawable(c, R.drawable.ic_insert_link_24dp),
+        "Visit Website", true, Uri.parse("https://weicools.com")));
 
+    convenienceCardBuilder.addItem(ConvenienceBuilder.createRateActionItem(c,
+        ContextCompat.getDrawable(c, R.drawable.ic_star_24dp),
+        "Rate this app", null));
 
-  private MaterialAboutActionItem createDynamicItem(String subText, final Context c) {
-    final MaterialAboutActionItem item = new MaterialAboutActionItem.Builder()
-        .text("Dynamic UI")
-        .subText(subText)
-        .icon(R.drawable.ic_action_navigation_arrow_back)
-        .build();
-    item.setOnClickAction(() -> {
-      getList().getCards().get(4).getItems().remove(getList().getCards().get(4).getItems().indexOf(item));
-      int newIndex = ((int) (Math.random() * 5));
-      getList().getCards().get(4).getItems().add(newIndex, item);
-      item.setSubText("Random number: " + ((int) (Math.random() * 10)));
-      setMaterialAboutList(getList());
-    });
+    convenienceCardBuilder.addItem(ConvenienceBuilder.createEmailItem(c,
+        ContextCompat.getDrawable(c, R.drawable.ic_email_24dp),
+        "Send an email", true, "lecymeng@outlook.com",
+        "Question concerning MaterialAboutLibrary"));
 
-    return item;
+    convenienceCardBuilder.addItem(ConvenienceBuilder.createPhoneItem(c,
+        ContextCompat.getDrawable(c, R.drawable.ic_phone_24dp),
+        "Call me", true, "+86 15185584134"));
+
+    convenienceCardBuilder.addItem(ConvenienceBuilder.createMapItem(c,
+        ContextCompat.getDrawable(c, R.drawable.ic_insert_link_24dp),
+        "Visit Beijing", null, "Beijing ChaoYang"));
+
+    return new MaterialAboutList(appCardBuilder.build(), authorCardBuilder.build(), convenienceCardBuilder.build());
   }
 
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     setTheme(R.style.AppTheme_MaterialAboutActivity_Light);
-    // colorIcon = R.color.mal_color_icon_light_theme;
     super.onCreate(savedInstanceState);
   }
 
@@ -88,13 +105,6 @@ public class AboutActivity extends MaterialAboutActivity {
   @Override
   protected CharSequence getActivityTitle() {
     return getString(R.string.mal_title_about);
-  }
-
-
-  @NonNull
-  @Override
-  protected ViewTypeManager getViewTypeManager() {
-    return new MyViewTypeManager();
   }
 
 
