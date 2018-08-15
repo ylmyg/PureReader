@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 
 android {
   compileSdkVersion 27
+  buildToolsVersion '27.0.3'
   defaultConfig {
     applicationId "io.weicools.purereader"
     minSdkVersion 22
@@ -63,9 +64,10 @@ android {
 }
 
 dependencies {
-  implementation fileTree(dir: 'libs', include: ['*.jar'])
+  implementation fileTree(include: ['*.jar'], dir: 'libs')
   // kotlin plugin
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
   // Support Library
   implementation "com.android.support:design:$support_version"
   implementation "com.android.support:support-v4:$support_version"
@@ -79,27 +81,35 @@ dependencies {
   implementation "android.arch.persistence.room:runtime:$room_version"
   implementation "android.arch.persistence.room:rxjava2:$room_version"
   annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+
   // Rx series
   implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
   implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
+
   // Retrofit series
   implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
   implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
   implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+
   // json
   implementation "com.google.code.gson:gson:$gson_version"
+
   // Image load
   implementation "com.facebook.fresco:fresco:$fresco_version"
   implementation "com.github.bumptech.glide:glide:$glide_version"
   annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
+
   // ButterKnife
   implementation "com.jakewharton:butterknife:$butterknife_version"
   annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife_version"
+
   // ui library
   implementation "com.aurelhubert:ahbottomnavigation:$ahbottom_version"
   implementation "com.github.daniel-stoneuk:material-about-library:$about_version"
+
   // analyze
   implementation "com.umeng.analytics:analytics:$umeng_version"
+
   // leakCanary
   debugImplementation "com.squareup.leakcanary:leakcanary-android:$leak_version"
   releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leak_version"
