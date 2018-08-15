@@ -63,6 +63,6 @@ public interface GankApi {
    * @param page page > 0
    * @return Observable<SearchGankData>
    */
-  @GET("search/query/listview/category/{category}/count/{count}/page/{page}")
-  Observable<SearchGankData> getSearchData(@Path("category") String category, @Path("count") int count, @Path("page") int page);
+  @GET("search/query/{keyword}/category/{category}/count/{count}/page/{page}")
+  Observable<SearchGankData> getSearchData(@Path("keyword") String keyword, @Path("category") String category, @Path("count") int count, @Path("page") int page);
 }

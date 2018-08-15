@@ -54,7 +54,7 @@ public class SearchAdapter extends BaseAdapter implements Filterable {
         FilterResults filterResults = new FilterResults();
         if (!TextUtils.isEmpty(constraint)) {
 
-          // Retrieve the autocomplete results.
+          // Retrieve the autocomplete searchResults.
           List<String> searchData = new ArrayList<>();
 
           for (String string : suggestions) {

@@ -241,7 +241,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
     //intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak an item name or number");    // user hint
     intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);    // setting recognition model, optimized for short phrases – search queries
-    intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);    // quantity of results we want to receive
+    intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);    // quantity of searchResults we want to receive
     if (mContext instanceof Activity) {
       ((Activity) mContext).startActivityForResult(intent, REQUEST_VOICE);
     }

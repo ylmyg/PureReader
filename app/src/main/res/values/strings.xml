@@ -7,6 +7,16 @@
     <string name="nav_info">关于</string>
     <string name="title_gank">干货集中营</string>
 
+    <string name="category_all">all</string>
+    <string name="category_android">Android</string>
+    <string name="category_ios">iOS</string>
+    <string name="category_web_font">前端</string>
+    <string name="category_app">App</string>
+    <string name="category_recommend">瞎推荐</string>
+    <string name="category_resource">拓展资源</string>
+    <string name="category_video">休息视频</string>
+    <string name="category_welfare">福利</string>
+
     <string name="zhihu_daily">知乎日报</string>
     <string name="empty_content">哎呀, 内容走丢了…</string>
     <string name="no_browser_found">没有安装浏览器</string>
@@ -58,5 +68,6 @@
     <string name="no_mail_app">没有安装邮件类应用</string>
     <string name="open_source_licenses">开源许可证</string>
     <string name="action_refresh">Refresh</string>
+    <string name="title_search">搜索</string>
     <!-- info fragment end -->
 </resources>

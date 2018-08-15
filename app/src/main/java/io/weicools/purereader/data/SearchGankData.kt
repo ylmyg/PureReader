@@ -1,22 +1,25 @@
 package io.weicools.purereader.data
 
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
+
 /**
  * @author Weicools Create on 2018.08.12
  *
  * desc:
  */
 data class SearchGankData(
-    val count: Int,
-    val error: Boolean,
-    val results: List<Result>
+    @SerializedName("count") @Expose val count: Int,
+    @SerializedName("error") @Expose val error: Boolean,
+    @SerializedName("results") @Expose val searchResults: List<SearchResult>
 )
 
-data class Result(
-    val desc: String,
-    val ganhuo_id: String,
-    val publishedAt: String,
-    val readability: String,
-    val type: String,
-    val url: String,
-    val who: String
+data class SearchResult(
+    @SerializedName("desc") @Expose val desc: String,
+    @SerializedName("ganhuo_id") @Expose val ganId: String,
+    @SerializedName("publishedAt") @Expose val publishedAt: String,
+    @SerializedName("readability") @Expose val readability: String,
+    @SerializedName("type") @Expose val type: String,
+    @SerializedName("url") @Expose val url: String,
+    @SerializedName("who") @Expose val who: String
 )

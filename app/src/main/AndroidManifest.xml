@@ -31,8 +31,8 @@
             android:name="UMENG_CHANNEL"
             android:value="${UMENG_CHANNEL_VALUE}"/>
 
-        <activity android:name=".ui.about.AboutActivity">
-        </activity>
+        <activity android:name=".ui.about.AboutActivity"/>
+        <activity android:name=".ui.search.SearchActivity"/>
     </application>
 
 </manifest>
