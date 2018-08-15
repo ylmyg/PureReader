@@ -1,7 +1,6 @@
 package io.weicools.purereader.ui;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -58,10 +57,10 @@ public class MainActivity extends AppCompatActivity {
     mViewPager.setOffscreenPageLimit(3);
     mViewPager.setAdapter(mViewPagerAdapter);
 
-    AHBottomNavigationItem mainItem = new AHBottomNavigationItem(R.string.nav_timeline, R.drawable.ic_library_books_black_24dp, R.color.color_tab_1);
-    AHBottomNavigationItem girlItem = new AHBottomNavigationItem(R.string.nav_girls, R.drawable.ic_photo_black_24dp, R.color.color_tab_2);
-    AHBottomNavigationItem favoriteItem = new AHBottomNavigationItem(R.string.nav_favorite, R.drawable.ic_favorite_24dp, R.color.color_tab_3);
-    AHBottomNavigationItem myInfoItem = new AHBottomNavigationItem(R.string.nav_info, R.drawable.ic_info_outline_black_24dp, R.color.color_tab_4);
+    AHBottomNavigationItem mainItem = new AHBottomNavigationItem(R.string.nav_timeline, R.drawable.ic_bottom_library_books, R.color.color_tab_1);
+    AHBottomNavigationItem girlItem = new AHBottomNavigationItem(R.string.nav_girls, R.drawable.ic_bottom_photo, R.color.color_tab_2);
+    AHBottomNavigationItem favoriteItem = new AHBottomNavigationItem(R.string.nav_favorite, R.drawable.ic_bottom_favorite, R.color.color_tab_3);
+    AHBottomNavigationItem myInfoItem = new AHBottomNavigationItem(R.string.nav_info, R.drawable.ic_bottom_info_outline, R.color.color_tab_4);
     List<AHBottomNavigationItem> navigationItemList = new ArrayList<>(BOTTOM_COUNT);
     navigationItemList.add(mainItem);
     navigationItemList.add(girlItem);

@@ -24,75 +24,56 @@ import io.weicools.purereader.ui.setting.LicenseActivity;
  * desc:
  */
 public class AboutActivity extends MaterialAboutActivity {
-  @NonNull
-  @Override
+  @SuppressWarnings("SpellCheckingInspection")
+  @NonNull @Override
   protected MaterialAboutList getMaterialAboutList(@NonNull final Context c) {
-    MaterialAboutCard.Builder appCardBuilder = new MaterialAboutCard.Builder();
-    // Add items to card
-    appCardBuilder.addItem(new MaterialAboutTitleItem.Builder()
-        .text("Pure Reader")
-        .desc("© 2018 Weicools")
-        .icon(R.mipmap.ic_launcher)
-        .build());
-
-    appCardBuilder.addItem(ConvenienceBuilder.createVersionActionItem(c,
-        ContextCompat.getDrawable(c, R.drawable.ic_insert_link_24dp),
-        "Version", false));
-
-    appCardBuilder.addItem(new MaterialAboutActionItem.Builder()
-        .text("Changelog")
-        .icon(ContextCompat.getDrawable(c, R.drawable.ic_track_changes_24dp))
-        .setOnClickAction(ConvenienceBuilder.createWebViewDialogOnClickAction(c, "Releases", "https://github.com/lecymeng/PureReader/releases", true, false))
-        .build());
-
-    appCardBuilder.addItem(new MaterialAboutActionItem.Builder()
-        .text("Licenses")
-        .icon(R.drawable.ic_insert_link_24dp)
-        .setOnClickAction(() -> c.startActivity(new Intent(c, LicenseActivity.class)))
-        .build());
+    MaterialAboutCard.Builder appCardBuilder = new MaterialAboutCard.Builder()
+        .addItem(new MaterialAboutTitleItem.Builder()
+            .text("Pure Reader")
+            .desc("© 2018 Weicools")
+            .icon(R.mipmap.ic_launcher)
+            .build())
+        .addItem(ConvenienceBuilder.createVersionActionItem(
+            c, ContextCompat.getDrawable(c, R.drawable.ic_update),
+            "Version", false))
+        .addItem(new MaterialAboutActionItem.Builder()
+            .text("Licenses")
+            .icon(R.drawable.ic_license)
+            .setOnClickAction(() -> c.startActivity(new Intent(c, LicenseActivity.class)))
+            .build())
+        .addItem(new MaterialAboutActionItem.Builder()
+            .text("Changelog")
+            .icon(ContextCompat.getDrawable(c, R.drawable.ic_track_changes))
+            .setOnClickAction(ConvenienceBuilder.createWebViewDialogOnClickAction(c, "Releases", "https://github.com/lecymeng/PureReader/releases", true, false))
+            .build())
+        .addItem(ConvenienceBuilder.createRateActionItem(
+            c, ContextCompat.getDrawable(c, R.drawable.ic_star_filled),
+            "Rate this app", null));
 
     MaterialAboutCard.Builder authorCardBuilder = new MaterialAboutCard.Builder()
         .title("Author")
         .addItem(new MaterialAboutActionItem.Builder()
             .text("Weicools")
-            .subText("Beijing")
-            .icon(R.drawable.ic_person_outline_24dp)
+            .subText("China Beijing")
+            .icon(R.drawable.ic_profile)
+            .build())
+        .addItem(ConvenienceBuilder.createWebsiteActionItem(
+            c, ContextCompat.getDrawable(c, R.drawable.ic_brower),
+            "Visit Website", true, Uri.parse("https://weicools.com")))
+        .addItem(ConvenienceBuilder.createEmailItem(
+            c, ContextCompat.getDrawable(c, R.drawable.ic_email),
+            "Send an email", true, "lecymeng@outlook.com",
+            "Question concerning MaterialAboutLibrary"))
+        .addItem(ConvenienceBuilder.createPhoneItem(
+            c, ContextCompat.getDrawable(c, R.drawable.ic_phone),
+            "Call me", true, "+86 15185584134"))
+        .addItem(new MaterialAboutActionItem.Builder()
+            .text("Fork on GitHub")
+            .icon(R.drawable.ic_github)
+            .setOnClickAction(ConvenienceBuilder.createWebsiteOnClickAction(c, Uri.parse("https://github.com/lecymeng")))
             .build());
 
-    authorCardBuilder.addItem(new MaterialAboutActionItem.Builder()
-        .text("Fork on GitHub")
-        .icon(R.drawable.ic_insert_link_24dp)
-        .setOnClickAction(ConvenienceBuilder.createWebsiteOnClickAction(c, Uri.parse("https://github.com/lecymeng")))
-        .build());
-
-    MaterialAboutCard.Builder convenienceCardBuilder = new MaterialAboutCard.Builder()
-        .title("Convenience Builder")
-        .addItem(ConvenienceBuilder.createVersionActionItem(c,
-            ContextCompat.getDrawable(c, R.drawable.ic_insert_link_24dp),
-            "Version", false));
-
-    convenienceCardBuilder.addItem(ConvenienceBuilder.createWebsiteActionItem(c,
-        ContextCompat.getDrawable(c, R.drawable.ic_insert_link_24dp),
-        "Visit Website", true, Uri.parse("https://weicools.com")));
-
-    convenienceCardBuilder.addItem(ConvenienceBuilder.createRateActionItem(c,
-        ContextCompat.getDrawable(c, R.drawable.ic_star_24dp),
-        "Rate this app", null));
-
-    convenienceCardBuilder.addItem(ConvenienceBuilder.createEmailItem(c,
-        ContextCompat.getDrawable(c, R.drawable.ic_email_24dp),
-        "Send an email", true, "lecymeng@outlook.com",
-        "Question concerning MaterialAboutLibrary"));
-
-    convenienceCardBuilder.addItem(ConvenienceBuilder.createPhoneItem(c,
-        ContextCompat.getDrawable(c, R.drawable.ic_phone_24dp),
-        "Call me", true, "+86 15185584134"));
-
-    convenienceCardBuilder.addItem(ConvenienceBuilder.createMapItem(c,
-        ContextCompat.getDrawable(c, R.drawable.ic_insert_link_24dp),
-        "Visit Beijing", null, "Beijing ChaoYang"));
-
-    return new MaterialAboutList(appCardBuilder.build(), authorCardBuilder.build(), convenienceCardBuilder.build());
+    return new MaterialAboutList(appCardBuilder.build(), authorCardBuilder.build());
   }
 
 

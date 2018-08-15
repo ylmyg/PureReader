@@ -7,25 +7,25 @@
         <item
             android:id="@+id/nav_timeline"
             android:enabled="true"
-            android:icon="@drawable/ic_library_books_black_24dp"
+            android:icon="@drawable/ic_bottom_library_books"
             android:title="@string/nav_timeline" />
 
         <item
             android:id="@+id/nav_girls"
             android:enabled="true"
-            android:icon="@drawable/ic_photo_black_24dp"
+            android:icon="@drawable/ic_bottom_photo"
             android:title="@string/nav_girls" />
 
         <item
             android:id="@+id/nav_favorite"
             android:enabled="true"
-            android:icon="@drawable/ic_favorite_24dp"
+            android:icon="@drawable/ic_bottom_favorite"
             android:title="@string/nav_favorite" />
 
         <item
             android:id="@+id/nav_setting"
             android:enabled="true"
-            android:icon="@drawable/ic_info_outline_black_24dp"
+            android:icon="@drawable/ic_bottom_info_outline"
             android:title="@string/nav_info" />
 
     </group>

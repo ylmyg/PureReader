@@ -24,4 +24,6 @@
 
     <color name="colorLightBar">#FFFFFF</color>
     <color name="colorLightStatus">#9E9E9E</color>
+    <color name="icon_color_1">#000000</color>
+    <color name="icon_color_2">#FFFFFF</color>
 </resources>

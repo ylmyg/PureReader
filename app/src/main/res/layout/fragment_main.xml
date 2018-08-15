@@ -55,6 +55,6 @@
         android:layout_margin="16dp"
         android:background="@color/colorAccent"
         android:tint="@android:color/white"
-        app:srcCompat="@drawable/ic_calendar_white_24dp" />
+        app:srcCompat="@drawable/ic_calendar" />
 
 </android.support.design.widget.CoordinatorLayout>
