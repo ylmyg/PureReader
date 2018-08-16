@@ -80,16 +80,16 @@ public class MainActivity extends AppCompatActivity {
         return true;
       }
 
-      if (mCurrFragment != null) {
-        mCurrFragment.willBeHidden();
-      }
+      //if (mCurrFragment != null) {
+      //  mCurrFragment.willBeHidden();
+      //}
       mViewPager.setCurrentItem(position, false);
       if (mCurrFragment == null) {
         return true;
       }
 
       mCurrFragment = (BaseFragment) mViewPagerAdapter.getItem(position);
-      mCurrFragment.willBeDisplayed();
+      //mCurrFragment.willBeDisplayed();
       return true;
     });
   }
