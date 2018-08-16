@@ -12,6 +12,9 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,19 +22,21 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
-import io.weicools.purereader.base.BaseFragment;
-import io.weicools.purereader.ui.search.SearchActivity;
-import java.util.ArrayList;
-import java.util.List;
-
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import io.weicools.purereader.AppConfig;
 import io.weicools.purereader.R;
+import io.weicools.purereader.base.BaseFragment;
 import io.weicools.purereader.ui.gank.DailyGankFragment;
 import io.weicools.purereader.ui.gank.GankFragment;
+import io.weicools.purereader.ui.search.SearchActivity;
+import io.weicools.purereader.ui.search.SearchDialogAdapter;
+import io.weicools.purereader.ui.search.SearchViewUtils;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Weicools Create on 2017/12/2
@@ -43,6 +48,12 @@ public class MainFragment extends BaseFragment {
   @BindView(R.id.timeline_tab_layout) TabLayout mTabLayout;
   @BindView(R.id.view_pager) ViewPager mViewPager;
   @BindView(R.id.fab) FloatingActionButton mFab;
+  @BindView(R.id.iv_search_back) ImageView mIvSearchBack;
+  @BindView(R.id.et_search) EditText mEtSearch;
+  @BindView(R.id.iv_clear_search) ImageView mIvClearSearch;
+  @BindView(R.id.ll_search_container) LinearLayout mLlSearchContainer;
+  @BindView(R.id.rv_search_history) RecyclerView mRvSearchHistory;
+  @BindView(R.id.card_view_search) CardView mCardViewSearch;
 
   private DailyGankFragment mGankFragment;
   private GankFragment mAndroidFragment;
@@ -51,17 +62,17 @@ public class MainFragment extends BaseFragment {
   private GankFragment mAppFragment;
   private GankFragment mRecommendFragment;
 
+  private SearchDialogAdapter mDialogAdapter;
+
   public static MainFragment newInstance () {
     return new MainFragment();
   }
 
-  @Override
-  protected int getLayoutResId () {
+  @Override protected int getLayoutResId () {
     return R.layout.fragment_main;
   }
 
-  @Override
-  public void onCreate (@Nullable Bundle savedInstanceState) {
+  @Override public void onCreate (@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setHasOptionsMenu(true);
     // FIXME: 2018/4/16 night mode problem
@@ -93,8 +104,7 @@ public class MainFragment extends BaseFragment {
     }
   }
 
-  @Override
-  public void onSaveInstanceState (@NonNull Bundle outState) {
+  @Override public void onSaveInstanceState (@NonNull Bundle outState) {
     super.onSaveInstanceState(outState);
     FragmentManager fm = getChildFragmentManager();
     if (mGankFragment.isAdded()) {
@@ -144,15 +154,26 @@ public class MainFragment extends BaseFragment {
     mViewPager.setOffscreenPageLimit(5);
     mViewPager.setAdapter(mFragmentAdapter);
     mTabLayout.setupWithViewPager(mViewPager);
+
+    mDialogAdapter = new SearchDialogAdapter(getContext(), new SearchDialogAdapter.OnClickSearchListener() {
+      @Override public void onClickHistoryItem (String s) {
+        Intent intent = new Intent(getActivity(), SearchActivity.class);
+        startActivity(intent);
+      }
+
+      @Override public void onClickClearHistory () {
+        Toast.makeText(getActivity(), "Already clear history", Toast.LENGTH_SHORT).show();
+      }
+    });
+    mRvSearchHistory.setLayoutManager(new LinearLayoutManager(getContext()));
+    mRvSearchHistory.setAdapter(mDialogAdapter);
   }
 
   private void initListener () {
     mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-      @Override
-      public void onPageScrolled (int position, float positionOffset, int positionOffsetPixels) { }
+      @Override public void onPageScrolled (int position, float positionOffset, int positionOffsetPixels) { }
 
-      @Override
-      public void onPageSelected (int position) {
+      @Override public void onPageSelected (int position) {
         if (position == 0) {
           mFab.show();
         } else {
@@ -160,8 +181,7 @@ public class MainFragment extends BaseFragment {
         }
       }
 
-      @Override
-      public void onPageScrollStateChanged (int state) { }
+      @Override public void onPageScrollStateChanged (int state) { }
     });
 
     mFab.setOnClickListener(view -> {
@@ -171,19 +191,27 @@ public class MainFragment extends BaseFragment {
     });
   }
 
-  @Override
-  public boolean onOptionsItemSelected (MenuItem item) {
+  @Override public boolean onOptionsItemSelected (MenuItem item) {
     switch (item.getItemId()) {
       case R.id.action_search:
-        startActivity(new Intent(getActivity(), SearchActivity.class));
+        //startActivity(new Intent(getActivity(), SearchActivity.class));
+        List<String> searchList = new ArrayList<>();
+        searchList.add("优酷");
+        searchList.add("土豆");
+        searchList.add("爱奇艺");
+        searchList.add("哔哩哔哩");
+        searchList.add("youtube");
+        searchList.add("斗鱼");
+        searchList.add("熊猫");
+        mDialogAdapter.updateSearchHistory(searchList);
+        SearchViewUtils.handleToolBar(getContext(), mCardViewSearch, mEtSearch);
         return true;
       default:
         return super.onOptionsItemSelected(item);
     }
   }
 
-  @Override
-  public void onCreateOptionsMenu (Menu menu, MenuInflater inflater) {
+  @Override public void onCreateOptionsMenu (Menu menu, MenuInflater inflater) {
     inflater.inflate(R.menu.menu_gank, menu);
     super.onCreateOptionsMenu(menu, inflater);
   }
@@ -198,18 +226,15 @@ public class MainFragment extends BaseFragment {
       mTitles = titles;
     }
 
-    @Override
-    public Fragment getItem (int position) {
+    @Override public Fragment getItem (int position) {
       return mFragments.get(position);
     }
 
-    @Override
-    public int getCount () {
+    @Override public int getCount () {
       return mFragments.size();
     }
 
-    @Override
-    public CharSequence getPageTitle (int position) {
+    @Override public CharSequence getPageTitle (int position) {
       return mTitles.get(position);
     }
   }

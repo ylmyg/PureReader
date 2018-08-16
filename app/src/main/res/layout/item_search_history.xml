@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/tv_history_item"
+  android:layout_width="match_parent"
+  android:layout_height="36dp"
+  android:drawablePadding="16dp"
+  android:drawableStart="@drawable/ic_bottom_favorite"
+  android:gravity="center_vertical"
+  android:paddingEnd="16dp"
+  android:paddingStart="16dp"
+  tools:text="Android" />

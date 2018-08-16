@@ -7,7 +7,7 @@
   <string name="nav_info">关于</string>
   <string name="title_gank">干货集中营</string>
 
-  <string name="category_all">all</string>
+  <string name="category_all">All</string>
   <string name="category_android">Android</string>
   <string name="category_ios">iOS</string>
   <string name="category_web_font">前端</string>
