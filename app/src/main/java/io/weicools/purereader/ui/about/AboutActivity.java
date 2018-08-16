@@ -37,7 +37,7 @@ public class AboutActivity extends MaterialAboutActivity {
             ConvenienceBuilder.createVersionActionItem(c, ContextCompat.getDrawable(c, R.drawable.ic_update), "Version",
                 false))
         .addItem(new MaterialAboutActionItem.Builder().text("Licenses")
-            .icon(R.drawable.ic_license)
+            .icon(R.drawable.ic_brower)
             .setOnClickAction(() -> c.startActivity(new Intent(c, LicenseActivity.class)))
             .build())
         .addItem(new MaterialAboutActionItem.Builder().text("Changelog")
