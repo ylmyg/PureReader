@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,9 +30,9 @@ import java.util.List;
  */
 public class SearchActivity extends AppCompatActivity {
 
-  @BindView(R.id.iv_back) ImageView mIvBack;
+  //@BindView(R.id.iv_back) ImageView mIvBack;
   @BindView(R.id.iv_clear_keyword) ImageView mIvClearKeyword;
-  @BindView(R.id.edit_query) TextInputEditText mEditQuery;
+  @BindView(R.id.edit_query) EditText mEditQuery;
   @BindView(R.id.search_tab_layout) TabLayout mTabLayout;
   @BindView(R.id.view_pager) ViewPager mViewPager;
 
@@ -41,8 +43,7 @@ public class SearchActivity extends AppCompatActivity {
   private SearchFragment mAppFragment;
   private SearchPagerAdapter mPagerAdapter;
 
-  @Override
-  protected void onCreate (Bundle savedInstanceState) {
+  @Override protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_search);
     ButterKnife.bind(this);
@@ -73,14 +74,16 @@ public class SearchActivity extends AppCompatActivity {
     mTabLayout.setupWithViewPager(mViewPager);
 
     mEditQuery.addTextChangedListener(new TextWatcher() {
-      @Override
-      public void beforeTextChanged (CharSequence s, int start, int count, int after) { }
+      @Override public void beforeTextChanged (CharSequence s, int start, int count, int after) { }
 
-      @Override
-      public void onTextChanged (CharSequence s, int start, int before, int count) { }
+      @Override public void onTextChanged (CharSequence s, int start, int before, int count) { }
 
-      @Override
-      public void afterTextChanged (Editable s) {
+      @Override public void afterTextChanged (Editable s) {
+        if (!TextUtils.isEmpty(mEditQuery.getText().toString())) {
+          mIvClearKeyword.setVisibility(View.VISIBLE);
+        } else {
+          mIvClearKeyword.setVisibility(View.INVISIBLE);
+        }
         if (!TextUtils.isEmpty(mEditQuery.getText().toString().trim())) {
           mPagerAdapter.loadSearchResult(mEditQuery.getText().toString(), 1);
         }
@@ -88,13 +91,11 @@ public class SearchActivity extends AppCompatActivity {
     });
   }
 
-  @OnClick(R.id.iv_back)
-  public void onBackClicked () {
+  @OnClick(R.id.iv_back) public void onBackClicked () {
     finish();
   }
 
-  @OnClick(R.id.iv_back)
-  public void onClearSearchKeyword () {
+  @OnClick(R.id.iv_clear_keyword) public void onClearSearchKeyword () {
     mEditQuery.setText("");
   }
 
@@ -108,19 +109,15 @@ public class SearchActivity extends AppCompatActivity {
       mTitles = titles;
     }
 
-    @Override
-    public Fragment getItem (int position) {
+    @Override public Fragment getItem (int position) {
       return mFragmentList.get(position);
     }
 
-    @Override
-    public int getCount () {
+    @Override public int getCount () {
       return mTitles.length;
     }
 
-    @Nullable
-    @Override
-    public CharSequence getPageTitle (int position) {
+    @Nullable @Override public CharSequence getPageTitle (int position) {
       return mTitles[position];
     }
 

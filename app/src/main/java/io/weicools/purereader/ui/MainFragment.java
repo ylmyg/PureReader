@@ -48,12 +48,6 @@ public class MainFragment extends BaseFragment {
   @BindView(R.id.timeline_tab_layout) TabLayout mTabLayout;
   @BindView(R.id.view_pager) ViewPager mViewPager;
   @BindView(R.id.fab) FloatingActionButton mFab;
-  @BindView(R.id.iv_search_back) ImageView mIvSearchBack;
-  @BindView(R.id.et_search) EditText mEtSearch;
-  @BindView(R.id.iv_clear_search) ImageView mIvClearSearch;
-  @BindView(R.id.ll_search_container) LinearLayout mLlSearchContainer;
-  @BindView(R.id.rv_search_history) RecyclerView mRvSearchHistory;
-  @BindView(R.id.card_view_search) CardView mCardViewSearch;
 
   private DailyGankFragment mGankFragment;
   private GankFragment mAndroidFragment;
@@ -61,8 +55,6 @@ public class MainFragment extends BaseFragment {
   private GankFragment mWebFontFragment;
   private GankFragment mAppFragment;
   private GankFragment mRecommendFragment;
-
-  private SearchDialogAdapter mDialogAdapter;
 
   public static MainFragment newInstance () {
     return new MainFragment();
@@ -154,19 +146,6 @@ public class MainFragment extends BaseFragment {
     mViewPager.setOffscreenPageLimit(5);
     mViewPager.setAdapter(mFragmentAdapter);
     mTabLayout.setupWithViewPager(mViewPager);
-
-    mDialogAdapter = new SearchDialogAdapter(getContext(), new SearchDialogAdapter.OnClickSearchListener() {
-      @Override public void onClickHistoryItem (String s) {
-        Intent intent = new Intent(getActivity(), SearchActivity.class);
-        startActivity(intent);
-      }
-
-      @Override public void onClickClearHistory () {
-        Toast.makeText(getActivity(), "Already clear history", Toast.LENGTH_SHORT).show();
-      }
-    });
-    mRvSearchHistory.setLayoutManager(new LinearLayoutManager(getContext()));
-    mRvSearchHistory.setAdapter(mDialogAdapter);
   }
 
   private void initListener () {
@@ -194,17 +173,7 @@ public class MainFragment extends BaseFragment {
   @Override public boolean onOptionsItemSelected (MenuItem item) {
     switch (item.getItemId()) {
       case R.id.action_search:
-        //startActivity(new Intent(getActivity(), SearchActivity.class));
-        List<String> searchList = new ArrayList<>();
-        searchList.add("优酷");
-        searchList.add("土豆");
-        searchList.add("爱奇艺");
-        searchList.add("哔哩哔哩");
-        searchList.add("youtube");
-        searchList.add("斗鱼");
-        searchList.add("熊猫");
-        mDialogAdapter.updateSearchHistory(searchList);
-        SearchViewUtils.handleToolBar(getContext(), mCardViewSearch, mEtSearch);
+        startActivity(new Intent(getActivity(), SearchActivity.class));
         return true;
       default:
         return super.onOptionsItemSelected(item);
