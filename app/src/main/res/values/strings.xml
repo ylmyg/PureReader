@@ -68,5 +68,6 @@
   <string name="open_source_licenses">开源许可证</string>
   <string name="action_refresh">Refresh</string>
   <string name="title_search">搜索</string>
+  <string name="text_category">分类: %s</string>
   <!-- info fragment end -->
 </resources>

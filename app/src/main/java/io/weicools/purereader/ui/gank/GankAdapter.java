@@ -65,12 +65,12 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankHolder> {
     if (mListType == LIST_TYPE_CATEGORY) {
       holder.tvType.setVisibility(View.INVISIBLE);
     } else {
-      holder.tvType.setText(data.getType());
+      holder.tvType.setText(mContext.getString(R.string.text_category, data.getType()));
     }
 
     List<String> imgList = data.getImages();
     if (imgList != null) {
-      ImageLoader.getInstance().loadImage(holder.ivImage,imgList.get(0),R.drawable.ic_image_black_24dp);
+      ImageLoader.getInstance().loadImage(holder.ivImage, imgList.get(0), R.drawable.ic_image_black_24dp);
     }
 
     holder.itemView.setOnClickListener(

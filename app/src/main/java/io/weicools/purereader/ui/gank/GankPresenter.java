@@ -54,6 +54,7 @@ public class GankPresenter implements GankContract.Presenter {
           }
         }, throwable -> {
           Log.e(TAG, "accept: error++" + throwable.getMessage());
+          mView.setLoadingIndicator(false);
           mView.showLoadingDataError();
         }));
   }
@@ -118,8 +119,15 @@ public class GankPresenter implements GankContract.Presenter {
       }
       return dataList;
     }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(dataList -> {
-      mView.showResult(dataList);
       mView.setLoadingIndicator(false);
-    }, throwable -> mView.showLoadingDataError()));
+      if (dataList.size() == 0) {
+        mView.showNoData();
+      } else {
+        mView.showResult(dataList);
+      }
+    }, throwable -> {
+      mView.setLoadingIndicator(false);
+      mView.showLoadingDataError();
+    }));
   }
 }
