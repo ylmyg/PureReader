@@ -17,15 +17,15 @@
   <string name="category_video">休息视频</string>
   <string name="category_welfare">福利</string>
 
-  <string name="empty_content">哎呀, 内容走丢了…</string>
+  <string name="empty_girl">哎呀, 没有发现新的妹子…</string>
+  <string name="empty_content">哎呀, 今天没有发干货…</string>
+  <string name="error_content">哎呀, 内容走丢了…</string>
   <string name="no_browser_found">没有安装浏览器</string>
-  <string name="favorite">收藏</string>
   <string name="empty_favorite">这里啥也没有, 快去收藏吧!</string>
   <string name="action_copy_link">复制链接</string>
   <string name="action_open_in_browser">在浏览器打开</string>
   <string name="action_share">分享</string>
-  <string name="unfavorite">取消收藏</string>
-  <string name="something_wrong">发生了一点小意外...</string>
+  <string name="something_wrong">发生了一点小意外…</string>
   <string name="share_to">分享至</string>
   <string name="copied_to_clipboard">已复制到剪贴板</string>
   <string name="share_failed">分享失败</string>
@@ -49,7 +49,6 @@
   <string name="about">关于</string>
   <string name="version">版本: V</string>
   <!--<string name="rate">为应用评分</string>-->
-  <!--<string name="rate_desc">如果你喜欢PureReader,请在酷安中给它一个好评吧</string>-->
   <string name="author">作者</string>
   <string name="author_page">个人主页</string>
   <string name="author_page_desc">https://lecymeng.github.io</string>

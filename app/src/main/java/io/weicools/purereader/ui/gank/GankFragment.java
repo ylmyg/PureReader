@@ -11,15 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-
-import io.weicools.purereader.data.GankContent;
-import java.util.List;
-
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.weicools.purereader.R;
+import io.weicools.purereader.data.GankContent;
 import io.weicools.purereader.ui.LoadMoreRecyclerOnScrollListener;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Weicools Create on 2018.04.12
@@ -31,8 +31,9 @@ import io.weicools.purereader.ui.LoadMoreRecyclerOnScrollListener;
 public class GankFragment extends Fragment implements GankContract.View {
   private static final String ARG_CATEGORY = "arg_category";
 
-  @BindView(R.id.rv_article) RecyclerView mRecyclerView;
+  @BindView(R.id.tv_error_msg) TextView mTvErrorMsg;
   @BindView(R.id.empty_view) LinearLayout mEmptyView;
+  @BindView(R.id.rv_article) RecyclerView mRecyclerView;
   @BindView(R.id.refresh_layout) SwipeRefreshLayout mRefreshLayout;
   Unbinder unbinder;
 
@@ -114,23 +115,27 @@ public class GankFragment extends Fragment implements GankContract.View {
 
   @Override
   public void showResult (List<GankContent> dataList) {
-    mEmptyView.setVisibility(View.GONE);
+    mEmptyView.setVisibility(View.INVISIBLE);
     mAdapter.setDataList(dataList);
   }
 
   @Override
   public void updateResult (List<GankContent> dataList) {
-    mEmptyView.setVisibility(View.GONE);
+    mEmptyView.setVisibility(View.INVISIBLE);
     mAdapter.updateData(dataList);
-  }
-
-  @Override
-  public void showLoadingDataError () {
-    mEmptyView.setVisibility(View.VISIBLE);
   }
 
   @Override
   public void showNoData () {
     mEmptyView.setVisibility(View.VISIBLE);
+    mTvErrorMsg.setText(R.string.empty_content);
+    mAdapter.setDataList(new ArrayList<>());
+  }
+
+  @Override
+  public void showLoadingDataError () {
+    mEmptyView.setVisibility(View.VISIBLE);
+    mTvErrorMsg.setText(R.string.error_content);
+    mAdapter.setDataList(new ArrayList<>());
   }
 }

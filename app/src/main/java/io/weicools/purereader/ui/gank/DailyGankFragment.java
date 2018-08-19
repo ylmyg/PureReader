@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -18,6 +19,8 @@ import io.weicools.purereader.AppConfig;
 import io.weicools.purereader.R;
 import io.weicools.purereader.data.GankContent;
 import io.weicools.purereader.ui.DatePickerDialog;
+import io.weicools.purereader.ui.meizi.GirlsFragment;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -29,8 +32,9 @@ import java.util.List;
  * show daily gank
  */
 public class DailyGankFragment extends Fragment implements GankContract.View {
-  @BindView(R.id.rv_article) RecyclerView mRecyclerView;
+  @BindView(R.id.tv_error_msg) TextView mTvErrorMsg;
   @BindView(R.id.empty_view) LinearLayout mEmptyView;
+  @BindView(R.id.rv_article) RecyclerView mRecyclerView;
   @BindView(R.id.refresh_layout) SwipeRefreshLayout mRefreshLayout;
   Unbinder unbinder;
 
@@ -113,24 +117,29 @@ public class DailyGankFragment extends Fragment implements GankContract.View {
 
   @Override
   public void showResult (List<GankContent> dataList) {
-    mEmptyView.setVisibility(View.GONE);
+    mEmptyView.setVisibility(View.INVISIBLE);
     mAdapter.setDataList(dataList);
-  }
-
-  @Override
-  public void updateResult (List<GankContent> dataList) {
-    mEmptyView.setVisibility(View.GONE);
-    mAdapter.updateData(dataList);
-  }
-
-  @Override
-  public void showLoadingDataError () {
-    mRefreshLayout.setRefreshing(false);
-    mEmptyView.setVisibility(View.VISIBLE);
   }
 
   @Override
   public void showNoData () {
     mEmptyView.setVisibility(View.VISIBLE);
+    mTvErrorMsg.setText(R.string.empty_content);
+    mAdapter.setDataList(new ArrayList<>());
   }
+
+  @Override
+  public void showLoadingDataError () {
+    mEmptyView.setVisibility(View.VISIBLE);
+    mTvErrorMsg.setText(R.string.error_content);
+    mAdapter.setDataList(new ArrayList<>());
+  }
+
+  /**
+   * Not handle update, only handle at {@link GirlsFragment} or {@link GankFragment}
+   *
+   * @param dataList gank content list
+   */
+  @Override
+  public void updateResult (List<GankContent> dataList) { }
 }
