@@ -14,12 +14,15 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import io.weicools.purereader.R;
 import io.weicools.purereader.api.GankRetrofit;
 import io.weicools.purereader.data.SearchResult;
+import io.weicools.purereader.database.ReaderDatabase;
+import io.weicools.purereader.util.ToastUtil;
 import java.util.List;
 
 /**
@@ -33,7 +36,8 @@ public class SearchFragment extends Fragment {
   Unbinder unbind;
 
   private String mCategory;
-  private SearchViewAdapter mAdapter;
+  private SearchViewAdapter mViewAdapter;
+  private SearchHistoryAdapter mHistoryAdapter;
   private CompositeDisposable mDisposable;
 
   public static SearchFragment newInstance (String category) {
@@ -65,9 +69,27 @@ public class SearchFragment extends Fragment {
   @Override
   public void onViewCreated (@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    mAdapter = new SearchViewAdapter(view.getContext());
+    mViewAdapter = new SearchViewAdapter(view.getContext());
+    mHistoryAdapter = new SearchHistoryAdapter(view.getContext(), new SearchHistoryAdapter.OnClickSearchListener() {
+      @Override
+      public void onClickHistoryItem (String s) {
+        SearchActivity activity = (SearchActivity) getActivity();
+        if (activity != null) {
+          activity.updateSearchKeyword(s);
+        }
+      }
+
+      @Override
+      public void onClickClearHistory () {
+        mDisposable.add(Completable.fromAction(() -> ReaderDatabase.getInstance().historyDao().deleteAllHistory())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(() -> ToastUtil.showShort("Clear finish"), throwable -> ToastUtil.showShort("occur error...")));
+      }
+    });
     mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    mRecyclerView.setAdapter(mAdapter);
+    mRecyclerView.setAdapter(mHistoryAdapter);
+    loadSearchHistory();
   }
 
   @Override
@@ -77,7 +99,15 @@ public class SearchFragment extends Fragment {
   }
 
   public void loadSearchHistory () {
-
+    mDisposable.add(ReaderDatabase.getInstance()
+        .historyDao()
+        .getHistoryKeyword()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(strings -> mHistoryAdapter.updateSearchHistory(strings), throwable -> {
+          Log.e("zzw", "accept: ", throwable);
+          ToastUtil.showShort("get history error, " + throwable.getMessage());
+        }));
   }
 
   public void loadSearchData (String keyword, int page) {
@@ -88,10 +118,11 @@ public class SearchFragment extends Fragment {
           .getSearchData(keyword, mCategory, 10, page)
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(searchGankData -> {
-            List<SearchResult> resultList = searchGankData.getSearchResults();
+          .subscribe(data -> {
+            List<SearchResult> resultList = data.getSearchResults();
             if (resultList != null) {
-              mAdapter.updateResult(resultList);
+              mRecyclerView.setAdapter(mViewAdapter);
+              mViewAdapter.updateResult(resultList);
             }
           }, throwable -> {
             // TODO: 2018/8/15 show search error

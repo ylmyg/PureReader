@@ -8,14 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import io.weicools.purereader.R;
 import io.weicools.purereader.data.GankContent;
-import io.weicools.purereader.util.DateFormatUtil;
+import io.weicools.purereader.ui.web.WebActivity;
+import io.weicools.purereader.util.DateTimeUtil;
+import io.weicools.purereader.util.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
-
-import io.weicools.purereader.R;
-import io.weicools.purereader.ui.web.WebActivity;
 
 /**
  * @author Weicools Create on 2018/4/12.
@@ -23,11 +22,17 @@ import io.weicools.purereader.ui.web.WebActivity;
  * desc:
  */
 public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankHolder> {
+  public static final int LIST_TYPE_DAILY = 0;
+  public static final int LIST_TYPE_CATEGORY = 1;
+  public static final int LIST_TYPE_FAVORITE = 2;
+
+  private int mListType;
   private Context mContext;
   private List<GankContent> mDataList;
 
-  public GankAdapter (Context context) {
+  public GankAdapter (Context context, int listType) {
     mContext = context;
+    mListType = listType;
     mDataList = new ArrayList<>();
   }
 
@@ -40,10 +45,6 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankHolder> {
     int insertionPos = this.mDataList.size();
     this.mDataList.addAll(list);
     notifyItemRangeInserted(insertionPos, list.size());
-    //        mDataList.clear();
-    //        mDataList.addAll(list);
-    //        notifyDataSetChanged();
-    //        notifyItemRemoved(list.size());
   }
 
   @NonNull
@@ -55,16 +56,25 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankHolder> {
 
   @Override
   public void onBindViewHolder (@NonNull GankHolder holder, int position) {
-    final GankContent data = mDataList.get(position);
+    GankContent data = mDataList.get(position);
 
     holder.tvWho.setText(data.getWho());
-    holder.tvTime.setText(DateFormatUtil.getTimeStr(data.getCreatedAt()));
+    holder.tvTime.setText(DateTimeUtil.getTimeStr(data.getCreatedAt()));
     holder.tvTitle.setText(data.getDesc());
-    holder.tvType.setText(data.getType());
-    holder.itemView.setOnClickListener(v -> {
-      String imgUrl = data.getImages().get(0);
-      WebActivity.startWebActivity(mContext, data.getUrl(), data.getDesc(), imgUrl);
-    });
+
+    if (mListType == LIST_TYPE_CATEGORY) {
+      holder.tvType.setVisibility(View.INVISIBLE);
+    } else {
+      holder.tvType.setText(data.getType());
+    }
+
+    List<String> imgList = data.getImages();
+    if (imgList != null) {
+      ImageLoader.getInstance().loadImage(holder.ivImage,imgList.get(0),R.drawable.ic_image_black_24dp);
+    }
+
+    holder.itemView.setOnClickListener(
+        v -> WebActivity.startWebActivity(mContext, data, mListType == LIST_TYPE_FAVORITE));
   }
 
   @Override
@@ -77,7 +87,7 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankHolder> {
     final TextView tvTime;
     final TextView tvTitle;
     final TextView tvType;
-    final ImageView ivCollect;
+    final ImageView ivImage;
 
     GankHolder (View itemView) {
       super(itemView);
@@ -85,7 +95,7 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankHolder> {
       tvTime = itemView.findViewById(R.id.tv_time);
       tvTitle = itemView.findViewById(R.id.tv_title);
       tvType = itemView.findViewById(R.id.tv_type);
-      ivCollect = itemView.findViewById(R.id.iv_collect);
+      ivImage = itemView.findViewById(R.id.iv_image);
     }
   }
 }

@@ -60,7 +60,7 @@ public class SearchViewAdapter extends RecyclerView.Adapter<SearchViewAdapter.Se
     @BindView(R.id.tv_time) TextView tvTime;
     @BindView(R.id.tv_title) TextView tvTitle;
     @BindView(R.id.tv_type) TextView tvType;
-    @BindView(R.id.iv_collect) ImageView ivCollect;
+    @BindView(R.id.iv_image) ImageView ivImage;
 
     SearchViewHolder (View itemView) {
       super(itemView);

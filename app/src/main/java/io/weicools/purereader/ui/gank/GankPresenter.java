@@ -1,17 +1,13 @@
 package io.weicools.purereader.ui.gank;
 
 import android.util.Log;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.weicools.purereader.data.DailyGankData;
-import io.weicools.purereader.data.GankContent;
-import java.util.ArrayList;
-import java.util.List;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import io.weicools.purereader.api.GankRetrofit;
+import io.weicools.purereader.data.GankContent;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Weicools Create on 2018/4/14.
@@ -38,7 +34,7 @@ public class GankPresenter implements GankContract.Presenter {
 
   @Override
   public void unSubscribe () {
-    mDisposable.clear();
+    mDisposable.dispose();
   }
 
   @Override

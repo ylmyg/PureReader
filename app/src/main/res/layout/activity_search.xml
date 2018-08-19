@@ -63,6 +63,18 @@
           android:src="@drawable/ic_clear"
           android:tint="@color/colorPrimary"
           android:visibility="invisible" />
+        
+        <ImageView
+          android:id="@+id/iv_search"
+          android:layout_width="48dp"
+          android:layout_height="48dp"
+          android:background="?android:attr/selectableItemBackground"
+          android:clickable="true"
+          android:contentDescription="@null"
+          android:focusable="true"
+          android:padding="12dp"
+          android:src="@drawable/ic_search"
+          android:tint="@color/colorPrimary" />
       </LinearLayout>
     </android.support.v7.widget.CardView>
     

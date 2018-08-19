@@ -12,17 +12,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-
-import io.weicools.purereader.data.GankContent;
-import java.util.Calendar;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.weicools.purereader.AppConfig;
 import io.weicools.purereader.R;
+import io.weicools.purereader.data.GankContent;
 import io.weicools.purereader.ui.DatePickerDialog;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * @author Weicools Create on 2018.04.12
@@ -58,7 +56,7 @@ public class DailyGankFragment extends Fragment implements GankContract.View {
     unbinder = ButterKnife.bind(this, view);
 
     new GankPresenter(this);
-    mAdapter = new GankAdapter(getContext());
+    mAdapter = new GankAdapter(getContext(), GankAdapter.LIST_TYPE_DAILY);
     LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
     mRefreshLayout.setColorSchemeColors(ContextCompat.getColor(view.getContext(), R.color.colorAccent));
     mRecyclerView.setLayoutManager(layoutManager);

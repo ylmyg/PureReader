@@ -67,7 +67,7 @@ public class GankFragment extends Fragment implements GankContract.View {
     unbinder = ButterKnife.bind(this, view);
 
     new GankPresenter(this);
-    mAdapter = new GankAdapter(getContext());
+    mAdapter = new GankAdapter(getContext(), GankAdapter.LIST_TYPE_CATEGORY);
     LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
     mRefreshLayout.setColorSchemeColors(ContextCompat.getColor(view.getContext(), R.color.colorAccent));
     mRecyclerView.setLayoutManager(layoutManager);

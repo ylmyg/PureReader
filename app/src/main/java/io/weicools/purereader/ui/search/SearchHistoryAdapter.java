@@ -16,7 +16,7 @@ import java.util.List;
  *
  * desc:
  */
-public class SearchDialogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
   private static final int TYPE_NORMAL = 0x01;
   private static final int TYPE_FOOT = 0x02;
   private static final int MAX_COUNT = 15;
@@ -26,13 +26,14 @@ public class SearchDialogAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
   private List<String> mData;
   private OnClickSearchListener mListener;
 
-  public SearchDialogAdapter (Context context, OnClickSearchListener listener) {
+  public SearchHistoryAdapter (Context context, OnClickSearchListener listener) {
     mContext = context;
     mListener = listener;
     mData = new ArrayList<>();
   }
 
   public void updateSearchHistory (List<String> searchList) {
+    searchList.add("Clear");
     mData = searchList;
   }
 

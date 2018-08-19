@@ -1,25 +1,37 @@
 package io.weicools.purereader.data
 
+import android.arch.persistence.room.ColumnInfo
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.TypeConverters
+import android.support.annotation.NonNull
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import io.weicools.purereader.database.converter.StringTypeConverter
+import java.io.Serializable
 
 /**
  * @author Weicools Create on 2018.08.12
  *
  * desc:
  */
+@Entity(tableName = "gank_content")
+@TypeConverters(StringTypeConverter::class)
 data class GankContent(
-    @SerializedName("_id") @Expose val _id: String,
-    @SerializedName("createdAt") @Expose val createdAt: String,
-    @SerializedName("desc") @Expose val desc: String,
-    @SerializedName("images") @Expose val images: List<String>,
-    @SerializedName("publishedAt") @Expose val publishedAt: String,
-    @SerializedName("source") @Expose val source: String,
-    @SerializedName("type") @Expose val type: String,
-    @SerializedName("url") @Expose val url: String,
-    @SerializedName("used") @Expose val used: Boolean,
-    @SerializedName("who") @Expose val who: String
-)
+    @NonNull
+    @PrimaryKey
+    @ColumnInfo(name = "_id") @SerializedName("_id") @Expose val _id: String,
+    @ColumnInfo(name = "createdAt") @SerializedName("createdAt") @Expose val createdAt: String,
+    @ColumnInfo(name = "desc") @SerializedName("desc") @Expose val desc: String,
+    @ColumnInfo(name = "images") @SerializedName("images") @Expose val images: List<String>,
+    @ColumnInfo(name = "publishedAt") @SerializedName("publishedAt") @Expose val publishedAt: String,
+    @ColumnInfo(name = "source") @SerializedName("source") @Expose val source: String,
+    @ColumnInfo(name = "type") @SerializedName("type") @Expose val type: String,
+    @ColumnInfo(name = "url") @SerializedName("url") @Expose val url: String,
+    @ColumnInfo(name = "used") @SerializedName("used") @Expose val used: Boolean,
+    @ColumnInfo(name = "who") @SerializedName("who") @Expose val who: String,
+    @ColumnInfo(name = "is_collect") val isCollect: Boolean
+) : Serializable
 
 /*
 {

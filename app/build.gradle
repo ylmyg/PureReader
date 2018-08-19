@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
   compileSdkVersion 27
@@ -80,7 +82,7 @@ dependencies {
   // Room
   implementation "android.arch.persistence.room:runtime:$room_version"
   implementation "android.arch.persistence.room:rxjava2:$room_version"
-  annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+  kapt "android.arch.persistence.room:compiler:$room_version"
 
   // Rx series
   implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
@@ -97,11 +99,11 @@ dependencies {
   // Image load
   implementation "com.facebook.fresco:fresco:$fresco_version"
   implementation "com.github.bumptech.glide:glide:$glide_version"
-  annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
+  kapt "com.github.bumptech.glide:compiler:$glide_version"
 
   // ButterKnife
   implementation "com.jakewharton:butterknife:$butterknife_version"
-  annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife_version"
+  kapt "com.jakewharton:butterknife-compiler:$butterknife_version"
 
   // ui library
   implementation "com.aurelhubert:ahbottomnavigation:$ahbottom_version"

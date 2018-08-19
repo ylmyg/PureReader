@@ -11,13 +11,18 @@ import java.util.Locale;
  * <p>
  * A util class for formatting the date between string and long.
  */
-public final class DateFormatUtil {
+public final class DateTimeUtil {
   private static final String DATE_FORMAT_STYLE1 = "yyyy-MM-dd";
   private static final String DATE_FORMAT_STYLE2 = "yyyy/MM/dd";
   private static final String DATE_FORMAT_STYLE3 = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+  private static final int TIME_INTERVAL = 1000;
 
-  private DateFormatUtil () {
+  private DateTimeUtil () {
     throw new AssertionError("No construction for constant class");
+  }
+
+  public static long getCurrTime() {
+    return System.currentTimeMillis() / TIME_INTERVAL;
   }
 
   public static String getTimeStr (String time) {

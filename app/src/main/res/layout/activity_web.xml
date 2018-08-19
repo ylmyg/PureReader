@@ -21,17 +21,6 @@
       app:contentScrim="@color/colorPrimary"
       app:layout_scrollFlags="scroll|enterAlwaysCollapsed|enterAlways">
       
-      <ImageView
-        android:id="@+id/image_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:contentDescription="@null"
-        android:fitsSystemWindows="true"
-        android:scaleType="centerCrop"
-        android:scrollbarAlwaysDrawVerticalTrack="true"
-        android:scrollbarStyle="insideInset"
-        android:src="@drawable/placeholder" />
-      
       <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
