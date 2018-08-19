@@ -20,7 +20,7 @@ import java.io.Serializable
 data class GankContent(
     @NonNull
     @PrimaryKey
-    @ColumnInfo(name = "_id") @SerializedName("_id") @Expose val _id: String,
+    @ColumnInfo(name = "_id") @SerializedName("_id") @Expose val id: String,
     @ColumnInfo(name = "createdAt") @SerializedName("createdAt") @Expose val createdAt: String,
     @ColumnInfo(name = "desc") @SerializedName("desc") @Expose val desc: String,
     @ColumnInfo(name = "images") @SerializedName("images") @Expose val images: List<String>,

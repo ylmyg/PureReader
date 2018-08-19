@@ -30,7 +30,7 @@ public class WebPresenter implements WebContract.Presenter {
   @Override
   public void favoriteContent (boolean isFavorite, GankContent content) {
     if (isFavorite) {
-      mDisposable.add(Completable.fromAction(() -> ReaderDatabase.getInstance().contentDao().unFavorite(content))
+      mDisposable.add(Completable.fromAction(() -> ReaderDatabase.getInstance().contentDao().deleteGankContent(content))
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(() -> mView.showUnFavoriteSuccess(), throwable -> mView.showUnFavoriteFailed()));
@@ -40,5 +40,20 @@ public class WebPresenter implements WebContract.Presenter {
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(() -> mView.showFavoriteSuccess(), throwable -> mView.showFavoriteFailed()));
     }
+  }
+
+  @Override
+  public void isFavoriteContent (GankContent content) {
+    mDisposable.add(ReaderDatabase.getInstance()
+        .contentDao()
+        .getFavorite(content.getId())
+        .map(content1 -> content1 != null)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(isFavorite -> {
+          if (isFavorite) {
+            mView.showIsFavorite();
+          }
+        }));
   }
 }

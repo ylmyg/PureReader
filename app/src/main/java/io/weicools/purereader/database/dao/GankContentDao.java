@@ -20,18 +20,19 @@ public interface GankContentDao {
    * @return search list
    */
   @Query("SELECT * FROM gank_content")
-  Flowable<List<GankContent>> getFavoriteList();
+  Flowable<List<GankContent>> getFavoriteList ();
 
   @Query("SELECT * FROM gank_content WHERE _id = :id")
-  Flowable<GankContent> getFavorite(String id);
+  Flowable<GankContent> getFavorite (String id);
 
   /**
    * save gank content
+   *
    * @param content content
    */
   @Insert(onConflict = OnConflictStrategy.REPLACE)
-  void insertGankContent(GankContent content);
+  void insertGankContent (GankContent content);
 
   @Delete
-  void unFavorite(GankContent content);
+  void deleteGankContent (GankContent content);
 }

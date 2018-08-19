@@ -1,6 +1,7 @@
 package io.weicools.purereader.ui.web;
 
 import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -113,6 +114,7 @@ public class WebActivity extends AppCompatActivity implements WebContract.View {
     if (mIsFavorite) {
       favoriteItem.setIcon(R.drawable.ic_favorite);
     }
+    mPresenter.isFavoriteContent(mContent);
     return true;
   }
 
@@ -164,7 +166,7 @@ public class WebActivity extends AppCompatActivity implements WebContract.View {
       String shareText = "" + mDesc + " " + link;
       shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
       startActivity(Intent.createChooser(shareIntent, getString(R.string.share_to)));
-    } catch (android.content.ActivityNotFoundException ex) {
+    } catch (ActivityNotFoundException ex) {
       ToastUtil.showShort(R.string.something_wrong);
     }
   }
@@ -210,5 +212,13 @@ public class WebActivity extends AppCompatActivity implements WebContract.View {
   @Override
   public void showUnFavoriteFailed () {
     ToastUtil.showShort("un favorite failed");
+  }
+
+  @Override
+  public void showIsFavorite () {
+    if (favoriteItem != null) {
+      mIsFavorite = true;
+      favoriteItem.setIcon(R.drawable.ic_favorite);
+    }
   }
 }

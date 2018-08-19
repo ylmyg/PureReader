@@ -19,9 +19,13 @@ public interface WebContract {
     void showUnFavoriteSuccess ();
 
     void showUnFavoriteFailed ();
+
+    void showIsFavorite ();
   }
 
   interface Presenter extends BasePresenter {
     void favoriteContent (boolean isFavorite, GankContent content);
+
+    void isFavoriteContent (GankContent content);
   }
 }
