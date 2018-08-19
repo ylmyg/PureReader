@@ -72,10 +72,12 @@ public class FavoriteFragment extends BaseFragment implements FavoritesContract.
   public void showFavorites (List<GankContent> dataList) {
     setLoadingIndicator(false);
     mAdapter.setDataList(dataList);
+    mEmptyView.setVisibility(View.INVISIBLE);
   }
 
   @Override
   public void showNoData () {
+    setLoadingIndicator(false);
     mEmptyView.setVisibility(View.VISIBLE);
   }
 }

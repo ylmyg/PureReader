@@ -15,7 +15,7 @@ public class FavoritesPresenter implements FavoritesContract.Presenter {
   private FavoritesContract.View mView;
   private CompositeDisposable mDisposable;
 
-  public FavoritesPresenter (FavoritesContract.View view) {
+  FavoritesPresenter (FavoritesContract.View view) {
     mView = view;
     mView.setPresenter(this);
     mDisposable = new CompositeDisposable();
@@ -33,8 +33,14 @@ public class FavoritesPresenter implements FavoritesContract.Presenter {
         .getFavoriteList()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(gankContents -> mView.showFavorites(gankContents), throwable -> {
-          ToastUtil.showShort("12");
+        .subscribe(contentList -> {
+          if (contentList.size() > 0) {
+            mView.showFavorites(contentList);
+          } else {
+            mView.showNoData();
+          }
+        }, throwable -> {
+          ToastUtil.showShort("load data error");
           mView.showNoData();
         }));
   }
