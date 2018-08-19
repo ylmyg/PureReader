@@ -7,10 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -34,21 +33,19 @@ import io.weicools.purereader.util.ToastUtil;
  * @author weicools
  */
 public class WebActivity extends AppCompatActivity implements WebContract.View {
+  private static final String ARG_IS_FAVORITE = "is_favorite";
+  private static final String ARG_GANK_CONTENT = "gank_content";
 
   @BindView(R.id.toolbar) Toolbar mToolbar;
-  @BindView(R.id.toolbar_layout) CollapsingToolbarLayout mToolbarLayout;
   @BindView(R.id.web_view) WebView mWebView;
   @BindView(R.id.nested_scroll_view) NestedScrollView mNestedScrollView;
-  private MenuItem favotiteItem;
+  private MenuItem favoriteItem;
 
   private WebContract.Presenter mPresenter;
   private Context mContext;
   private GankContent mContent;
   private String mUrl, mDesc;
   private boolean mIsFavorite;
-  private boolean mIsNightMode;
-  private static final String ARG_GANK_CONTENT = "gank_content";
-  private static final String ARG_IS_FAVORITE = "is_favorite";
 
   public static void startWebActivity (Context context, GankContent content, boolean isFavorite) {
     Intent intent = new Intent(context, WebActivity.class);
@@ -65,27 +62,18 @@ public class WebActivity extends AppCompatActivity implements WebContract.View {
     mContext = this;
 
     mContent = (GankContent) getIntent().getSerializableExtra(ARG_GANK_CONTENT);
+    mIsFavorite = getIntent().getBooleanExtra(ARG_IS_FAVORITE, false);
     mUrl = mContent.getUrl();
     mDesc = mContent.getDesc();
-    mIsFavorite = getIntent().getBooleanExtra(ARG_IS_FAVORITE, false);
 
+    mToolbar.setTitle(mDesc);
     setSupportActionBar(mToolbar);
     ActionBar actionBar = getSupportActionBar();
     if (actionBar != null) {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-    setToolbarTitle(mDesc);
-    mToolbar.setOnClickListener(view -> mNestedScrollView.smoothScrollTo(0, 0));
     initWebView();
     new WebPresenter(this);
-  }
-
-  private void setToolbarTitle (@NonNull String title) {
-    mToolbarLayout.setTitle(title);
-    mToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBar);
-    mToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
-    mToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBarPlus1);
-    mToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBarPlus1);
   }
 
   @SuppressLint("SetJavaScriptEnabled")
@@ -104,8 +92,8 @@ public class WebActivity extends AppCompatActivity implements WebContract.View {
 
     mWebView.setWebViewClient(new WebViewClient() {
       @Override
-      public boolean shouldOverrideUrlLoading (WebView view, String url) {
-        CustomTabsHelper.openUrl(mContext, url);
+      public boolean shouldOverrideUrlLoading (WebView view, WebResourceRequest request) {
+        CustomTabsHelper.openUrl(mContext, request.getUrl().toString());
         return true;
       }
     });
@@ -121,9 +109,9 @@ public class WebActivity extends AppCompatActivity implements WebContract.View {
   @Override
   public boolean onCreateOptionsMenu (Menu menu) {
     getMenuInflater().inflate(R.menu.menu_more, menu);
-    favotiteItem = menu.getItem(0);
+    favoriteItem = menu.getItem(0);
     if (mIsFavorite) {
-      favotiteItem.setIcon(R.drawable.ic_favorite);
+      favoriteItem.setIcon(R.drawable.ic_favorite);
     }
     return true;
   }
@@ -149,22 +137,19 @@ public class WebActivity extends AppCompatActivity implements WebContract.View {
     AppCompatTextView share = view.findViewById(R.id.text_view_share);
 
     // copy the article's link to clipboard
-    copyLink.setOnClickListener(view12 -> {
-      //mPresenter.getLink(mType, REQUEST_COPY_LINK, mId);
+    copyLink.setOnClickListener(v -> {
       copyLink(mUrl);
       dialog.dismiss();
     });
 
     // open the link in system browser
-    openWithBrowser.setOnClickListener(view13 -> {
-      //mPresenter.getLink(mType, REQUEST_OPEN_WITH_BROWSER, mId);
+    openWithBrowser.setOnClickListener(v -> {
       openWithBrowser(mUrl);
       dialog.dismiss();
     });
 
     // getLink the content as text
-    share.setOnClickListener(view14 -> {
-      //mPresenter.getLink(mType, REQUEST_SHARE, mId);
+    share.setOnClickListener(v -> {
       share(mUrl);
       dialog.dismiss();
     });
@@ -207,7 +192,7 @@ public class WebActivity extends AppCompatActivity implements WebContract.View {
 
   @Override
   public void showFavoriteSuccess () {
-    favotiteItem.setIcon(R.drawable.ic_favorite);
+    favoriteItem.setIcon(R.drawable.ic_favorite);
     ToastUtil.showShort("favorite success");
   }
 
@@ -218,7 +203,7 @@ public class WebActivity extends AppCompatActivity implements WebContract.View {
 
   @Override
   public void showUnFavoriteSuccess () {
-    favotiteItem.setIcon(R.drawable.ic_favorite_border);
+    favoriteItem.setIcon(R.drawable.ic_favorite_border);
     ToastUtil.showShort("un favorite success");
   }
 
