@@ -1,12 +1,12 @@
 <resources>
   <string name="app_name">PureReader</string>
-
+  
   <string name="nav_timeline">干货</string>
   <string name="nav_girls">妹子</string>
   <string name="nav_favorite">收藏</string>
   <string name="nav_info">关于</string>
   <string name="title_gank">干货集中营</string>
-
+  
   <string name="category_all">All</string>
   <string name="category_android">Android</string>
   <string name="category_ios">iOS</string>
@@ -16,7 +16,7 @@
   <string name="category_resource">拓展资源</string>
   <string name="category_video">休息视频</string>
   <string name="category_welfare">福利</string>
-
+  
   <string name="empty_girl">哎呀, 没有发现新的妹子…</string>
   <string name="empty_content">哎呀, 今天没有发干货…</string>
   <string name="error_content">哎呀, 内容走丢了…</string>
@@ -32,11 +32,11 @@
   <string name="btn_cancel">取消</string>
   <string name="btn_ok">确定</string>
   <string name="title_girl">妹子</string>
-
+  
   <string name="menu_share">分享</string>
   <string name="menu_save">保存</string>
   <string name="search_hint">Search</string>
-
+  
   <!--info fragment-->
   <string name="settings">设置</string>
   <string name="no_picture_mode">无图模式</string>
@@ -68,5 +68,6 @@
   <string name="action_refresh">Refresh</string>
   <string name="title_search">搜索</string>
   <string name="text_category">分类: %s</string>
+  <string name="btn_history_gank">历史干货</string>
   <!-- info fragment end -->
 </resources>

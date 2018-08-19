@@ -1,5 +1,6 @@
 package io.weicools.purereader.ui.gank;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -19,10 +20,15 @@ import io.weicools.purereader.AppConfig;
 import io.weicools.purereader.R;
 import io.weicools.purereader.data.GankContent;
 import io.weicools.purereader.ui.DatePickerDialog;
+import io.weicools.purereader.ui.history.GankHistoryActivity;
 import io.weicools.purereader.ui.meizi.GirlsFragment;
+import io.weicools.purereader.util.DateTimeUtil;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * @author Weicools Create on 2018.04.12
@@ -81,6 +87,19 @@ public class DailyGankFragment extends Fragment implements GankContract.View {
   }
 
   @Override
+  public void onActivityResult (int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (resultCode == RESULT_OK && requestCode == GankHistoryActivity.REQUEST_DATE_CODE) {
+      if (data != null) {
+        String date = data.getStringExtra(GankHistoryActivity.ARG_DATE);
+        Date newDate = DateTimeUtil.formatStringToDate(date);
+        mPresenter.loadDailyData(DateTimeUtil.getYearFromDate(newDate), DateTimeUtil.getMonthFromDate(newDate) + 1,
+            DateTimeUtil.getDayFromDate(newDate));
+      }
+    }
+  }
+
+  @Override
   public void onDestroyView () {
     super.onDestroyView();
     unbinder.unbind();
@@ -95,11 +114,20 @@ public class DailyGankFragment extends Fragment implements GankContract.View {
 
     Calendar minDate = Calendar.getInstance();
     minDate.set(2015, 5, 18);
-    DatePickerDialog dialog = DatePickerDialog.newInstance((view, year, monthOfYear, dayOfMonth) -> {
-      mYear = year;
-      mMonth = monthOfYear;
-      mDay = dayOfMonth;
-      mPresenter.loadDailyData(mYear, mMonth + 1, mDay);
+    DatePickerDialog dialog = DatePickerDialog.newInstance(new DatePickerDialog.OnDialogListener() {
+      @Override
+      public void onDateSet (DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        mYear = year;
+        mMonth = monthOfYear;
+        mDay = dayOfMonth;
+        mPresenter.loadDailyData(mYear, mMonth + 1, mDay);
+      }
+
+      @Override
+      public void onLoadHistoryGank () {
+        startActivityForResult(new Intent(getContext(), GankHistoryActivity.class),
+            GankHistoryActivity.REQUEST_DATE_CODE);
+      }
     }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), Calendar.getInstance(), minDate);
 
     dialog.show(getChildFragmentManager(), AppConfig.TYPE_DAILY);

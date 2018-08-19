@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+  
+  <android.support.design.widget.AppBarLayout
+    android:id="@+id/app_bar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true"
+    android:theme="@style/AppTheme.AppBarOverlay">
+    
+    <android.support.v7.widget.Toolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      app:title="@string/btn_history_gank"
+      android:layout_height="?attr/actionBarSize"
+      app:contentInsetStartWithNavigation="0dp"
+      app:navigationIcon="@drawable/ic_arrow_back"
+      app:popupTheme="@style/AppTheme.PopupOverlay" />
+  </android.support.design.widget.AppBarLayout>
+  
+  <FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBaseBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingBottom="8dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    
+    <android.support.v7.widget.RecyclerView
+      android:id="@+id/rv_history"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:clipToPadding="false"
+      android:fadeScrollbars="true"
+      android:scrollbarFadeDuration="1"
+      android:scrollbars="vertical"
+      tools:listitem="@layout/item_search_history" />
+    
+    <LinearLayout
+      android:id="@+id/empty_view"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:clickable="true"
+      android:focusable="true"
+      android:gravity="center"
+      android:orientation="vertical"
+      android:visibility="invisible"
+      tools:ignore="UseCompoundDrawables">
+      
+      <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hapticFeedbackEnabled="true"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_bottom_favorite"
+        android:tint="@color/colorAccent" />
+      
+      <TextView
+        android:id="@+id/tv_error_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/colorAccent"
+        tools:text="@string/empty_content" />
+    </LinearLayout>
+  </FrameLayout>
+</android.support.design.widget.CoordinatorLayout>

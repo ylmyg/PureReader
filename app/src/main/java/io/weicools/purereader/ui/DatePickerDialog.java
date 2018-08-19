@@ -24,27 +24,27 @@ public class DatePickerDialog extends DialogFragment {
   Unbinder unbinder;
 
   private int currYear, currMonth, currDay;
-  private OnDateSetListener mOnDateSetListener;
+  private OnDialogListener mOnDialogListener;
   private Calendar mMaxDate, mMinDate;
 
   public DatePickerDialog () { }
 
-  public static DatePickerDialog newInstance (OnDateSetListener listener, int year, int monthOfYear, int dayOfMonth,
+  public static DatePickerDialog newInstance (OnDialogListener listener, int year, int monthOfYear, int dayOfMonth,
       Calendar maxDate, Calendar minDate) {
     DatePickerDialog ret = new DatePickerDialog();
     ret.initialize(listener, year, monthOfYear, dayOfMonth, maxDate, minDate);
     return ret;
   }
 
-  public static DatePickerDialog newInstance (OnDateSetListener listener, int year, int monthOfYear, int dayOfMonth) {
+  public static DatePickerDialog newInstance (OnDialogListener listener, int year, int monthOfYear, int dayOfMonth) {
     DatePickerDialog ret = new DatePickerDialog();
     ret.initialize(listener, year, monthOfYear, dayOfMonth);
     return ret;
   }
 
-  private void initialize (OnDateSetListener listener, int year, int monthOfYear, int dayOfMonth, Calendar maxDate,
+  private void initialize (OnDialogListener listener, int year, int monthOfYear, int dayOfMonth, Calendar maxDate,
       Calendar minDate) {
-    mOnDateSetListener = listener;
+    mOnDialogListener = listener;
 
     currYear = year;
     currMonth = monthOfYear;
@@ -53,8 +53,8 @@ public class DatePickerDialog extends DialogFragment {
     mMinDate = minDate;
   }
 
-  private void initialize (OnDateSetListener listener, int year, int monthOfYear, int dayOfMonth) {
-    mOnDateSetListener = listener;
+  private void initialize (OnDialogListener listener, int year, int monthOfYear, int dayOfMonth) {
+    mOnDialogListener = listener;
 
     currYear = year;
     currMonth = monthOfYear;
@@ -74,7 +74,7 @@ public class DatePickerDialog extends DialogFragment {
 
   @OnClick(R.id.btn_ok)
   void onSelectDate () {
-    mOnDateSetListener.onDateSet(DatePickerDialog.this, mDatePicker.getYear(), mDatePicker.getMonth(),
+    mOnDialogListener.onDateSet(DatePickerDialog.this, mDatePicker.getYear(), mDatePicker.getMonth(),
         mDatePicker.getDayOfMonth());
     dismiss();
   }
@@ -84,13 +84,32 @@ public class DatePickerDialog extends DialogFragment {
     dismiss();
   }
 
+  @OnClick(R.id.btn_look_history)
+  void onLoadHository () {
+    dismiss();
+    mOnDialogListener.onLoadHistoryGank();
+  }
+
   @Override
   public void onDestroyView () {
     super.onDestroyView();
     unbinder.unbind();
   }
 
-  public interface OnDateSetListener {
+  public interface OnDialogListener {
+    /**
+     * 选择日期
+     *
+     * @param view dialog
+     * @param year 年
+     * @param monthOfYear 月
+     * @param dayOfMonth 日
+     */
     void onDateSet (DatePickerDialog view, int year, int monthOfYear, int dayOfMonth);
+
+    /**
+     * 查看历史干货日期
+     */
+    void onLoadHistoryGank ();
   }
 }

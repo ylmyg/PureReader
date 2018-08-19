@@ -3,6 +3,7 @@ package io.weicools.purereader.api;
 import io.reactivex.Observable;
 import io.weicools.purereader.data.DailyGankData;
 import io.weicools.purereader.data.GankData;
+import io.weicools.purereader.data.HistoryDate;
 import io.weicools.purereader.data.SearchGankData;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -67,4 +68,12 @@ public interface GankApi {
   @GET("search/query/{keyword}/category/{category}/count/{count}/page/{page}")
   Observable<SearchGankData> getSearchData (@Path("keyword") String keyword, @Path("category") String category,
       @Path("count") int count, @Path("page") int page);
+
+  /**
+   * http://gank.io/api/day/history
+   *
+   * @return Observable<DailyGankData>
+   */
+  @GET("day/history")
+  Observable<HistoryDate> getHistoryDate ();
 }

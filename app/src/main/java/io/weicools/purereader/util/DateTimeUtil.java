@@ -3,6 +3,7 @@ package io.weicools.purereader.util;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -21,7 +22,7 @@ public final class DateTimeUtil {
     throw new AssertionError("No construction for constant class");
   }
 
-  public static long getCurrTime() {
+  public static long getCurrTime () {
     return System.currentTimeMillis() / TIME_INTERVAL;
   }
 
@@ -98,14 +99,32 @@ public final class DateTimeUtil {
     return sDate;
   }
 
-  public static long formatDoubanMomentDateStringToLong (String date) {
+  public static Date formatStringToDate (String date) {
     Date d = null;
     try {
       d = new SimpleDateFormat(DATE_FORMAT_STYLE1, Locale.getDefault()).parse(date);
     } catch (ParseException e) {
       e.printStackTrace();
     }
-    return d == null ? 0 : d.getTime();
+    return d == null ? new Date() : d;
+  }
+
+  public static int getYearFromDate (Date date) {
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(date);
+    return calendar.get(Calendar.YEAR);
+  }
+
+  public static int getMonthFromDate (Date date) {
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(date);
+    return calendar.get(Calendar.MONTH);
+  }
+
+  public static int getDayFromDate (Date date) {
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(date);
+    return calendar.get(Calendar.DAY_OF_MONTH);
   }
 
   public static long formatGuokrHandpickTimeStringToLong (String date) {
