@@ -23,9 +23,6 @@ public class WebPresenter implements WebContract.Presenter {
   }
 
   @Override
-  public void subscribe () { }
-
-  @Override
   public void unSubscribe () {
     mDisposable.dispose();
   }

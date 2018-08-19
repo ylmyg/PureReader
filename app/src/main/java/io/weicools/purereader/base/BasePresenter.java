@@ -6,7 +6,5 @@ package io.weicools.purereader.base;
  * desc: The base of all the presenters.
  */
 public interface BasePresenter {
-  void subscribe ();
-
   void unSubscribe ();
 }

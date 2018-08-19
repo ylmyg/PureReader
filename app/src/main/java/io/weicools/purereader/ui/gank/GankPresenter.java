@@ -28,11 +28,6 @@ public class GankPresenter implements GankContract.Presenter {
   }
 
   @Override
-  public void subscribe () {
-    //loadGankData(1);
-  }
-
-  @Override
   public void unSubscribe () {
     mDisposable.dispose();
   }

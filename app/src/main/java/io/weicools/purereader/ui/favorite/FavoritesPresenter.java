@@ -22,11 +22,6 @@ public class FavoritesPresenter implements FavoritesContract.Presenter {
   }
 
   @Override
-  public void subscribe () {
-
-  }
-
-  @Override
   public void unSubscribe () {
     mDisposable.dispose();
   }
