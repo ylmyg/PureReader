@@ -7,7 +7,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,14 +95,10 @@ public class DailyGankFragment extends Fragment implements GankContract.View {
       mYear = year;
       mMonth = monthOfYear;
       mDay = dayOfMonth;
-      // FIXME: 2018/4/16 month ???
-      Log.d("DailyGank", "onDateSet: load daily:" + mYear + "/" + mMonth + "/" + mDay);
       mPresenter.loadDailyData(mYear, mMonth + 1, mDay);
     }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), Calendar.getInstance(), minDate);
 
-    //        dialog.setMaxDate(Calendar.getInstance());
-    //        dialog.setMinDate(minDate);
-    dialog.show(getActivity().getFragmentManager(), AppConfig.TYPE_DAILY);
+    dialog.show(getChildFragmentManager(), AppConfig.TYPE_DAILY);
   }
 
   @Override
