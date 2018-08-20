@@ -146,10 +146,6 @@ public class SearchActivity extends AppCompatActivity {
     }
   }
 
-  @OnClick(R.id.iv_search) public void onClickQuery() {
-    mPagerAdapter.loadSearchHistory();
-  }
-
   @Override
   protected void onDestroy () {
     super.onDestroy();

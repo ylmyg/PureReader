@@ -3,6 +3,9 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
   compileSdkVersion 27
   buildToolsVersion '27.0.3'
@@ -34,10 +37,10 @@ android {
 
   signingConfigs {
     release {
-      storeFile file('../Weicools.jks')
-      storePassword '12138@233'
-      keyPassword '12138@233'
-      keyAlias 'Weicools'
+      storeFile file(properties.getProperty("storeFile"))
+      storePassword properties.getProperty("storePassword")
+      keyPassword properties.getProperty("keyPassword")
+      keyAlias properties.getProperty("keyAlias")
     }
   }
 
@@ -106,11 +109,14 @@ dependencies {
   kapt "com.jakewharton:butterknife-compiler:$butterknife_version"
 
   // ui library
+  implementation "com.nex3z:flow-layout:$flow_layout"
   implementation "com.aurelhubert:ahbottomnavigation:$ahbottom_version"
   implementation "com.github.daniel-stoneuk:material-about-library:$about_version"
 
   // analyze
   implementation "com.umeng.analytics:analytics:$umeng_version"
+//  implementation "com.uber.autodispose:autodispose-android:$autodispose_version"
+//  implementation "com.uber.autodispose:autodispose-android-archcomponents:$autodispose_version"
 
   // leakCanary
   debugImplementation "com.squareup.leakcanary:leakcanary-android:$leak_version"

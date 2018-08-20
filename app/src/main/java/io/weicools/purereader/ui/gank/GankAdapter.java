@@ -59,7 +59,7 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankHolder> {
     GankContent data = mDataList.get(position);
 
     holder.tvWho.setText(data.getWho());
-    holder.tvTime.setText(DateTimeUtil.getTimeStr(data.getCreatedAt()));
+    holder.tvTime.setText(DateTimeUtil.getTimeStr(data.getPublishedAt()));
     holder.tvTitle.setText(data.getDesc());
 
     if (mListType == LIST_TYPE_CATEGORY) {

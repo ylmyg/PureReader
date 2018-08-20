@@ -69,5 +69,7 @@
   <string name="title_search">搜索</string>
   <string name="text_category">分类: %s</string>
   <string name="btn_history_gank">历史干货</string>
+  <string name="title_search_history">搜索历史</string>
+  <string name="text_clear_search_history">清除搜索记录</string>
   <!-- info fragment end -->
 </resources>

@@ -1,12 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:orientation="vertical">
+  tools:ignore="SpUsage">
   
   <android.support.v7.widget.RecyclerView
     android:id="@+id/recycler_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
-</LinearLayout>
+    android:layout_height="match_parent"
+    tools:listitem="@layout/item_gank" />
+  
+  <LinearLayout
+    android:id="@+id/ll_search_history"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/title_search_history"
+      android:textSize="16dp" />
+    <View
+      android:layout_width="wrap_content"
+      android:layout_height="0.5dp"
+      android:layout_marginTop="8dp"
+      android:layout_marginBottom="8dp"
+      android:background="@color/colorAccent"/>
+    
+    <com.nex3z.flowlayout.FlowLayout
+      android:id="@+id/flow_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:flChildSpacing="8dp"
+      app:flRowSpacing="8dp" />
+    
+    <View
+      android:layout_width="wrap_content"
+      android:layout_marginTop="8dp"
+      android:layout_marginBottom="8dp"
+      android:layout_height="0.5dp"
+      android:background="@color/colorAccent"/>
+    
+    <TextView
+      android:id="@+id/tv_clear_history"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:text="@string/text_clear_search_history"
+      android:textSize="18dp" />
+  </LinearLayout>
+</FrameLayout>
