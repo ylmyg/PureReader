@@ -86,7 +86,7 @@ public class SearchFragment extends Fragment {
     mRecyclerView.addOnScrollListener(new LoadMoreRecyclerOnScrollListener(layoutManager) {
       @Override
       public void onLoadMore (int currentPage) {
-        loadSearchData(mKeyword, currentPage);
+        loadSearchData(mKeyword, currentPage, true);
       }
     });
     loadSearchHistory();
@@ -123,7 +123,7 @@ public class SearchFragment extends Fragment {
         }));
   }
 
-  public void loadSearchData (String keyword, int page) {
+  public void loadSearchData (String keyword, int page, boolean isLoadMore) {
     if (page == 1) {
       mKeyword = keyword;
     }
@@ -142,9 +142,12 @@ public class SearchFragment extends Fragment {
         return resultList;
       }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(resultList -> {
         mProgressBar.setVisibility(View.INVISIBLE);
-        if (resultList != null) {
+        if (resultList != null && isLoadMore) {
           mRecyclerView.setAdapter(mViewAdapter);
-          mViewAdapter.updateResult(resultList);
+          mViewAdapter.updateSearchResult(resultList);
+        } else if (resultList != null) {
+          mRecyclerView.setAdapter(mViewAdapter);
+          mViewAdapter.setSearchResult(resultList);
         }
       }, throwable -> {
         mProgressBar.setVisibility(View.INVISIBLE);

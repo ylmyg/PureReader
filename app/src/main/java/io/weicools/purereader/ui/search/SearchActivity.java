@@ -114,7 +114,7 @@ public class SearchActivity extends AppCompatActivity {
     });
   }
 
-  public void updateSearchKeyword(String keyword) {
+  public void updateSearchKeyword (String keyword) {
     mEditQuery.setText(keyword);
   }
 
@@ -140,7 +140,7 @@ public class SearchActivity extends AppCompatActivity {
           .subscribe(() -> {
           }, throwable -> Log.e("zzw", "save keyword error: ", throwable)));
 
-      mPagerAdapter.loadSearchResult(mEditQuery.getText().toString(), 1);
+      mPagerAdapter.loadSearchResult(mEditQuery.getText().toString());
     } else {
       ToastUtil.showShort("Please input search keyword!");
     }
@@ -178,9 +178,9 @@ public class SearchActivity extends AppCompatActivity {
       return mTitles[position];
     }
 
-    public void loadSearchResult (String keyword, int page) {
+    public void loadSearchResult (String keyword) {
       for (Fragment fragment : mFragmentList) {
-        ((SearchFragment) fragment).loadSearchData(keyword, page);
+        ((SearchFragment) fragment).loadSearchData(keyword, 1, false);
       }
     }
 

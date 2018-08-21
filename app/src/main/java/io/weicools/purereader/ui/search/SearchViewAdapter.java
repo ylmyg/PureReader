@@ -31,9 +31,15 @@ public class SearchViewAdapter extends RecyclerView.Adapter<SearchViewAdapter.Se
     mResultList = new ArrayList<>();
   }
 
-  public void updateResult (List<SearchResult> resultList) {
+  public void setSearchResult (List<SearchResult> resultList) {
     mResultList = resultList;
     notifyDataSetChanged();
+  }
+
+  public void updateSearchResult (@NonNull List<SearchResult> list) {
+    int insertionPos = this.mResultList.size();
+    this.mResultList.addAll(list);
+    notifyItemRangeInserted(insertionPos, list.size());
   }
 
   @NonNull

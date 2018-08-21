@@ -41,7 +41,6 @@ public class GankFragment extends Fragment implements GankContract.View {
   private GankAdapter mAdapter;
   private GankContract.Presenter mPresenter;
 
-  private int currPage = 1;
   private boolean mIsFirstLoad = true;
 
   public static GankFragment newInstance (String categoryKey) {
@@ -78,8 +77,7 @@ public class GankFragment extends Fragment implements GankContract.View {
     mRecyclerView.addOnScrollListener(new LoadMoreRecyclerOnScrollListener(layoutManager) {
       @Override
       public void onLoadMore (int currentPage) {
-        currPage = currentPage;
-        mPresenter.loadGankData(false, category, currPage);
+        mPresenter.loadGankData(false, category, currentPage);
       }
     });
 
