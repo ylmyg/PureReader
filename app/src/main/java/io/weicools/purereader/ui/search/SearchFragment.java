@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
@@ -27,6 +28,8 @@ import io.weicools.purereader.R;
 import io.weicools.purereader.api.GankRetrofit;
 import io.weicools.purereader.data.SearchResult;
 import io.weicools.purereader.database.ReaderDatabase;
+import io.weicools.purereader.ui.LoadMoreRecyclerOnScrollListener;
+import io.weicools.purereader.util.DateTimeUtil;
 import io.weicools.purereader.util.ToastUtil;
 import java.util.List;
 
@@ -40,9 +43,10 @@ public class SearchFragment extends Fragment {
   @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
   @BindView(R.id.flow_layout) FlowLayout mFlowLayout;
   @BindView(R.id.ll_search_history) LinearLayout mLlSearchHistory;
+  @BindView(R.id.progress_bar) ProgressBar mProgressBar;
   Unbinder unbind;
 
-  private String mCategory;
+  private String mCategory, mKeyword;
   private SearchViewAdapter mViewAdapter;
   private CompositeDisposable mDisposable;
 
@@ -54,14 +58,16 @@ public class SearchFragment extends Fragment {
     return fragment;
   }
 
-  @Override public void onCreate (@Nullable Bundle savedInstanceState) {
+  @Override
+  public void onCreate (@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     if (getArguments() != null) {
       mCategory = getArguments().getString(ARG_CATEGORY);
     }
   }
 
-  @Nullable @Override
+  @Nullable
+  @Override
   public View onCreateView (@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.frgment_search, container, false);
@@ -70,22 +76,32 @@ public class SearchFragment extends Fragment {
     return view;
   }
 
-  @Override public void onViewCreated (@NonNull View view, @Nullable Bundle savedInstanceState) {
+  @Override
+  public void onViewCreated (@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     mViewAdapter = new SearchViewAdapter(view.getContext());
-    mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+    mRecyclerView.setLayoutManager(layoutManager);
     mRecyclerView.setAdapter(mViewAdapter);
+    mRecyclerView.addOnScrollListener(new LoadMoreRecyclerOnScrollListener(layoutManager) {
+      @Override
+      public void onLoadMore (int currentPage) {
+        loadSearchData(mKeyword, currentPage);
+      }
+    });
     loadSearchHistory();
   }
 
-  @OnClick(R.id.tv_clear_history) void onClickClearHistory () {
+  @OnClick(R.id.tv_clear_history)
+  void onClickClearHistory () {
     mDisposable.add(Completable.fromAction(() -> ReaderDatabase.getInstance().historyDao().deleteAllHistory())
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(() -> ToastUtil.showShort("Clear finish"), throwable -> ToastUtil.showShort("occur error...")));
   }
 
-  @Override public void onDestroyView () {
+  @Override
+  public void onDestroyView () {
     super.onDestroyView();
     unbind.unbind();
   }
@@ -108,25 +124,32 @@ public class SearchFragment extends Fragment {
   }
 
   public void loadSearchData (String keyword, int page) {
+    if (page == 1) {
+      mKeyword = keyword;
+    }
     if (isAdded()) {
-      mDisposable.add(GankRetrofit.getInstance()
-          .getGankApi()
-          .getSearchData(keyword, mCategory, 10, page)
-          .subscribeOn(Schedulers.io())
-          .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(data -> {
-            mLlSearchHistory.setVisibility(View.INVISIBLE);
-            List<SearchResult> resultList = data.getSearchResults();
-            if (resultList != null) {
-              mLlSearchHistory.setVisibility(View.INVISIBLE);
-              mRecyclerView.setAdapter(mViewAdapter);
-              mViewAdapter.updateResult(resultList);
-            }
-          }, throwable -> {
-            // TODO: 2018/8/15 show search error
-            Toast.makeText(getContext(), "search error", Toast.LENGTH_SHORT).show();
-            Log.e("zzw", "accept: +++" + throwable.getMessage());
-          }));
+      mProgressBar.setVisibility(View.VISIBLE);
+      mLlSearchHistory.setVisibility(View.INVISIBLE);
+      mDisposable.add(GankRetrofit.getInstance().getGankApi().getSearchData(keyword, mCategory, 10, page).map(data -> {
+        List<SearchResult> resultList = data.getSearchResults();
+        if (resultList == null) {
+          return null;
+        }
+        for (SearchResult result : resultList) {
+          result.setPublishedAt(DateTimeUtil.dateFormat(result.getPublishedAt(), DateTimeUtil.DATE_FORMAT_STYLE6,
+              DateTimeUtil.DATE_FORMAT_STYLE4));
+        }
+        return resultList;
+      }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(resultList -> {
+        mProgressBar.setVisibility(View.INVISIBLE);
+        if (resultList != null) {
+          mRecyclerView.setAdapter(mViewAdapter);
+          mViewAdapter.updateResult(resultList);
+        }
+      }, throwable -> {
+        mProgressBar.setVisibility(View.INVISIBLE);
+        Toast.makeText(getContext(), "search error", Toast.LENGTH_SHORT).show();
+      }));
     }
   }
 

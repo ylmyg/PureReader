@@ -13,9 +13,12 @@ import java.util.Locale;
  * A util class for formatting the date between string and long.
  */
 public final class DateTimeUtil {
-  private static final String DATE_FORMAT_STYLE1 = "yyyy-MM-dd";
-  private static final String DATE_FORMAT_STYLE2 = "yyyy/MM/dd";
-  private static final String DATE_FORMAT_STYLE3 = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+  public static final String DATE_FORMAT_STYLE1 = "yyyy-MM-dd";
+  public static final String DATE_FORMAT_STYLE2 = "yyyy/MM/dd";
+  public static final String DATE_FORMAT_STYLE3 = "yyyy-MM-dd HH:mm";
+  public static final String DATE_FORMAT_STYLE4 = "yyyy-MM-dd HH:mm:ss";
+  public static final String DATE_FORMAT_STYLE5 = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+  public static final String DATE_FORMAT_STYLE6 = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS";
   private static final int TIME_INTERVAL = 1000;
 
   private DateTimeUtil () {
@@ -26,8 +29,8 @@ public final class DateTimeUtil {
     return System.currentTimeMillis() / TIME_INTERVAL;
   }
 
-  public static String getTimeStr (String time) {
-    DateFormat df = new SimpleDateFormat(DATE_FORMAT_STYLE3, Locale.getDefault());
+  public static String getTimeStr (String time, String originPattern) {
+    DateFormat df = new SimpleDateFormat(originPattern, Locale.getDefault());
     long diff;
     try {
       Date publishDate = df.parse(time);
@@ -45,13 +48,13 @@ public final class DateTimeUtil {
           return diff + "小时前";
         }
         diff /= 24;
-        if (diff < 30) {
+        if (diff < 7) {
           if (diff == 1) {
             return "昨天";
           }
           return diff + "天前";
         }
-        DateFormat dfDate = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        DateFormat dfDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         return dfDate.format(publishDate);
       }
     } catch (ParseException e) {
@@ -60,40 +63,32 @@ public final class DateTimeUtil {
     return time;
   }
 
-  public static String dateFormat (String dateStr) {
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+  public static String dateFormat (String dateStr, String oldPattern, String newPattern) {
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(oldPattern, Locale.getDefault());
     Date date = new Date();
     try {
       date = simpleDateFormat.parse(dateStr);
     } catch (ParseException e) {
       e.printStackTrace();
     }
-    simpleDateFormat = new SimpleDateFormat(DATE_FORMAT_STYLE2, Locale.US);
+    simpleDateFormat = new SimpleDateFormat(newPattern, Locale.getDefault());
     return simpleDateFormat.format(date);
   }
 
-  public static String formatZhihuDailyDateLongToString (long date) {
-    String sDate;
-    Date d = new Date(date + 24 * 60 * 60 * 1000);
-    SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
-    sDate = format.format(d);
-    return sDate;
-  }
-
-  public static long formatZhihuDailyDateStringToLong (String date) {
+  public static long formatStringDateToLong (String date, String pattern) {
     Date d = null;
     try {
-      d = new SimpleDateFormat("yyyyMMdd", Locale.getDefault()).parse(date);
+      d = new SimpleDateFormat(pattern, Locale.getDefault()).parse(date);
     } catch (ParseException e) {
       e.printStackTrace();
     }
     return d == null ? 0 : d.getTime();
   }
 
-  public static String formatDoubanMomentDateLongToString (long date) {
+  public static String formatLongDateToString (long date, String pattern) {
     String sDate;
     Date d = new Date(date);
-    SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT_STYLE1, Locale.getDefault());
+    SimpleDateFormat format = new SimpleDateFormat(pattern, Locale.getDefault());
     sDate = format.format(d);
 
     return sDate;
@@ -125,15 +120,5 @@ public final class DateTimeUtil {
     Calendar calendar = Calendar.getInstance();
     calendar.setTime(date);
     return calendar.get(Calendar.DAY_OF_MONTH);
-  }
-
-  public static long formatGuokrHandpickTimeStringToLong (String date) {
-    Date d = null;
-    try {
-      d = new SimpleDateFormat(DATE_FORMAT_STYLE1, Locale.getDefault()).parse(date.substring(0, 10));
-    } catch (ParseException e) {
-      e.printStackTrace();
-    }
-    return d == null ? 0 : d.getTime();
   }
 }

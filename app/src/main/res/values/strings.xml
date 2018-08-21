@@ -71,5 +71,6 @@
   <string name="btn_history_gank">历史干货</string>
   <string name="title_search_history">搜索历史</string>
   <string name="text_clear_search_history">清除搜索记录</string>
+  <string name="text_who">作者: %s</string>
   <!-- info fragment end -->
 </resources>

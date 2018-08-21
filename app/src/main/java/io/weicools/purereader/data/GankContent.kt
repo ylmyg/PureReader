@@ -22,9 +22,8 @@ data class GankContent(
     @PrimaryKey
     @ColumnInfo(name = "_id") @SerializedName("_id") @Expose val id: String,
     @ColumnInfo(name = "desc") @SerializedName("desc") @Expose val desc: String,
-    @ColumnInfo(name = "images") @SerializedName("images") @Expose val images: List<String>,
-    @ColumnInfo(name = "publishedAt") @SerializedName("publishedAt") @Expose val publishedAt: String,
-    @ColumnInfo(name = "source") @SerializedName("source") @Expose val source: String,
+    @ColumnInfo(name = "images") @SerializedName("images") @Expose val images: List<String>?,
+    @ColumnInfo(name = "publishedAt") @SerializedName("publishedAt") @Expose var publishedAt: String,
     @ColumnInfo(name = "type") @SerializedName("type") @Expose val type: String,
     @ColumnInfo(name = "url") @SerializedName("url") @Expose val url: String,
     @ColumnInfo(name = "who") @SerializedName("who") @Expose val who: String

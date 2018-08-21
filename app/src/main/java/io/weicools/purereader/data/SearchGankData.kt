@@ -11,14 +11,13 @@ import com.google.gson.annotations.SerializedName
 data class SearchGankData(
     @SerializedName("count") @Expose val count: Int,
     @SerializedName("error") @Expose val error: Boolean,
-    @SerializedName("results") @Expose val searchResults: List<SearchResult>
+    @SerializedName("results") @Expose val searchResults: List<SearchResult>?
 )
 
 data class SearchResult(
     @SerializedName("desc") @Expose val desc: String,
     @SerializedName("ganhuo_id") @Expose val ganId: String,
-    @SerializedName("publishedAt") @Expose val publishedAt: String,
-    @SerializedName("readability") @Expose val readability: String,
+    @SerializedName("publishedAt") @Expose var publishedAt: String,
     @SerializedName("type") @Expose val type: String,
     @SerializedName("url") @Expose val url: String,
     @SerializedName("who") @Expose val who: String

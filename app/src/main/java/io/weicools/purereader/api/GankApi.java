@@ -48,18 +48,9 @@ public interface GankApi {
       @Path("page") int page);
 
   /**
-   * https://gank.io/api/random/data/Android/5
-   *
-   * @param category {all | Android | iOS | 休息视频 | 福利 | 拓展资源 | 前端 | 瞎推荐 | App}
-   * @param count count > 0
-   * @return Observable<GankData>
-   */
-  @GET("random/data/{category}/{count}")
-  Observable<GankData> getRandomData (@Path("category") String category, @Path("count") int count);
-
-  /**
    * https://gank.io/api/search/query/listview/category/Android/count/10/page/1
    *
+   * @param keyword keyword
    * @param category {all | Android | iOS | 休息视频 | 福利 | 拓展资源 | 前端 | 瞎推荐 | App}
    * @param count max = 50
    * @param page page > 0

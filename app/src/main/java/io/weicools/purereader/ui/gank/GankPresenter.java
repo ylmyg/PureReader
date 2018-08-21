@@ -7,6 +7,7 @@ import io.reactivex.schedulers.Schedulers;
 import io.weicools.purereader.api.GankRetrofit;
 import io.weicools.purereader.data.DailyGankData;
 import io.weicools.purereader.data.GankContent;
+import io.weicools.purereader.util.DateTimeUtil;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,24 +36,25 @@ public class GankPresenter implements GankContract.Presenter {
 
   @Override
   public void loadGankData (final boolean isRefresh, String category, int page) {
-    mDisposable.add(GankRetrofit.getInstance()
-        .getGankApi()
-        .getCategoryData(category, 10, page)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(data -> {
-          mView.setLoadingIndicator(false);
-          List<GankContent> contentList = data.getResults();
-          if (isRefresh) {
-            mView.showResult(contentList);
-          } else {
-            mView.updateResult(contentList);
-          }
-        }, throwable -> {
-          Log.e(TAG, "accept: error++" + throwable.getMessage());
-          mView.setLoadingIndicator(false);
-          mView.showLoadingDataError();
-        }));
+    mDisposable.add(GankRetrofit.getInstance().getGankApi().getCategoryData(category, 10, page).map(data -> {
+      List<GankContent> contentList = data.getResults();
+      for (GankContent content : contentList) {
+        content.setPublishedAt(DateTimeUtil.dateFormat(content.getPublishedAt(), DateTimeUtil.DATE_FORMAT_STYLE5,
+            DateTimeUtil.DATE_FORMAT_STYLE4));
+      }
+      return contentList;
+    }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(contentList -> {
+      mView.setLoadingIndicator(false);
+      if (isRefresh) {
+        mView.showResult(contentList);
+      } else {
+        mView.updateResult(contentList);
+      }
+    }, throwable -> {
+      Log.e(TAG, "accept: error++" + throwable.getMessage());
+      mView.setLoadingIndicator(false);
+      mView.showLoadingDataError();
+    }));
   }
 
   @Override
@@ -114,6 +116,10 @@ public class GankPresenter implements GankContract.Presenter {
     }
     if (resourceList != null) {
       dataList.addAll(resourceList);
+    }
+    for (GankContent content : dataList) {
+      content.setPublishedAt(DateTimeUtil.dateFormat(content.getPublishedAt(), DateTimeUtil.DATE_FORMAT_STYLE5,
+          DateTimeUtil.DATE_FORMAT_STYLE4));
     }
     return dataList;
   }

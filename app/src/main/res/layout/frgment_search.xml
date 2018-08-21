@@ -13,6 +13,13 @@
     android:layout_height="match_parent"
     tools:listitem="@layout/item_gank" />
   
+  <ProgressBar
+    android:id="@+id/progress_bar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:visibility="invisible" />
+  
   <LinearLayout
     android:id="@+id/ll_search_history"
     android:layout_width="match_parent"
@@ -27,9 +34,9 @@
     <View
       android:layout_width="wrap_content"
       android:layout_height="0.5dp"
-      android:layout_marginTop="8dp"
       android:layout_marginBottom="8dp"
-      android:background="@color/colorAccent"/>
+      android:layout_marginTop="8dp"
+      android:background="@color/colorAccent" />
     
     <com.nex3z.flowlayout.FlowLayout
       android:id="@+id/flow_layout"
@@ -40,10 +47,10 @@
     
     <View
       android:layout_width="wrap_content"
-      android:layout_marginTop="8dp"
-      android:layout_marginBottom="8dp"
       android:layout_height="0.5dp"
-      android:background="@color/colorAccent"/>
+      android:layout_marginBottom="8dp"
+      android:layout_marginTop="8dp"
+      android:background="@color/colorAccent" />
     
     <TextView
       android:id="@+id/tv_clear_history"
