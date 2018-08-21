@@ -17,7 +17,7 @@ buildscript {
   ext.ahbottom_version = '2.1.0'
   ext.about_version = '2.3.0'
   ext.flow_layout = '1.2.2'
-//  ext.autodispose_version = '1.0.0-RC1'
+  ext.autodispose_version = '1.0.0-RC1'
 
   repositories {
     google()

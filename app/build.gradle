@@ -23,6 +23,14 @@ android {
       abiFilters 'armeabi', 'arm64-v8a'
     }
 
+    lintOptions {
+      abortOnError false
+    }
+
+    kapt {
+      correctErrorTypes = true
+    }
+
     javaCompileOptions {
       annotationProcessorOptions {
         arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
@@ -35,15 +43,6 @@ android {
     }
   }
 
-  signingConfigs {
-    release {
-      storeFile file(properties.getProperty("storeFile"))
-      storePassword properties.getProperty("storePassword")
-      keyPassword properties.getProperty("keyPassword")
-      keyAlias properties.getProperty("keyAlias")
-    }
-  }
-
   buildTypes {
     debug {
       minifyEnabled false
@@ -52,7 +51,6 @@ android {
 
     release {
       minifyEnabled true
-      signingConfig signingConfigs.release
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
@@ -115,8 +113,8 @@ dependencies {
 
   // analyze
   implementation "com.umeng.analytics:analytics:$umeng_version"
-//  implementation "com.uber.autodispose:autodispose-android:$autodispose_version"
-//  implementation "com.uber.autodispose:autodispose-android-archcomponents:$autodispose_version"
+  //implementation "com.uber.autodispose:autodispose-android:$autodispose_version"
+  //implementation "com.uber.autodispose:autodispose-android-archcomponents:$autodispose_version"
 
   // leakCanary
   debugImplementation "com.squareup.leakcanary:leakcanary-android:$leak_version"
