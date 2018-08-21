@@ -6,6 +6,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -18,10 +19,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.weicools.purereader.R;
@@ -39,6 +42,7 @@ public class WebActivity extends AppCompatActivity implements WebContract.View {
 
   @BindView(R.id.toolbar) Toolbar mToolbar;
   @BindView(R.id.web_view) WebView mWebView;
+  @BindView(R.id.progress_bar) ProgressBar mProgressBar;
   @BindView(R.id.nested_scroll_view) NestedScrollView mNestedScrollView;
   private MenuItem favoriteItem;
 
@@ -96,6 +100,26 @@ public class WebActivity extends AppCompatActivity implements WebContract.View {
       public boolean shouldOverrideUrlLoading (WebView view, WebResourceRequest request) {
         CustomTabsHelper.openUrl(mContext, request.getUrl().toString());
         return true;
+      }
+
+      @Override
+      public void onPageStarted (WebView view, String url, Bitmap favicon) {
+        super.onPageStarted(view, url, favicon);
+        mProgressBar.setVisibility(View.VISIBLE);
+      }
+
+      @Override
+      public void onPageFinished (WebView view, String url) {
+        super.onPageFinished(view, url);
+        mProgressBar.setVisibility(View.GONE);
+      }
+    });
+
+    mWebView.setWebChromeClient(new WebChromeClient() {
+      @Override
+      public void onProgressChanged (WebView view, int newProgress) {
+        super.onProgressChanged(view, newProgress);
+        mProgressBar.setProgress(newProgress);
       }
     });
 
