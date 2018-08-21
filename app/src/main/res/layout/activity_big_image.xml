@@ -17,6 +17,21 @@
       app:title="@string/title_girl" />
   </android.support.design.widget.AppBarLayout>
   
+  <io.weicools.purereader.widget.RingProgressBar
+    android:id="@+id/ring_progress_bar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:visibility="invisible"
+    app:max="100"
+    app:ringColor="@android:color/darker_gray"
+    app:ringProgressColor="@color/colorPrimary"
+    app:ringWidth="3dp"
+    app:style="STROKE"
+    app:textColor="@color/colorPrimary"
+    app:textIsShow="true"
+    app:textSize="16sp" />
+  
   <com.facebook.drawee.view.SimpleDraweeView
     android:id="@+id/draweeview"
     android:layout_width="match_parent"
