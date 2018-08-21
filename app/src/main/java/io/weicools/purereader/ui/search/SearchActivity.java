@@ -1,5 +1,6 @@
 package io.weicools.purereader.ui.search;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -63,6 +64,7 @@ public class SearchActivity extends AppCompatActivity {
     initViews();
   }
 
+  @SuppressLint("ClickableViewAccessibility")
   private void initViews () {
     String[] titles = {
         getString(R.string.category_all), getString(R.string.category_android), getString(R.string.category_ios),
@@ -84,7 +86,10 @@ public class SearchActivity extends AppCompatActivity {
     mViewPager.setOffscreenPageLimit(4);
     mViewPager.setAdapter(mPagerAdapter);
     mTabLayout.setupWithViewPager(mViewPager);
-
+    mEditQuery.setOnTouchListener((view, motionEvent) -> {
+      mPagerAdapter.loadSearchHistory();
+      return false;
+    });
     mEditQuery.addTextChangedListener(new TextWatcher() {
       @Override
       public void beforeTextChanged (CharSequence s, int start, int count, int after) { }
@@ -144,6 +149,10 @@ public class SearchActivity extends AppCompatActivity {
     } else {
       ToastUtil.showShort("Please input search keyword!");
     }
+  }
+
+  public void loadSearchResult(String keyword) {
+    mPagerAdapter.loadSearchResult(mEditQuery.getText().toString());
   }
 
   @Override

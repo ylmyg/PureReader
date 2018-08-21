@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -107,6 +106,8 @@ public class SearchFragment extends Fragment {
   }
 
   public void loadSearchHistory () {
+    mRecyclerView.setVisibility(View.INVISIBLE);
+    mLlSearchHistory.setVisibility(View.VISIBLE);
     mDisposable.add(ReaderDatabase.getInstance()
         .historyDao()
         .getHistoryKeyword()
@@ -117,10 +118,7 @@ public class SearchFragment extends Fragment {
           for (String s : strings) {
             mFlowLayout.addView(buildHistoryText(s));
           }
-        }, throwable -> {
-          Log.e("zzw", "accept: ", throwable);
-          ToastUtil.showShort("get history error, " + throwable.getMessage());
-        }));
+        }, throwable -> ToastUtil.showShort("get history error, " + throwable.getMessage())));
   }
 
   public void loadSearchData (String keyword, int page, boolean isLoadMore) {
@@ -142,12 +140,13 @@ public class SearchFragment extends Fragment {
         return resultList;
       }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(resultList -> {
         mProgressBar.setVisibility(View.INVISIBLE);
-        if (resultList != null && isLoadMore) {
-          mRecyclerView.setAdapter(mViewAdapter);
-          mViewAdapter.updateSearchResult(resultList);
-        } else if (resultList != null) {
-          mRecyclerView.setAdapter(mViewAdapter);
-          mViewAdapter.setSearchResult(resultList);
+        if (resultList != null) {
+          mRecyclerView.setVisibility(View.VISIBLE);
+          if (isLoadMore) {
+            mViewAdapter.updateSearchResult(resultList);
+          } else {
+            mViewAdapter.setSearchResult(resultList);
+          }
         }
       }, throwable -> {
         mProgressBar.setVisibility(View.INVISIBLE);
@@ -166,6 +165,7 @@ public class SearchFragment extends Fragment {
       SearchActivity activity = (SearchActivity) getActivity();
       if (activity != null) {
         activity.updateSearchKeyword(text);
+        activity.loadSearchResult(text);
       }
     });
 
