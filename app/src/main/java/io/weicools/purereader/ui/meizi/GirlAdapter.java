@@ -7,14 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import com.bumptech.glide.Glide;
-
+import com.bumptech.glide.request.RequestOptions;
+import io.weicools.purereader.R;
 import io.weicools.purereader.data.GankContent;
 import java.util.ArrayList;
 import java.util.List;
-
-import io.weicools.purereader.R;
 
 /**
  * @author Weicools Create on 2018/4/14.
@@ -51,10 +49,8 @@ public class GirlAdapter extends RecyclerView.Adapter<GirlAdapter.GirlHolder> {
   @Override
   public void onBindViewHolder (@NonNull GirlHolder holder, int position) {
     final GankContent data = mDataList.get(position);
-
-    Glide.with(mContext).load(data.getUrl() + "?imageView2/0/w/250").into(holder.ivGirl);
-    //                .placeholder(R.drawable.placeholder)
-    //                .error(R.drawable.placeholder)
+    RequestOptions options = new RequestOptions().placeholder(R.drawable.img_place_miku).error(R.drawable.img_load_error);
+    Glide.with(mContext).applyDefaultRequestOptions(options).load(data.getUrl() + "?imageView2/0/w/250").into(holder.ivGirl);
     holder.itemView.setOnClickListener(
         v -> BigImageActivity.startBigImageActivity(mContext, data.getUrl(), data.getDesc()));
   }

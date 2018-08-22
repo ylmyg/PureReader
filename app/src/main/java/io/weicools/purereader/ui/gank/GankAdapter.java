@@ -8,11 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import io.weicools.purereader.R;
 import io.weicools.purereader.data.GankContent;
 import io.weicools.purereader.ui.web.WebActivity;
 import io.weicools.purereader.util.DateTimeUtil;
-import io.weicools.purereader.util.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,7 +71,9 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankHolder> {
 
     List<String> imgList = data.getImages();
     if (imgList != null) {
-      ImageLoader.getInstance().loadImage(holder.ivImage, imgList.get(0), R.drawable.ic_image_black_24dp);
+      RequestOptions options =
+          new RequestOptions().centerCrop().placeholder(R.drawable.img_place_miku).error(R.drawable.img_load_error);
+      Glide.with(mContext).applyDefaultRequestOptions(options).load(imgList.get(0)).into(holder.ivImage);
     }
 
     holder.itemView.setOnClickListener(

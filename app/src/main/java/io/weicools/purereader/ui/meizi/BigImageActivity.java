@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -18,9 +17,9 @@ import android.view.MenuItem;
 import android.view.View;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.facebook.drawee.drawable.ProgressBarDrawable;
-import com.facebook.drawee.generic.GenericDraweeHierarchy;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.github.chrisbanes.photoview.PhotoView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.weicools.purereader.R;
@@ -40,7 +39,7 @@ public class BigImageActivity extends AppCompatActivity {
   private static final int REQUEST_PERMISSION_CODE = 0x01;
 
   @BindView(R.id.toolbar) Toolbar mToolbar;
-  @BindView(R.id.draweeview) SimpleDraweeView mDraweeView;
+  @BindView(R.id.photo_view) PhotoView mPhotoView;
   @BindView(R.id.ring_progress_bar) RingProgressBar mProgressBar;
 
   private String url, desc;
@@ -68,10 +67,9 @@ public class BigImageActivity extends AppCompatActivity {
 
     url = getIntent().getStringExtra(BigImageActivity.EXTRA_IMAGE_URL);
     desc = getIntent().getStringExtra(BigImageActivity.EXTRA_IMAGE_DESC);
-    GenericDraweeHierarchy hierarchy = mDraweeView.getHierarchy();
-    hierarchy.setProgressBarImage(new ProgressBarDrawable());
-    Uri uri = Uri.parse(url);
-    mDraweeView.setImageURI(uri);
+
+    RequestOptions options = new RequestOptions().placeholder(R.drawable.img_place_miku).error(R.drawable.img_load_error);
+    Glide.with(this).applyDefaultRequestOptions(options).load(url).into(mPhotoView);
   }
 
   @Override
@@ -87,7 +85,14 @@ public class BigImageActivity extends AppCompatActivity {
         finish();
         break;
       case R.id.action_share:
-        // TODO: 2018/8/21 share 
+        //Intent shareIntent = new Intent();
+        //shareIntent.setAction(Intent.ACTION_SEND);
+        //shareIntent.setType("text/plain");
+        //shareIntent.putExtra(Intent.EXTRA_SUBJECT, contentTitle);
+        //shareIntent.putExtra(Intent.EXTRA_TEXT, content);
+        ////创建分享的Dialog
+        //shareIntent = Intent.createChooser(shareIntent, dialogTitle);
+        //startActivity(shareIntent);
         break;
       case R.id.action_save:
         int result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -124,7 +129,7 @@ public class BigImageActivity extends AppCompatActivity {
   }
 
   private void saveImage () {
-    RxDownload download = new RxDownload("https://ww1.sinaimg.cn/",new RxDownloadListener() {
+    RxDownload download = new RxDownload("https://ww1.sinaimg.cn/", new RxDownloadListener() {
       @Override
       public void onDownloadStart () {
         mProgressBar.setVisibility(View.VISIBLE);

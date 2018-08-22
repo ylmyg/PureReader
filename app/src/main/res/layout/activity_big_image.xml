@@ -1,6 +1,7 @@
 <android.support.design.widget.CoordinatorLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:background="#FFFFFFFF"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
   
@@ -32,11 +33,9 @@
     app:textIsShow="true"
     app:textSize="16sp" />
   
-  <com.facebook.drawee.view.SimpleDraweeView
-    android:id="@+id/draweeview"
+  <com.github.chrisbanes.photoview.PhotoView
+    android:id="@+id/photo_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:actualImageScaleType="fitCenter"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    app:placeholderImage="@drawable/placeholder" />
+    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 </android.support.design.widget.CoordinatorLayout>
