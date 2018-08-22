@@ -2,10 +2,11 @@ package io.weicools.purereader;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatDelegate;
-
 import io.weicools.purereader.util.ToastUtil;
+import zlc.season.rxdownload3.core.DownloadConfig;
 
 /**
  * @author Weicools Create on 2017/12/2.
@@ -25,6 +26,10 @@ public class PureReaderApp extends Application {
     } else {
       AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
     }
+
+    String downloadPath = Environment.getExternalStorageDirectory().getPath() + "/MeiziPicture";
+    DownloadConfig.Builder builder = DownloadConfig.Builder.Companion.create(this).setDefaultPath(downloadPath);
+    DownloadConfig.INSTANCE.init(builder);
   }
 
   public static Context getAppInstance () {

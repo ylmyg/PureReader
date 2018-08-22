@@ -5,16 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
@@ -23,10 +22,10 @@ import com.github.chrisbanes.photoview.PhotoView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.weicools.purereader.R;
-import io.weicools.purereader.download.RxDownload;
-import io.weicools.purereader.download.RxDownloadListener;
 import io.weicools.purereader.util.ToastUtil;
 import io.weicools.purereader.widget.RingProgressBar;
+import zlc.season.rxdownload3.RxDownload;
+import zlc.season.rxdownload3.core.Status;
 
 /**
  * @author Weicools Create on 2018.04.13
@@ -68,7 +67,8 @@ public class BigImageActivity extends AppCompatActivity {
     url = getIntent().getStringExtra(BigImageActivity.EXTRA_IMAGE_URL);
     desc = getIntent().getStringExtra(BigImageActivity.EXTRA_IMAGE_DESC);
 
-    RequestOptions options = new RequestOptions().placeholder(R.drawable.img_place_miku).error(R.drawable.img_load_error);
+    RequestOptions options =
+        new RequestOptions().placeholder(R.drawable.img_place_miku).error(R.drawable.img_load_error);
     Glide.with(this).applyDefaultRequestOptions(options).load(url).into(mPhotoView);
   }
 
@@ -85,14 +85,6 @@ public class BigImageActivity extends AppCompatActivity {
         finish();
         break;
       case R.id.action_share:
-        //Intent shareIntent = new Intent();
-        //shareIntent.setAction(Intent.ACTION_SEND);
-        //shareIntent.setType("text/plain");
-        //shareIntent.putExtra(Intent.EXTRA_SUBJECT, contentTitle);
-        //shareIntent.putExtra(Intent.EXTRA_TEXT, content);
-        ////创建分享的Dialog
-        //shareIntent = Intent.createChooser(shareIntent, dialogTitle);
-        //startActivity(shareIntent);
         break;
       case R.id.action_save:
         int result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -129,35 +121,20 @@ public class BigImageActivity extends AppCompatActivity {
   }
 
   private void saveImage () {
-    RxDownload download = new RxDownload("https://ww1.sinaimg.cn/", new RxDownloadListener() {
-      @Override
-      public void onDownloadStart () {
-        mProgressBar.setVisibility(View.VISIBLE);
-      }
-
-      @Override
-      public void onDownloadFinish () { }
-
-      @Override
-      public void onProgress (int progress) {
-        mProgressBar.setProgress(progress);
-      }
-
-      @Override
-      public void onDownloadFail (String errorInfo) {
-        mProgressBar.setVisibility(View.INVISIBLE);
-        ToastUtil.showShort("保存失败啦…");
-      }
-    });
-
-    String downloadPath = Environment.getExternalStorageDirectory().getPath() + "/MeiziPicture";
     mDisposable.add(
-        download.startDownload(url, downloadPath).observeOn(AndroidSchedulers.mainThread()).subscribe(inputStream -> {
-          mProgressBar.setVisibility(View.INVISIBLE);
-          ToastUtil.showShort("已经保存图片到SD卡目录下的MeiziPicture目录！");
-        }, throwable -> {
-          mProgressBar.setVisibility(View.INVISIBLE);
-          ToastUtil.showShort("保存失败啦…");
-        }));
+        RxDownload.INSTANCE.create(url, true).observeOn(AndroidSchedulers.mainThread()).subscribe(this::setProgress));
+  }
+
+  private void setProgress (Status status) {
+    Log.e("zzw", "setProgress: " + status.getDownloadSize());
+    long totalSize = status.getTotalSize();
+    long downloadSize = status.getDownloadSize();
+    if (downloadSize == totalSize) {
+      ToastUtil.showShort("下载完成");
+    }
+    mProgressBar.setMax((int) totalSize);
+    mProgressBar.setProgress((int) downloadSize);
+    //percent.setText(status.percent());
+    //size.setText(status.formatString());
   }
 }
