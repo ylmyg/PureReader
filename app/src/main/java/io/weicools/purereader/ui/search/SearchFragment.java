@@ -4,13 +4,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,8 +41,9 @@ public class SearchFragment extends Fragment {
   public static final String ARG_CATEGORY = "category";
   @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
   @BindView(R.id.flow_layout) FlowLayout mFlowLayout;
-  @BindView(R.id.ll_search_history) LinearLayout mLlSearchHistory;
+  @BindView(R.id.cv_search_history) CardView mCvSearchHistory;
   @BindView(R.id.progress_bar) ProgressBar mProgressBar;
+  @BindView(R.id.tv_no_search_history) TextView mTvNoSearchHistory;
   Unbinder unbind;
 
   private String mCategory, mKeyword;
@@ -107,18 +108,26 @@ public class SearchFragment extends Fragment {
 
   public void loadSearchHistory () {
     mRecyclerView.setVisibility(View.INVISIBLE);
-    mLlSearchHistory.setVisibility(View.VISIBLE);
+    mCvSearchHistory.setVisibility(View.VISIBLE);
     mDisposable.add(ReaderDatabase.getInstance()
         .historyDao()
         .getHistoryKeyword()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(strings -> {
-          mFlowLayout.removeAllViews();
-          for (String s : strings) {
-            mFlowLayout.addView(buildHistoryText(s));
+          if (strings == null || strings.size() == 0) {
+            mTvNoSearchHistory.setVisibility(View.VISIBLE);
+          } else {
+            mTvNoSearchHistory.setVisibility(View.INVISIBLE);
+            mFlowLayout.removeAllViews();
+            for (String s : strings) {
+              mFlowLayout.addView(buildHistoryText(s));
+            }
           }
-        }, throwable -> ToastUtil.showShort("get history error, " + throwable.getMessage())));
+        }, throwable -> {
+          mTvNoSearchHistory.setVisibility(View.VISIBLE);
+          ToastUtil.showShort("get history error, " + throwable.getMessage());
+        }));
   }
 
   public void loadSearchData (String keyword, int page, boolean isLoadMore) {
@@ -127,7 +136,7 @@ public class SearchFragment extends Fragment {
     }
     if (isAdded()) {
       mProgressBar.setVisibility(View.VISIBLE);
-      mLlSearchHistory.setVisibility(View.INVISIBLE);
+      mCvSearchHistory.setVisibility(View.INVISIBLE);
       mDisposable.add(GankRetrofit.getInstance().getGankApi().getSearchData(keyword, mCategory, 10, page).map(data -> {
         List<SearchResult> resultList = data.getSearchResults();
         if (resultList == null) {
