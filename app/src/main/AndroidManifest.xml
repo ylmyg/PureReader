@@ -25,17 +25,8 @@
     <activity android:name=".ui.setting.LicenseActivity" />
     <activity android:name=".ui.meizi.BigImageActivity" />
     <activity android:name=".ui.web.WebActivity" />
-    
-    <meta-data
-      android:name="UMENG_APPKEY"
-      android:value="5ad444a28f4a9d4f4f000066" />
-    <meta-data
-      android:name="UMENG_CHANNEL"
-      android:value="${UMENG_CHANNEL_VALUE}" />
-    
     <activity android:name=".ui.about.AboutActivity" />
     <activity android:name=".ui.search.SearchActivity" />
     <activity android:name=".ui.history.GankHistoryActivity" />
   </application>
-
 </manifest>
