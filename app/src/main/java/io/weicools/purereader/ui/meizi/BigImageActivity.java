@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
@@ -130,10 +131,13 @@ public class BigImageActivity extends AppCompatActivity {
     long totalSize = status.getTotalSize();
     long downloadSize = status.getDownloadSize();
     if (downloadSize == totalSize) {
+      mProgressBar.setVisibility(View.INVISIBLE);
       ToastUtil.showShort("下载完成");
+      return;
     }
     mProgressBar.setMax((int) totalSize);
     mProgressBar.setProgress((int) downloadSize);
+    mProgressBar.setVisibility(View.VISIBLE);
     //percent.setText(status.percent());
     //size.setText(status.formatString());
   }
