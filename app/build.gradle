@@ -7,12 +7,12 @@ Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 android {
-  compileSdkVersion 27
-  buildToolsVersion '27.0.3'
+  compileSdkVersion 28
+  buildToolsVersion '28.0.3'
   defaultConfig {
     applicationId "io.weicools.purereader"
     minSdkVersion 22
-    targetSdkVersion 27
+    targetSdkVersion 28
     versionCode 102
     versionName "1.0.2"
     addManifestPlaceholders([APP_NAME: "@string/app_name"])
